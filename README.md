@@ -1,4 +1,4 @@
-# Reign of the Warlock
+# Diablo Game — Reign of the Warlock
 
 Prywatny projekt fanowski Kris Labs PL, udostępniany publicznie bez opłat. Pierwsze publiczne wydanie gry to **0.1** (25 września 2026). Rok „Kris Labs PL 2026” oznacza rok powstania gry i nie zmienia się w kolejnych wydaniach.
 

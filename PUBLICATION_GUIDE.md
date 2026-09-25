@@ -2,13 +2,13 @@
 
 Repozytorium przygotowane lokalnie:
 
-`C:\Users\krzys\Documents\GitHub\Diablo-Game-Reign-of-the-Warlock`
+`C:\Users\krzys\Documents\GitHub\Diablo-Game`
 
-Właściciel i nazwa: `krzysztofszymaniak76-beep/Diablo-Game-Reign-of-the-Warlock`; widoczność: publiczna. Zmiany nie zostały wysłane do GitHub.
+Właściciel i nazwa: `krzysztofszymaniak76-beep/Diablo-Game`; widoczność: publiczna. Zmiany nie zostały wysłane do GitHub.
 
 ## Pierwsze opublikowanie repozytorium
 
-Otwórz powyższy folder w GitHub Desktop, zaloguj się na konto `krzysztofszymaniak76-beep`, wybierz **Publish repository**, pozostaw widoczność publiczną i zatwierdź. Nie dołączaj licencji open-source, bo nie została ustalona.
+Na formularzu `https://github.com/new` wybierz konto `krzysztofszymaniak76-beep`, nazwę `Diablo-Game` i widoczność publiczną. Nie zaznaczaj dodawania README, `.gitignore` ani licencji — są już lokalnie albo nie zostały ustalone. Po kliknięciu **Create repository** trzeba jeszcze wysłać przygotowany lokalny commit `main`; samo utworzenie pustego repozytorium nie publikuje plików gry.
 
 ## Wydanie 0.1
 
