@@ -23,7 +23,7 @@ Data wydania: 25 września 2026
 
 Nazwa assetu: `Diablo-Game-Reign-of-the-Warlock-Setup-0.1.exe`
 
-Rozmiar: 136312903 bajtów
-SHA-256: `d99be0abb82f2d293bd5e4fcd8a09ff45eca730aeba48670eacbd52e967977d4`
+Rozmiar: 136311587 bajtów
+SHA-256: `218cea2384956571a0692b647a1fe6032f5d9ee3fcf45789f581ff4075ac809f`
 
 Instalator nie jest podpisany cyfrowo.

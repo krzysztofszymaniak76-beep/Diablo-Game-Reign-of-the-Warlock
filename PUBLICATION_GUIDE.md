@@ -1,18 +1,22 @@
-# Publikacja przygotowanej wersji 0.1
+# Publikowanie gry i wydania 0.1
 
-Repozytorium przygotowane lokalnie:
+Publiczne repozytorium: `krzysztofszymaniak76-beep/Diablo-Game-Reign-of-the-Warlock`.
+Lokalna kopia robocza znajduje się w folderze `Diablo-Game`; jej pełna
+ścieżka zależy od komputera.
 
-`C:\Users\krzys\Documents\GitHub\Diablo-Game`
+## Wysłanie kodu
 
-Właściciel i nazwa: `krzysztofszymaniak76-beep/Diablo-Game`; widoczność: publiczna. Zmiany nie zostały wysłane do GitHub.
-
-## Pierwsze opublikowanie repozytorium
-
-Na formularzu `https://github.com/new` wybierz konto `krzysztofszymaniak76-beep`, nazwę `Diablo-Game` i widoczność publiczną. Nie zaznaczaj dodawania README, `.gitignore` ani licencji — są już lokalnie albo nie zostały ustalone. Po kliknięciu **Create repository** trzeba jeszcze wysłać przygotowany lokalny commit `main`; samo utworzenie pustego repozytorium nie publikuje plików gry.
+Repozytorium zostało utworzone jako puste, bez dodatkowego README,
+`.gitignore` i licencji. Lokalna gałąź `main` zawiera przygotowane pliki gry,
+a `origin` wskazuje na powyższy adres. Przy pierwszym wysłaniu uruchom
+`git push -u origin main` albo użyj **Publish repository** / **Push origin**
+w GitHub Desktop. Nie dodawaj drugiego README, `.gitignore` ani licencji przez
+formularz GitHub — pliki projektu są już w lokalnym repozytorium, a licencja
+ponownego użycia zawartości nie została ustalona.
 
 ## Wydanie 0.1
 
-Po opublikowaniu repozytorium utwórz w GitHub nowe wydanie z tagiem `v0.1`, tytułem `Reign of the Warlock 0.1` i opisem z pliku `GITHUB_RELEASE_0.1.md`. Dołącz z Pobranych dokładnie plik `Diablo-Game-Reign-of-the-Warlock-Setup-0.1.exe` i opublikuj wydanie jako stabilne, nie jako wersję roboczą ani prerelease. Plik nie może być zmieniony ani przepakowany — updater weryfikuje rozmiar i SHA-256 przez GitHub Releases API.
+Po wysłaniu kodu utwórz w GitHub nowe wydanie z tagiem `v0.1`, tytułem `Reign of the Warlock 0.1` i opisem z pliku `GITHUB_RELEASE_0.1.md`. Dołącz z Pobranych dokładnie plik `Diablo-Game-Reign-of-the-Warlock-Setup-0.1.exe` i opublikuj wydanie jako stabilne, nie jako wersję roboczą ani prerelease. Plik nie może być zmieniony ani przepakowany — updater weryfikuje rozmiar i SHA-256 przez GitHub Releases API.
 
 ## Kolejne wydania i updater
 
