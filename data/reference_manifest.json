@@ -1,0 +1,51 @@
+{
+  "game": "Diablo II: Resurrected",
+  "expansions": ["Lord of Destruction", "Reign of the Warlock"],
+  "patch": "3.3",
+  "build": null,
+  "era": "Reign of the Warlock",
+  "mode": "private-offline-adaptation",
+  "verifiedAt": "2026-09-12",
+  "sources": [
+    {
+      "id": "blizzard_rotw_overview_pl",
+      "kind": "official-overview",
+      "url": "https://news.blizzard.com/pl-pl/article/24243863/siej-zaglade-w-dodatku-reign-of-the-warlock"
+    },
+    {
+      "id": "blizzard_patch_3_2",
+      "kind": "official-patch-notes",
+      "url": "https://news.blizzard.com/en-us/article/24261478/diablo-ii-resurrected-ladder-season-14-has-concluded"
+    },
+    {
+      "id": "blizzard_patch_3_3",
+      "kind": "official-patch-notes",
+      "url": "https://news.blizzard.com/en-gb/article/24296140/diablo-ii-resurrected-ladder-season-15-now-live"
+    },
+    {
+      "id": "arreat_summit_historical",
+      "kind": "official-historical-reference",
+      "url": "https://classic.battle.net/diablo2exp/"
+    },
+    {
+      "id": "blizzard_d2r_patch_2_4_mercenaries",
+      "kind": "official-patch-notes-hireling-baseline",
+      "url": "https://news.blizzard.com/en-us/article/23788293/diablo-ii-resurrected-patch-2-4-ladder-now-live"
+    },
+    {
+      "id": "arreat_summit_hirelings_historical",
+      "kind": "official-historical-hireling-reference",
+      "url": "https://classic.battle.net/diablo2exp/basics/hirelings.shtml"
+    }
+  ],
+  "availabilityLimits": [
+    "The supplied official patch 3.3 notes distinguish Ladder and Non-Ladder items but do not provide a complete offline availability matrix.",
+    "No authorized installation tables or complete patch 3.3 data export were present in the project during this audit.",
+    "Build number is unavailable and must not be inferred.",
+    "Classic class skill names in skills_manifest.csv are a historical inventory pending row-by-row patch 3.3 revalidation.",
+    "Warlock manifest intentionally contains only names located in the supplied official overview or 3.2/3.3 notes; missing records remain explicit."
+    ,"Hireling type names are verified against official patch 2.4 notes and the historical Arreat Summit; exact patch 3.3 tables remain unavailable."
+  ],
+  "importerVersion": "0.1.0",
+  "datasetId": "d2r-rotw-3.3-private-offline-audit-2026-09-12-v1"
+}

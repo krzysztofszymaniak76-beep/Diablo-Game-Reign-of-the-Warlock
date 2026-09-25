@@ -1,0 +1,1352 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "equipment-v0.5.1-source-subset-1",
+  "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+  "note": "Normal base statistics only. No generated staffmods, automods, affixes, sockets, block, durability wear or speed breakpoints yet. Polish labels are project translations. Not a certified D2R patch dump.",
+  "bases": [
+    {
+      "id": "hand_axe",
+      "code": "hax",
+      "name": "Hand Axe",
+      "displayName": "Topór ręczny",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "axe",
+      "classOnly": null,
+      "width": 1,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        3,
+        6
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 28,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 2,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "hax",
+        "line": 2,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "short_sword",
+      "code": "ssd",
+      "name": "Short Sword",
+      "displayName": "Krótki miecz",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "swor",
+      "classOnly": null,
+      "width": 1,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        2,
+        7
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 24,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 2,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "ssd",
+        "line": 27,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "scepter",
+      "code": "scp",
+      "name": "Scepter",
+      "displayName": "Berło",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "scep",
+      "classOnly": null,
+      "width": 1,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 25,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        6,
+        11
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 50,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 2,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": "pal",
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "scp",
+        "line": 17,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "wand",
+      "code": "wnd",
+      "name": "Wand",
+      "displayName": "Różdżka",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "wand",
+      "classOnly": null,
+      "width": 1,
+      "height": 2,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        2,
+        4
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 15,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 1,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": "nec",
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "wnd",
+        "line": 12,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "club",
+      "code": "clb",
+      "name": "Club",
+      "displayName": "Maczuga",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "club",
+      "classOnly": null,
+      "width": 1,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        1,
+        6
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 24,
+      "sourceBaseSpeed": -10,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 2,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "clb",
+        "line": 16,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "two_handed_sword",
+      "code": "2hs",
+      "name": "Two-Handed Sword",
+      "displayName": "Miecz dwuręczny",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "swor",
+      "classOnly": null,
+      "width": 1,
+      "height": 4,
+      "requiredLevel": 0,
+      "requiredStrength": 35,
+      "requiredDexterity": 27,
+      "oneHandDamage": [
+        2,
+        9
+      ],
+      "twoHandDamage": [
+        8,
+        17
+      ],
+      "throwDamage": null,
+      "twoHanded": true,
+      "barbarianOneHand": true,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 44,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 2,
+      "sourceMaxSockets": 3,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "2hs",
+        "line": 35,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "great_axe",
+      "code": "gax",
+      "name": "Great Axe",
+      "displayName": "Wielki topór",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "axe",
+      "classOnly": null,
+      "width": 2,
+      "height": 4,
+      "requiredLevel": 0,
+      "requiredStrength": 63,
+      "requiredDexterity": 39,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        9,
+        30
+      ],
+      "throwDamage": null,
+      "twoHanded": true,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 50,
+      "sourceBaseSpeed": -10,
+      "sourceRangeAdder": 2,
+      "sourceMaxSockets": 6,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "gax",
+        "line": 10,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "grand_scepter",
+      "code": "gsc",
+      "name": "Grand Scepter",
+      "displayName": "Wielkie berło",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "scep",
+      "classOnly": null,
+      "width": 1,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 37,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        8,
+        18
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 60,
+      "sourceBaseSpeed": 10,
+      "sourceRangeAdder": 1,
+      "sourceMaxSockets": 3,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": "pal",
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "gsc",
+        "line": 18,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "great_sword",
+      "code": "gsd",
+      "name": "Great Sword",
+      "displayName": "Wielki miecz",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "swor",
+      "classOnly": null,
+      "width": 2,
+      "height": 4,
+      "requiredLevel": 0,
+      "requiredStrength": 100,
+      "requiredDexterity": 60,
+      "oneHandDamage": [
+        12,
+        20
+      ],
+      "twoHandDamage": [
+        25,
+        42
+      ],
+      "throwDamage": null,
+      "twoHanded": true,
+      "barbarianOneHand": true,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 50,
+      "sourceBaseSpeed": 10,
+      "sourceRangeAdder": 2,
+      "sourceMaxSockets": 6,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "gsd",
+        "line": 40,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "dagger",
+      "code": "dgr",
+      "name": "Dagger",
+      "displayName": "Sztylet",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "knif",
+      "classOnly": null,
+      "width": 1,
+      "height": 2,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        1,
+        4
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 75,
+      "dexterityBonus": 75,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 16,
+      "sourceBaseSpeed": -20,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 1,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": "war",
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "dgr",
+        "line": 41,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "war_hammer",
+      "code": "whm",
+      "name": "War Hammer",
+      "displayName": "Młot bojowy",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "hamm",
+      "classOnly": null,
+      "width": 2,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 53,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        19,
+        29
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 110,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 55,
+      "sourceBaseSpeed": 20,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 4,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "whm",
+        "line": 24,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "flail",
+      "code": "fla",
+      "name": "Flail",
+      "displayName": "Cep",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "mace",
+      "classOnly": null,
+      "width": 2,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 41,
+      "requiredDexterity": 35,
+      "oneHandDamage": [
+        1,
+        24
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 30,
+      "sourceBaseSpeed": -10,
+      "sourceRangeAdder": 2,
+      "sourceMaxSockets": 5,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "fla",
+        "line": 23,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "spear",
+      "code": "spr",
+      "name": "Spear",
+      "displayName": "Włócznia",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "spea",
+      "classOnly": null,
+      "width": 2,
+      "height": 4,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 20,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        3,
+        15
+      ],
+      "throwDamage": null,
+      "twoHanded": true,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 30,
+      "sourceBaseSpeed": -10,
+      "sourceRangeAdder": 3,
+      "sourceMaxSockets": 3,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "spr",
+        "line": 54,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "war_staff",
+      "code": "wst",
+      "name": "War Staff",
+      "displayName": "Kostur wojenny",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "staf",
+      "classOnly": null,
+      "width": 2,
+      "height": 4,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        12,
+        28
+      ],
+      "throwDamage": null,
+      "twoHanded": true,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 50,
+      "sourceBaseSpeed": 20,
+      "sourceRangeAdder": 1,
+      "sourceMaxSockets": 6,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": "sor",
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "wst",
+        "line": 69,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "hunters_bow",
+      "code": "hbw",
+      "name": "Hunter's Bow",
+      "displayName": "Łuk myśliwski",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "bow",
+      "classOnly": null,
+      "width": 2,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 28,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        2,
+        6
+      ],
+      "throwDamage": null,
+      "twoHanded": true,
+      "barbarianOneHand": false,
+      "strengthBonus": 0,
+      "dexterityBonus": 100,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 32,
+      "sourceBaseSpeed": -10,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 4,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "hbw",
+        "line": 71,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "light_crossbow",
+      "code": "lxb",
+      "name": "Light Crossbow",
+      "displayName": "Lekka kusza",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "xbow",
+      "classOnly": null,
+      "width": 2,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 21,
+      "requiredDexterity": 27,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        6,
+        9
+      ],
+      "throwDamage": null,
+      "twoHanded": true,
+      "barbarianOneHand": false,
+      "strengthBonus": 0,
+      "dexterityBonus": 100,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 30,
+      "sourceBaseSpeed": -10,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 3,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "lxb",
+        "line": 78,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "throwing_axe",
+      "code": "tax",
+      "name": "Throwing Axe",
+      "displayName": "Topór do rzucania",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "taxe",
+      "classOnly": null,
+      "width": 1,
+      "height": 2,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 40,
+      "oneHandDamage": [
+        4,
+        7
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": [
+        8,
+        12
+      ],
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 75,
+      "dexterityBonus": 75,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 6,
+      "sourceBaseSpeed": 10,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 0,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": true,
+      "minStack": 24,
+      "maxStack": 200,
+      "spawnStack": 48,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "tax",
+        "line": 46,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "katar",
+      "code": "ktr",
+      "name": "Katar",
+      "displayName": "Katar",
+      "kind": "weapon",
+      "slot": "weapon",
+      "type": "h2h",
+      "classOnly": "assassin",
+      "width": 1,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 20,
+      "requiredDexterity": 20,
+      "oneHandDamage": [
+        4,
+        7
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 75,
+      "dexterityBonus": 75,
+      "defenseRange": [
+        0,
+        0
+      ],
+      "durability": 48,
+      "sourceBaseSpeed": -10,
+      "sourceRangeAdder": 1,
+      "sourceMaxSockets": 2,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "ktr",
+        "line": 178,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "targe",
+      "code": "pa1",
+      "name": "Targe",
+      "displayName": "Targa",
+      "kind": "armor",
+      "slot": "offhand",
+      "type": "ashd",
+      "classOnly": "paladin",
+      "width": 2,
+      "height": 2,
+      "requiredLevel": 3,
+      "requiredStrength": 16,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        2,
+        6
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        8,
+        12
+      ],
+      "durability": 20,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 4,
+      "sourceBlock": 10,
+      "sourceAutoPrefix": "304",
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "pa1",
+        "line": 105,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "buckler",
+      "code": "buc",
+      "name": "Buckler",
+      "displayName": "Puklerz",
+      "kind": "armor",
+      "slot": "offhand",
+      "type": "shie",
+      "classOnly": null,
+      "width": 2,
+      "height": 2,
+      "requiredLevel": 0,
+      "requiredStrength": 12,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        1,
+        3
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 100,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        4,
+        6
+      ],
+      "durability": 12,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 1,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "buc",
+        "line": 24,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "quilted_armor",
+      "code": "qui",
+      "name": "Quilted Armor",
+      "displayName": "Pikowany pancerz",
+      "kind": "armor",
+      "slot": "chest",
+      "type": "tors",
+      "classOnly": null,
+      "width": 2,
+      "height": 3,
+      "requiredLevel": 0,
+      "requiredStrength": 12,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 0,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        8,
+        11
+      ],
+      "durability": 20,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 2,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "qui",
+        "line": 9,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "cap",
+      "code": "cap",
+      "name": "Cap",
+      "displayName": "Czapka",
+      "kind": "armor",
+      "slot": "head",
+      "type": "helm",
+      "classOnly": null,
+      "width": 2,
+      "height": 2,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 0,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        3,
+        5
+      ],
+      "durability": 12,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 2,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "cap",
+        "line": 2,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "leather_gloves",
+      "code": "lgl",
+      "name": "Leather Gloves",
+      "displayName": "Skórzane rękawice",
+      "kind": "armor",
+      "slot": "hands",
+      "type": "glov",
+      "classOnly": null,
+      "width": 2,
+      "height": 2,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 0,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        2,
+        3
+      ],
+      "durability": 12,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 0,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "lgl",
+        "line": 30,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "boots",
+      "code": "lbt",
+      "name": "Boots",
+      "displayName": "Buty",
+      "kind": "armor",
+      "slot": "feet",
+      "type": "boot",
+      "classOnly": null,
+      "width": 2,
+      "height": 2,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        3,
+        8
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 120,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        2,
+        3
+      ],
+      "durability": 12,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 0,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "lbt",
+        "line": 35,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "sash",
+      "code": "lbl",
+      "name": "Sash",
+      "displayName": "Szarfa",
+      "kind": "armor",
+      "slot": "belt",
+      "type": "belt",
+      "classOnly": null,
+      "width": 2,
+      "height": 1,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 0,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        2,
+        2
+      ],
+      "durability": 12,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 0,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "lbl",
+        "line": 40,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    }
+  ],
+  "classes": [
+    {
+      "classId": "barbarian",
+      "stats": {
+        "strength": 30,
+        "dexterity": 20,
+        "vitality": 25,
+        "energy": 10
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "charstats.txt",
+        "key": "Barbarian",
+        "line": 6,
+        "sha256": "4f9e9b670727634298ae562753966baab7eae701ceeb4edd159ba10e18e899c2"
+      }
+    },
+    {
+      "classId": "paladin",
+      "stats": {
+        "strength": 25,
+        "dexterity": 20,
+        "vitality": 25,
+        "energy": 15
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "charstats.txt",
+        "key": "Paladin",
+        "line": 5,
+        "sha256": "4f9e9b670727634298ae562753966baab7eae701ceeb4edd159ba10e18e899c2"
+      }
+    },
+    {
+      "classId": "necromancer",
+      "stats": {
+        "strength": 15,
+        "dexterity": 25,
+        "vitality": 15,
+        "energy": 25
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "charstats.txt",
+        "key": "Necromancer",
+        "line": 4,
+        "sha256": "4f9e9b670727634298ae562753966baab7eae701ceeb4edd159ba10e18e899c2"
+      }
+    },
+    {
+      "classId": "druid",
+      "stats": {
+        "strength": 15,
+        "dexterity": 20,
+        "vitality": 25,
+        "energy": 20
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "charstats.txt",
+        "key": "Druid",
+        "line": 8,
+        "sha256": "4f9e9b670727634298ae562753966baab7eae701ceeb4edd159ba10e18e899c2"
+      }
+    }
+  ]
+}

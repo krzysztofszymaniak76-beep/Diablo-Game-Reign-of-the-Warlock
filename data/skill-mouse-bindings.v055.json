@@ -1,0 +1,1200 @@
+{
+  "schemaVersion": 1,
+  "catalogId": "d2r-mouse-skill-bindings-v0.5.17",
+  "sourceSnapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+  "sourceTable": "skills.txt",
+  "sourceSha256": "56944cb6b6b0f3c57f7b690977987a732afeafc961fa9dc969e7796e54c93f3f",
+  "status": "SOURCE_SNAPSHOT_VALUES_UNVERIFIED_CURRENT_PATCH",
+  "skills": {
+    "basic.attack": {
+      "runtimeId": "basic.attack",
+      "sourceName": "Attack",
+      "sourceId": 0,
+      "classCode": null,
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "both",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 0,
+        "shift": 8,
+        "base": 0,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 2
+      }
+    },
+    "barbarian.bash": {
+      "runtimeId": "barbarian.bash",
+      "sourceName": "Bash",
+      "sourceId": 126,
+      "classCode": "bar",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "h2h",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 2,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 128
+      }
+    },
+    "barbarian.battle_orders": {
+      "runtimeId": "barbarian.battle_orders",
+      "sourceName": "Battle Orders",
+      "sourceId": 149,
+      "classCode": "bar",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 24,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 7,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 151
+      }
+    },
+    "barbarian.shout": {
+      "runtimeId": "barbarian.shout",
+      "sourceName": "Shout",
+      "sourceId": 138,
+      "classCode": "bar",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 6,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 6,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 140
+      }
+    },
+    "barbarian.whirlwind": {
+      "runtimeId": "barbarian.whirlwind",
+      "sourceName": "Whirlwind",
+      "sourceId": 151,
+      "classCode": "bar",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": 2,
+      "requiredLevel": 30,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 7,
+        "base": 25,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 153
+      }
+    },
+    "barbarian.leap_attack": {
+      "runtimeId": "barbarian.leap_attack",
+      "sourceName": "Leap Attack",
+      "sourceId": 143,
+      "classCode": "bar",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 18,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 10,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 145
+      }
+    },
+    "paladin.zeal": {
+      "runtimeId": "paladin.zeal",
+      "sourceName": "Zeal",
+      "sourceId": 106,
+      "classCode": "pal",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "h2h",
+      "weaponSelection": null,
+      "requiredLevel": 12,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 2,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 108
+      }
+    },
+    "paladin.might": {
+      "runtimeId": "paladin.might",
+      "sourceName": "Might",
+      "sourceId": 98,
+      "classCode": "pal",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": true,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 0,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 100
+      }
+    },
+    "paladin.holy_fire": {
+      "runtimeId": "paladin.holy_fire",
+      "sourceName": "Holy Fire",
+      "sourceId": 102,
+      "classCode": "pal",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": true,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 6,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 0,
+        "shift": 8,
+        "base": 0,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 104
+      }
+    },
+    "paladin.blessed_hammer": {
+      "runtimeId": "paladin.blessed_hammer",
+      "sourceName": "Blessed Hammer",
+      "sourceId": 112,
+      "classCode": "pal",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 18,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 6,
+        "base": 20,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 114
+      }
+    },
+    "paladin.smite": {
+      "runtimeId": "paladin.smite",
+      "sourceName": "Smite",
+      "sourceId": 97,
+      "classCode": "pal",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "h2h",
+      "weaponSelection": 4,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 2,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 99
+      }
+    },
+    "necromancer.teeth": {
+      "runtimeId": "necromancer.teeth",
+      "sourceName": "Teeth",
+      "sourceId": 67,
+      "classCode": "nec",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 7,
+        "base": 6,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 69
+      }
+    },
+    "necromancer.raise_skeleton": {
+      "runtimeId": "necromancer.raise_skeleton",
+      "sourceName": "Raise Skeleton",
+      "sourceId": 70,
+      "classCode": "nec",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": true,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 6,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 72
+      }
+    },
+    "necromancer.clay_golem": {
+      "runtimeId": "necromancer.clay_golem",
+      "sourceName": "Clay Golem",
+      "sourceId": 75,
+      "classCode": "nec",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 6,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 15,
+        "perLevel": 3
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 77
+      }
+    },
+    "necromancer.amplify_damage": {
+      "runtimeId": "necromancer.amplify_damage",
+      "sourceName": "Amplify Damage",
+      "sourceId": 66,
+      "classCode": "nec",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 4,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 68
+      }
+    },
+    "necromancer.corpse_explosion": {
+      "runtimeId": "necromancer.corpse_explosion",
+      "sourceName": "Corpse Explosion",
+      "sourceId": 74,
+      "classCode": "nec",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": true,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 6,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 15,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 76
+      }
+    },
+    "druid.maul": {
+      "runtimeId": "druid.maul",
+      "sourceName": "Maul",
+      "sourceId": 233,
+      "classCode": "dru",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "h2h",
+      "weaponSelection": null,
+      "requiredLevel": 12,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 3,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 235
+      }
+    },
+    "druid.spirit_wolf": {
+      "runtimeId": "druid.spirit_wolf",
+      "sourceName": "Summon Spirit Wolf",
+      "sourceId": 227,
+      "classCode": "dru",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 6,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 15,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 229
+      }
+    },
+    "druid.oak_sage": {
+      "runtimeId": "druid.oak_sage",
+      "sourceName": "Oak Sage",
+      "sourceId": 226,
+      "classCode": "dru",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 6,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 15,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 228
+      }
+    },
+    "druid.grizzly": {
+      "runtimeId": "druid.grizzly",
+      "sourceName": "Summon Grizzly",
+      "sourceId": 247,
+      "classCode": "dru",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 30,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 40,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 249
+      }
+    },
+    "amazon.jab": {
+      "runtimeId": "amazon.jab",
+      "sourceName": "Jab",
+      "sourceId": 10,
+      "classCode": "ama",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "h2h",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 6,
+        "base": 8,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 12
+      }
+    },
+    "amazon.magic_arrow": {
+      "runtimeId": "amazon.magic_arrow",
+      "sourceName": "Magic Arrow",
+      "sourceId": 6,
+      "classCode": "ama",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "rng",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 0,
+        "shift": 5,
+        "base": 12,
+        "perLevel": -1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 8
+      }
+    },
+    "amazon.fire_arrow": {
+      "runtimeId": "amazon.fire_arrow",
+      "sourceName": "Fire Arrow",
+      "sourceId": 7,
+      "classCode": "ama",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "rng",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 5,
+        "base": 24,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 9
+      }
+    },
+    "amazon.inner_sight": {
+      "runtimeId": "amazon.inner_sight",
+      "sourceName": "Inner Sight",
+      "sourceId": 8,
+      "classCode": "ama",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 7,
+        "base": 10,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 10
+      }
+    },
+    "assassin.tiger_strike": {
+      "runtimeId": "assassin.tiger_strike",
+      "sourceName": "Tiger Strike",
+      "sourceId": 254,
+      "classCode": "ass",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "h2h",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 1,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 256
+      }
+    },
+    "assassin.dragon_talon": {
+      "runtimeId": "assassin.dragon_talon",
+      "sourceName": "Dragon Talon",
+      "sourceId": 255,
+      "classCode": "ass",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "h2h",
+      "weaponSelection": 4,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 6,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 257
+      }
+    },
+    "assassin.fire_trauma": {
+      "runtimeId": "assassin.fire_trauma",
+      "sourceName": "Fire Trauma",
+      "sourceId": 251,
+      "classCode": "ass",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "rng",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 5,
+        "base": 24,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 253
+      }
+    },
+    "assassin.psychic_hammer": {
+      "runtimeId": "assassin.psychic_hammer",
+      "sourceName": "Psychic Hammer",
+      "sourceId": 253,
+      "classCode": "ass",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "rng",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 6,
+        "base": 16,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 255
+      }
+    },
+    "sorceress.fire_bolt": {
+      "runtimeId": "sorceress.fire_bolt",
+      "sourceName": "Fire Bolt",
+      "sourceId": 36,
+      "classCode": "sor",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 7,
+        "base": 5,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 38
+      }
+    },
+    "sorceress.charged_bolt": {
+      "runtimeId": "sorceress.charged_bolt",
+      "sourceName": "Charged Bolt",
+      "sourceId": 38,
+      "classCode": "sor",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 5,
+        "base": 24,
+        "perLevel": 4
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 40
+      }
+    },
+    "sorceress.ice_bolt": {
+      "runtimeId": "sorceress.ice_bolt",
+      "sourceName": "Ice Bolt",
+      "sourceId": 39,
+      "classCode": "sor",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 3,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 41
+      }
+    },
+    "sorceress.frozen_armor": {
+      "runtimeId": "sorceress.frozen_armor",
+      "sourceName": "Frozen Armor",
+      "sourceId": 40,
+      "classCode": "sor",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 8,
+        "base": 7,
+        "perLevel": 0
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 42
+      }
+    },
+    "warlock.miasma_bolt": {
+      "runtimeId": "warlock.miasma_bolt",
+      "sourceName": "Miasma Bolt",
+      "sourceId": 395,
+      "classCode": "war",
+      "mouse": {
+        "left": true,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 7,
+        "base": 4,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 397
+      }
+    },
+    "warlock.hex_bane": {
+      "runtimeId": "warlock.hex_bane",
+      "sourceName": "Hex Bane",
+      "sourceId": 385,
+      "classCode": "war",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 7,
+        "base": 12,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 387
+      }
+    },
+    "warlock.summon_goatman": {
+      "runtimeId": "warlock.summon_goatman",
+      "sourceName": "Summon Goatman",
+      "sourceId": 373,
+      "classCode": "war",
+      "mouse": {
+        "left": false,
+        "right": true
+      },
+      "targeting": {
+        "corpse": false,
+        "pet": false,
+        "ally": false,
+        "item": false
+      },
+      "aura": false,
+      "passive": false,
+      "rangeToken": "none",
+      "weaponSelection": null,
+      "requiredLevel": 1,
+      "mana": {
+        "useOnDo": false,
+        "start": 0,
+        "minimum": 1,
+        "shift": 7,
+        "base": 30,
+        "perLevel": 1
+      },
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "skills.txt",
+        "line": 375
+      }
+    }
+  }
+}

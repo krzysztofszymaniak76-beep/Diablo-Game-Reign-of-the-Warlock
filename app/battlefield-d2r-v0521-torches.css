@@ -1,0 +1,83 @@
+/* The iron sconce is fixed at the frame edge. Only the independent fire canvas moves. */
+#app:not(.camp-mode) .battlefield-shell > .battle-torch {
+  --torch-width: clamp(76px, 5vw, 96px);
+  z-index: 7;
+  top: clamp(38px, 4.2vw, 68px);
+  width: var(--torch-width);
+  height: calc(var(--torch-width) * 1.5);
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .8));
+}
+
+#app:not(.camp-mode) .battlefield-shell > .battle-torch-left {
+  left: calc(var(--torch-width) * -.41);
+}
+
+#app:not(.camp-mode) .battlefield-shell > .battle-torch-right {
+  right: calc(var(--torch-width) * -.27);
+}
+
+#app:not(.camp-mode) .battle-torch img {
+  filter: brightness(.84) contrast(1.12);
+}
+
+#app:not(.camp-mode) .battle-torch .torch-light {
+  top: calc(var(--torch-width) * -.2);
+  width: calc(var(--torch-width) * .9);
+  height: calc(var(--torch-width) * .65);
+  opacity: .55;
+  background: radial-gradient(ellipse at 50% 56%,
+    rgba(255, 151, 53, .24), rgba(168, 67, 18, .09) 39%, transparent 73%);
+  filter: blur(5px);
+  animation: none;
+}
+
+#app:not(.camp-mode) .battle-torch::before {
+  top: calc(var(--torch-width) * .16);
+  width: calc(var(--torch-width) * .42);
+  height: calc(var(--torch-width) * .22);
+  opacity: .48;
+  animation: none;
+}
+
+#app:not(.camp-mode) .battle-torch .torch-flame {
+  top: calc(var(--torch-width) * -.38);
+  width: calc(var(--torch-width) * .38);
+  height: calc(var(--torch-width) * .68);
+  transform: translateX(-50%);
+  transform-origin: center bottom;
+  opacity: 1;
+  background: none;
+  border-radius: 0;
+  clip-path: none;
+  -webkit-mask: none;
+  mask: none;
+  filter: drop-shadow(0 0 5px rgba(247, 108, 26, .5));
+  animation: none;
+  overflow: hidden;
+}
+
+/* Nudge only the fire within the right bowl; the metal remains fixed. */
+#app:not(.camp-mode) .battle-torch-right .torch-flame {
+  transform: translateX(calc(-50% + 6px));
+}
+
+#app:not(.camp-mode) .battle-torch .torch-flame::before,
+#app:not(.camp-mode) .battle-torch .torch-flame i,
+#app:not(.camp-mode) .battle-torch .torch-flame b,
+#app:not(.camp-mode) .battle-torch .torch-flame em {
+  display: none;
+  animation: none;
+}
+
+#app:not(.camp-mode) .battle-torch .torch-fire-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 1320px), (max-height: 850px) {
+  #app:not(.camp-mode) .battlefield-shell > .battle-torch {
+    --torch-width: clamp(70px, 5vw, 90px);
+    top: clamp(32px, 4.2vw, 54px);
+  }
+}

@@ -1,0 +1,5 @@
+[
+  { "tier": "normal", "namesPl": ["Stara księga", "Tom", "Kodeks", "Kompendium", "Grymuar"], "source": "blizzard_rotw_overview_pl", "mechanicsStatus": "MISSING" },
+  { "tier": "exceptional", "namesPl": ["Spalony tekst", "Mroczny tom", "Mroczny kodeks", "Opętane kompendium", "Opętany grymuar"], "source": "blizzard_rotw_overview_pl", "mechanicsStatus": "MISSING" },
+  { "tier": "elite", "namesPl": ["Zapomniany tom", "Księga okultystyczna", "Kodeks okultystyczny", "Bluźniercze kompendium", "Bluźnierczy grymuar"], "source": "blizzard_rotw_overview_pl", "mechanicsStatus": "MISSING" }
+]

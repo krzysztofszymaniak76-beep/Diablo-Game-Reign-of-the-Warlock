@@ -1,0 +1,62 @@
+[
+  {
+    "id": "rotw.authority",
+    "nameEn": "Authority",
+    "namePl": "Władza",
+    "socketableType": "body_armor",
+    "socketCount": 3,
+    "runes": ["Hel", "Shael", "Ral"],
+    "allowedQualities": ["normal", "superior"],
+    "availability": "rotw_profile_requires_offline_verification",
+    "source": "blizzard_rotw_overview_pl",
+    "propertiesStatus": "MISSING"
+  },
+  {
+    "id": "rotw.coven",
+    "nameEn": "Coven",
+    "namePl": "Sabat",
+    "socketableType": "helm",
+    "socketCount": 3,
+    "runes": ["Ist", "Ral", "Io"],
+    "allowedQualities": ["normal", "superior"],
+    "availability": "rotw_profile_requires_offline_verification",
+    "source": "blizzard_rotw_overview_pl",
+    "propertiesStatus": "MISSING"
+  },
+  {
+    "id": "rotw.void",
+    "nameEn": "Void",
+    "namePl": "Pustka",
+    "socketableType": "dagger",
+    "socketCount": 3,
+    "runes": ["Thul", "Zod", "Ist"],
+    "allowedQualities": ["normal", "superior"],
+    "availability": "rotw_profile_requires_offline_verification",
+    "source": "blizzard_rotw_overview_pl",
+    "propertiesStatus": "MISSING"
+  },
+  {
+    "id": "rotw.vigilance",
+    "nameEn": "Vigilance",
+    "namePl": "Czuwanie",
+    "socketableType": "shield",
+    "socketCount": 2,
+    "runes": ["Dol", "Gul"],
+    "allowedQualities": ["normal", "superior"],
+    "availability": "rotw_profile_requires_offline_verification",
+    "source": "blizzard_rotw_overview_pl",
+    "propertiesStatus": "MISSING"
+  },
+  {
+    "id": "rotw.ritual",
+    "nameEn": "Ritual",
+    "namePl": "Rytuał",
+    "socketableType": "dagger",
+    "socketCount": 3,
+    "runes": ["Amn", "Shael", "Ohm"],
+    "allowedQualities": ["normal", "superior"],
+    "availability": "rotw_profile_requires_offline_verification",
+    "source": "blizzard_rotw_overview_pl",
+    "propertiesStatus": "MISSING"
+  }
+]

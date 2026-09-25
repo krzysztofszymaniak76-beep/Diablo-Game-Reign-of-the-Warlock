@@ -1,0 +1,28 @@
+quest_id,english_name,act,data_status,implementation_status,reward_scope,test_status
+act1.den_of_evil,Den of Evil,1,historical_revalidation_required,not_implemented,personal,personal_reward_engine_tested
+act1.sisters_burial_grounds,Sisters' Burial Grounds,1,historical_revalidation_required,not_implemented,shared_and_personal,not_tested
+act1.search_for_cain,The Search for Cain,1,historical_revalidation_required,not_implemented,shared_and_personal,not_tested
+act1.forgotten_tower,The Forgotten Tower,1,historical_revalidation_required,not_implemented,world,not_tested
+act1.tools_of_the_trade,Tools of the Trade,1,historical_revalidation_required,not_implemented,personal,not_tested
+act1.sisters_to_the_slaughter,Sisters to the Slaughter,1,historical_revalidation_required,not_implemented,campaign,not_tested
+act2.radaments_lair,Radament's Lair,2,historical_revalidation_required,not_implemented,personal,not_tested
+act2.horadric_staff,The Horadric Staff,2,historical_revalidation_required,not_implemented,campaign,not_tested
+act2.tainted_sun,Tainted Sun,2,historical_revalidation_required,not_implemented,campaign,not_tested
+act2.arcane_sanctuary,Arcane Sanctuary,2,historical_revalidation_required,not_implemented,campaign,not_tested
+act2.summoner,The Summoner,2,historical_revalidation_required,not_implemented,campaign,not_tested
+act2.seven_tombs,The Seven Tombs,2,historical_revalidation_required,not_implemented,campaign,not_tested
+act3.golden_bird,The Golden Bird,3,historical_revalidation_required,not_implemented,personal,not_tested
+act3.blade_old_religion,Blade of the Old Religion,3,historical_revalidation_required,not_implemented,personal,not_tested
+act3.khalims_will,Khalim's Will,3,historical_revalidation_required,not_implemented,campaign,not_tested
+act3.lam_esens_tome,Lam Esen's Tome,3,historical_revalidation_required,not_implemented,personal,not_tested
+act3.blackened_temple,The Blackened Temple,3,historical_revalidation_required,not_implemented,campaign,not_tested
+act3.guardian,The Guardian,3,historical_revalidation_required,not_implemented,campaign,not_tested
+act4.fallen_angel,The Fallen Angel,4,historical_revalidation_required,not_implemented,personal,not_tested
+act4.hells_forge,Hell's Forge,4,historical_revalidation_required,not_implemented,personal,not_tested
+act4.terrors_end,Terror's End,4,historical_revalidation_required,not_implemented,campaign,not_tested
+act5.siege_on_harrogath,Siege on Harrogath,5,historical_revalidation_required,not_implemented,personal,not_tested
+act5.rescue_on_mount_arreat,Rescue on Mount Arreat,5,historical_revalidation_required,not_implemented,personal,not_tested
+act5.prison_of_ice,Prison of Ice,5,historical_revalidation_required,not_implemented,personal,not_tested
+act5.betrayal_of_harrogath,Betrayal of Harrogath,5,historical_revalidation_required,not_implemented,personal,not_tested
+act5.rite_of_passage,Rite of Passage,5,historical_revalidation_required,not_implemented,campaign_and_personal,not_tested
+act5.eve_of_destruction,Eve of Destruction,5,historical_revalidation_required,not_implemented,campaign,not_tested

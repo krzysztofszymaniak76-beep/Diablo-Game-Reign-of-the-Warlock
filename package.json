@@ -1,0 +1,15 @@
+{
+  "name": "reign-of-the-warlock-turn-based",
+  "version": "0.5.18",
+  "developmentStatus": "v0.5.18",
+  "private": true,
+  "type": "module",
+  "description": "Offline turn-based dark-fantasy RPG prototype with card commands and reference-audited data.",
+  "scripts": {
+    "test": "node --test",
+    "serve": "node scripts/serve.mjs"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  }
+}

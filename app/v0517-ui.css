@@ -1,0 +1,858 @@
+/* Reign of the Warlock v0.5.17 — team selection, Rogue Encampment and compact HUD. */
+
+/* --------------------------------------------------------------------------
+   Eight-hero team selection
+   -------------------------------------------------------------------------- */
+
+.team-selection-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  display: grid;
+  place-items: center;
+  padding: 12px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(91, 54, 25, .28), transparent 42%),
+    linear-gradient(rgba(3, 2, 2, .9), rgba(2, 2, 2, .98));
+  backdrop-filter: blur(5px);
+}
+
+.team-selection-panel {
+  width: min(1500px, calc(100vw - 24px));
+  height: min(900px, calc(100vh - 24px));
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 0, rgba(104, 58, 25, .2), transparent 45%),
+    linear-gradient(120deg, #17110d, #080605 55%, #110d0a);
+  border-color: #6d5434;
+}
+
+.team-selection-header {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 54px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  padding: 15px 20px 13px;
+  border-bottom: 1px solid #715739;
+  background: linear-gradient(90deg, rgba(72, 43, 24, .42), rgba(8, 6, 5, .84) 42%, rgba(26, 18, 12, .78));
+}
+
+.team-selection-sigil {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  color: #e0b467;
+  background: radial-gradient(circle, #5a2e16, #0a0705 70%);
+  border: 1px solid #8b663a;
+  box-shadow: inset 0 0 12px #000, 0 0 13px rgba(173, 99, 38, .24);
+  transform: rotate(45deg);
+}
+
+.team-selection-header h2 {
+  margin: 2px 0 4px;
+  color: #e5cfaa;
+  font-size: clamp(20px, 2vw, 30px);
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-shadow: 0 2px 2px #000;
+}
+
+.team-selection-header p {
+  max-width: 850px;
+  margin: 0;
+  color: #8d8375;
+  font: 10px/1.4 Arial, sans-serif;
+}
+
+.team-selection-body {
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(230px, 20vw, 300px);
+  gap: 14px;
+  padding: 14px;
+  overflow: hidden;
+}
+
+.team-selection-grid {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.team-selection-card,
+.team-selection-grid > button {
+  --team-accent: #a77b42;
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  padding: 0;
+  overflow: hidden;
+  color: #cdbd9f;
+  text-align: left;
+  background:
+    radial-gradient(circle at 50% 30%, color-mix(in srgb, var(--team-accent) 18%, transparent), transparent 46%),
+    linear-gradient(#201710, #090706 72%);
+  border: 1px solid color-mix(in srgb, var(--team-accent) 55%, #4c3d2b);
+  box-shadow: inset 0 0 0 2px #070504, inset 0 0 22px #000, 0 3px 8px #000;
+  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+  isolation: isolate;
+  transition: filter 140ms ease, transform 140ms ease, border-color 140ms ease;
+}
+
+.team-selection-card::before,
+.team-selection-grid > button::before {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  z-index: 3;
+  pointer-events: none;
+  border: 1px solid color-mix(in srgb, var(--team-accent) 28%, transparent);
+  clip-path: inherit;
+}
+
+.team-selection-card::after,
+.team-selection-grid > button::after {
+  content: "WYBRANO";
+  position: absolute;
+  z-index: 5;
+  top: 8px;
+  right: 8px;
+  padding: 4px 7px;
+  color: #f3dcae;
+  background: #2c1b0d;
+  border: 1px solid #b48548;
+  box-shadow: 0 2px 7px #000;
+  font: 700 7px Arial, sans-serif;
+  letter-spacing: .12em;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.team-selection-card:hover,
+.team-selection-grid > button:hover,
+.team-selection-card:focus-visible,
+.team-selection-grid > button:focus-visible {
+  z-index: 4;
+  filter: brightness(1.12);
+  border-color: #c89d5c;
+  transform: translateY(-2px);
+}
+
+.team-selection-card.selected,
+.team-selection-card[aria-pressed="true"],
+.team-selection-grid > button.selected,
+.team-selection-grid > button[aria-pressed="true"] {
+  border-color: #dfb76d;
+  box-shadow: inset 0 0 0 2px #070504, inset 0 0 28px color-mix(in srgb, var(--team-accent) 22%, #000), 0 0 14px rgba(210, 158, 78, .34);
+}
+
+.team-selection-card.selected::after,
+.team-selection-card[aria-pressed="true"]::after,
+.team-selection-grid > button.selected::after,
+.team-selection-grid > button[aria-pressed="true"]::after {
+  opacity: 1;
+  transform: none;
+}
+
+.team-selection-card:disabled,
+.team-selection-grid > button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(.78) brightness(.55);
+}
+
+.team-selection-portrait,
+.team-selection-card > img,
+.team-selection-grid > button > img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: block;
+  object-fit: contain;
+  object-position: 50% 100%;
+  filter: saturate(.82) contrast(1.06) drop-shadow(0 5px 5px #000);
+}
+
+.team-card-copy {
+  position: relative;
+  z-index: 4;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px 9px;
+  background: linear-gradient(180deg, rgba(7, 5, 4, .6), rgba(7, 5, 4, .98) 35%);
+  border-top: 1px solid color-mix(in srgb, var(--team-accent) 42%, #3a3025);
+}
+
+.team-card-name,
+.team-card-copy strong {
+  overflow: hidden;
+  color: #e2cda6;
+  font: 500 14px/1.1 Georgia, serif;
+  letter-spacing: .05em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team-card-class,
+.team-card-copy small {
+  overflow: hidden;
+  color: var(--team-accent);
+  font: 700 7px/1.2 Arial, sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team-card-class {
+  max-height: 2.3em;
+  font-size: 9px;
+  letter-spacing: .04em;
+  white-space: normal;
+}
+
+.team-card-kit {
+  color: #b7aa91 !important;
+  font-size: 9px !important;
+  font-weight: 500 !important;
+  letter-spacing: .02em !important;
+  text-transform: none !important;
+}
+
+.team-card-fallback {
+  position: absolute;
+  inset: 0 0 42px;
+  z-index: 0;
+  display: grid;
+  place-items: center;
+  color: var(--team-accent);
+  font: 54px Georgia, serif;
+  text-shadow: 0 0 18px currentColor;
+}
+
+.team-selection-roster {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  align-content: start;
+  gap: 7px;
+  padding: 15px;
+  overflow: hidden;
+  background:
+    linear-gradient(120deg, rgba(67, 44, 25, .22), transparent 44%),
+    #090706;
+  border: 1px solid #4d3d2b;
+  box-shadow: inset 0 0 22px #000;
+}
+
+.team-selection-roster h3 {
+  margin: 0 0 4px;
+  color: #d7c29a;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: .11em;
+}
+
+.team-selection-slots {
+  min-height: 0;
+  display: grid;
+  grid-template-rows: repeat(3, minmax(64px, 1fr));
+  gap: 7px;
+}
+
+.team-slot {
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  padding: 7px;
+  color: #766e62;
+  background: linear-gradient(100deg, #14100c, #080605);
+  border: 1px solid #3d3328;
+}
+
+.team-slot > span {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  color: #9d855e;
+  background: #080605;
+  border: 1px solid #58462e;
+  font: 700 11px Georgia, serif;
+}
+
+.team-slot > strong {
+  overflow: hidden;
+  font: 500 11px Georgia, serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team-slot.filled,
+.team-slot[data-character-id] {
+  color: #d8c49d;
+  border-color: #78603d;
+  box-shadow: inset 3px 0 0 #a4773f;
+}
+
+.team-slot img {
+  width: 38px;
+  height: 48px;
+  object-fit: cover;
+  object-position: 50% 18%;
+}
+
+.team-selection-rule {
+  display: grid;
+  grid-template-columns: 47px minmax(0, 1fr);
+  align-items: center;
+  gap: 8px;
+  margin: 3px 0 0;
+  padding-top: 9px;
+  color: #6e675e;
+  border-top: 1px solid #3b3126;
+  font: 8px/1.35 Arial, sans-serif;
+}
+
+.team-selection-rule b {
+  color: #c7a66e;
+  font: 500 17px Georgia, serif;
+}
+
+.team-selection-footer {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) minmax(0, 1fr) minmax(190px, 250px);
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: linear-gradient(#18120e, #090706);
+  border-top: 1px solid #644c30;
+}
+
+.team-selection-footer > span {
+  color: #7f7567;
+  font: 9px Arial, sans-serif;
+  text-align: center;
+}
+
+.team-selection-footer button {
+  min-height: 38px;
+  padding: 7px 14px;
+  font: 700 9px Arial, sans-serif;
+  letter-spacing: .12em;
+}
+
+.team-selection-cancel {
+  color: #9d9080;
+  background: linear-gradient(#201a15, #0b0907);
+  border: 1px solid #594a37;
+}
+
+.team-selection-confirm {
+  color: #ead3a7;
+  background: linear-gradient(#6c301d, #2a0e09);
+  border: 1px solid #a6653e;
+  box-shadow: inset 0 0 0 2px #170806, inset 0 0 15px #000;
+}
+
+.team-selection-confirm:disabled {
+  cursor: not-allowed;
+  color: #6f6558;
+  filter: grayscale(.72) brightness(.62);
+}
+
+/* --------------------------------------------------------------------------
+   Spatial Rogue Encampment
+   -------------------------------------------------------------------------- */
+
+.camp-layer {
+  position: relative;
+  z-index: 10;
+  grid-row: 2 / -1;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) clamp(58px, 8vh, 82px);
+  overflow: hidden;
+  background: #080705;
+}
+
+#app.camp-mode > .combat-layout,
+#app.camp-mode > .command-deck {
+  display: none !important;
+}
+
+#app.camp-mode > #camp-layer {
+  display: grid !important;
+}
+
+.camp-scene {
+  position: relative;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    #11100b url('/app/assets/camp-rogue-encampment-v0517.png') center center / cover no-repeat;
+  box-shadow: inset 0 0 0 2px #080604, inset 0 0 75px 14px #000;
+}
+
+.camp-scene-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(3, 4, 3, .12), transparent 24%, transparent 72%, rgba(2, 2, 2, .34)),
+    radial-gradient(ellipse at 51% 45%, transparent 34%, rgba(2, 2, 2, .24) 100%);
+}
+
+.camp-location-plaque {
+  position: absolute;
+  z-index: 8;
+  top: 12px;
+  left: 50%;
+  min-width: 230px;
+  transform: translateX(-50%);
+  display: grid;
+  gap: 2px;
+  padding: 6px 20px;
+  color: #cbb78f;
+  text-align: center;
+  background: linear-gradient(90deg, transparent, rgba(7, 6, 4, .9) 14% 86%, transparent);
+  border-top: 1px solid rgba(142, 105, 59, .45);
+  border-bottom: 1px solid rgba(142, 105, 59, .28);
+  pointer-events: none;
+}
+
+.camp-location-plaque span {
+  color: #877352;
+  font: 700 6px Arial, sans-serif;
+  letter-spacing: .2em;
+}
+
+.camp-location-plaque strong {
+  font: 500 11px Georgia, serif;
+  letter-spacing: .16em;
+}
+
+.camp-hotspot {
+  position: absolute;
+  z-index: 4;
+  margin: 0;
+  padding: 0;
+  color: #d9c49b;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  transform: translate(-50%, -100%);
+  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, .82));
+}
+
+.camp-hotspot::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  bottom: 1%;
+  width: 62%;
+  height: 12%;
+  transform: translateX(-50%);
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .25);
+  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.camp-hotspot:hover::before,
+.camp-hotspot:focus-visible::before {
+  background: rgba(37, 25, 13, .5);
+  border-color: rgba(226, 181, 101, .88);
+  box-shadow: 0 0 12px rgba(218, 142, 51, .55), inset 0 0 7px #000;
+}
+
+.camp-hotspot:focus-visible {
+  outline: 2px solid #e1bb73;
+  outline-offset: 5px;
+}
+
+.camp-npc {
+  width: clamp(78px, 8.6vw, 150px);
+  height: clamp(116px, 18.5vh, 230px);
+}
+
+.camp-npc img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  object-position: 50% 100%;
+  filter: saturate(.84) contrast(1.06) brightness(.91);
+  transition: filter 140ms ease, transform 140ms ease;
+}
+
+.camp-npc:hover img,
+.camp-npc:focus-visible img {
+  filter: saturate(1) contrast(1.06) brightness(1.08);
+  transform: translateY(-2px);
+}
+
+.camp-hotspot-copy {
+  position: absolute;
+  z-index: 9;
+  left: 50%;
+  bottom: -3px;
+  min-width: 116px;
+  max-width: 180px;
+  transform: translate(-50%, 5px);
+  display: grid;
+  gap: 1px;
+  padding: 5px 10px;
+  color: #cdb78d;
+  text-align: center;
+  background: linear-gradient(90deg, transparent, rgba(8, 6, 4, .94) 13% 87%, transparent);
+  border-top: 1px solid rgba(151, 111, 61, .55);
+  border-bottom: 1px solid rgba(75, 55, 33, .6);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, .5);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 130ms ease, transform 130ms ease;
+}
+
+.camp-hotspot-copy strong {
+  font: 700 8px Georgia, serif;
+  letter-spacing: .11em;
+  white-space: nowrap;
+}
+
+.camp-hotspot-copy small {
+  color: #776e61;
+  font: 6px/1.2 Arial, sans-serif;
+  white-space: nowrap;
+}
+
+.camp-hotspot:hover .camp-hotspot-copy,
+.camp-hotspot:focus-visible .camp-hotspot-copy {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+/* Percent positions are tied to the authored 16:9 camp plate. */
+.camp-akara { left: 83.5%; top: 55%; }
+.camp-charsi { left: 32.5%; top: 34%; }
+.camp-kashya { left: 70.5%; top: 59%; }
+.camp-gheed { left: 23.5%; top: 57%; }
+.camp-warriv { left: 11.5%; top: 55%; }
+.camp-cain { left: 56%; top: 55%; }
+
+.camp-place {
+  z-index: 3;
+  width: clamp(52px, 5vw, 86px);
+  height: clamp(52px, 7.5vh, 86px);
+  display: grid;
+  place-items: center;
+  transform: translate(-50%, -50%);
+}
+
+.camp-place::before {
+  bottom: 8%;
+  width: 86%;
+  height: 28%;
+}
+
+.camp-place-glyph {
+  width: 72%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  color: #caa567;
+  background: radial-gradient(circle, rgba(65, 43, 22, .83), rgba(8, 6, 4, .93) 70%);
+  border: 1px solid #765633;
+  border-radius: 50%;
+  box-shadow: inset 0 0 12px #000, 0 0 9px rgba(213, 142, 52, .24);
+  font: 24px Georgia, serif;
+  text-shadow: 0 0 8px currentColor;
+}
+
+.camp-place .camp-hotspot-copy { bottom: -24px; }
+.camp-stash { left: 43.5%; top: 43%; }
+.camp-waypoint { left: 76.7%; top: 22%; }
+.camp-waypoint .camp-place-glyph { color: #76b6df; border-color: #547897; box-shadow: inset 0 0 12px #000, 0 0 13px rgba(78, 151, 203, .55); }
+.camp-gate { left: 84%; top: 83%; width: clamp(70px, 7vw, 120px); }
+
+.camp-toolbar {
+  position: relative;
+  z-index: 12;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: clamp(145px, 13vw, 220px) minmax(220px, 1fr) minmax(440px, auto);
+  align-items: stretch;
+  gap: 8px;
+  padding: 5px 10px 7px;
+  background:
+    linear-gradient(180deg, #211912 0 2px, #0b0806 3px 100%);
+  border-top: 2px ridge #705436;
+  box-shadow: inset 0 3px #070504, 0 -7px 22px rgba(0, 0, 0, .76);
+}
+
+.camp-toolbar-ledger,
+.camp-toolbar-party {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 10px;
+  color: #7e7465;
+  background: rgba(8, 6, 5, .86);
+  border: 1px solid #3d3327;
+  font: 700 7px Arial, sans-serif;
+  letter-spacing: .12em;
+}
+
+.camp-toolbar-ledger::before {
+  content: "◆";
+  color: #dbaf57;
+  font-size: 16px;
+  text-shadow: 0 0 8px #b66b25;
+}
+
+.camp-toolbar-ledger strong {
+  margin-left: auto;
+  color: #e2c77f;
+  font: 500 17px Georgia, serif;
+  letter-spacing: .04em;
+}
+
+.camp-toolbar-party strong {
+  min-width: 0;
+  overflow: hidden;
+  color: #c9b48d;
+  font: 500 11px Georgia, serif;
+  letter-spacing: .03em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.camp-toolbar-actions {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(76px, 1fr));
+  gap: 5px;
+}
+
+.camp-toolbar-actions button {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 5px;
+  padding: 4px 7px;
+  color: #a99b83;
+  background: linear-gradient(#1c1610, #090706);
+  border: 1px solid #51402c;
+  box-shadow: inset 0 0 0 1px #070504;
+}
+
+.camp-toolbar-actions button:hover,
+.camp-toolbar-actions button:focus-visible {
+  color: #e1c999;
+  border-color: #947044;
+  filter: brightness(1.1);
+}
+
+.camp-toolbar-actions i {
+  color: #c8a664;
+  font: normal 17px Georgia, serif;
+  text-align: center;
+}
+
+.camp-toolbar-actions span {
+  overflow: hidden;
+  font: 700 7px Arial, sans-serif;
+  letter-spacing: .07em;
+  text-overflow: ellipsis;
+}
+
+.camp-toolbar-actions kbd {
+  position: absolute;
+  top: 2px;
+  right: 3px;
+  color: #665e52;
+  background: transparent;
+  border: 0;
+  font: 5px Arial, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Compact combat HUD. Give the unused lower strip back to the battlefield.
+   -------------------------------------------------------------------------- */
+
+.game-shell {
+  grid-template-rows: 5vh minmax(0, 1fr) clamp(126px, 18vh, 180px);
+}
+
+.d2r-command-hud {
+  align-items: end;
+  gap: 0;
+  margin: 0;
+  padding: 0 6px 2px;
+  border-top-width: 2px;
+}
+
+.d2-resource-side {
+  align-content: end;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.d2-life-panel { justify-items: start !important; }
+.d2-mana-panel { justify-items: end !important; }
+.d2-life-panel .d2-guardian { left: 0; }
+.d2-mana-panel .d2-guardian { right: 0; }
+
+.d2-resource-orb {
+  width: clamp(104px, 16vh, 170px);
+  transform: none;
+  border-width: 6px;
+}
+
+.d2-life-panel .d2-resource-caption {
+  left: 0;
+  transform: none;
+}
+
+.d2-mana-panel .d2-resource-caption {
+  right: 0;
+  left: auto;
+  transform: none;
+}
+
+.d2-center-console {
+  align-self: stretch;
+  padding: 0 0 2px;
+}
+
+.d2-center-console .mouse-skill-stage {
+  height: 100%;
+  align-items: end;
+  padding: 2px 9px 3px;
+  border-top: 0;
+}
+
+.d2-center-console .mouse-skill-slot {
+  height: clamp(74px, 10.5vh, 96px);
+  grid-template-rows: minmax(39px, 1fr) auto auto;
+  padding-top: 4px;
+}
+
+.d2-center-console .mouse-skill-art {
+  width: clamp(40px, 6vh, 58px);
+  height: clamp(40px, 6vh, 58px);
+}
+
+.d2-center-console .mouse-skill-center {
+  height: clamp(94px, 13.2vh, 124px);
+  grid-template-rows: auto minmax(34px, 1fr) auto auto;
+  gap: 2px;
+  padding: 3px 7px;
+}
+
+.d2-belt { padding: 2px 4px; }
+.d2-belt-slot { height: clamp(36px, 5.2vh, 52px); }
+.d2-center-lower .mouse-hud-shortcuts button { min-height: 21px; }
+.d2-end-turn { min-height: 27px; }
+.d2-system-controls button { min-height: 21px; }
+
+@media (max-width: 1320px) {
+  .team-selection-body { grid-template-columns: minmax(0, 1fr) 230px; gap: 9px; padding: 9px; }
+  .team-selection-grid { gap: 6px; }
+  .team-selection-roster { padding: 10px; }
+  .team-card-copy { padding: 6px 7px 7px; }
+  .team-card-name, .team-card-copy strong { font-size: 12px; }
+
+  .camp-npc { width: clamp(72px, 8.2vw, 108px); }
+  .camp-toolbar { grid-template-columns: 145px minmax(190px, 1fr) minmax(390px, auto); padding-left: 6px; padding-right: 6px; }
+  .camp-toolbar-actions { grid-template-columns: repeat(5, minmax(70px, 1fr)); gap: 3px; }
+  .camp-toolbar-actions button { padding-left: 4px; padding-right: 4px; }
+
+  .d2r-command-hud { grid-template-columns: 154px minmax(510px, 1fr) 154px; padding-left: 3px; padding-right: 3px; }
+  .d2-resource-orb { width: clamp(102px, 15.5vh, 138px); }
+  .d2-center-console .mouse-skill-stage { grid-template-columns: 82px minmax(300px, 1fr) 82px; gap: 4px; padding-left: 4px; padding-right: 4px; }
+}
+
+@media (max-height: 850px) {
+  .team-selection-header { grid-template-columns: 42px minmax(0, 1fr); gap: 10px; padding: 8px 13px; }
+  .team-selection-sigil { width: 35px; height: 35px; }
+  .team-selection-header h2 { margin-top: 1px; font-size: 18px; }
+  .team-selection-header p { font-size: 8px; }
+  .team-selection-body { gap: 8px; padding: 8px; }
+  .team-selection-grid { gap: 5px; }
+  .team-selection-roster { gap: 4px; padding: 8px; }
+  .team-selection-roster h3 { font-size: 12px; }
+  .team-selection-slots { grid-template-rows: repeat(3, minmax(49px, 1fr)); gap: 4px; }
+  .team-slot { grid-template-columns: 28px minmax(0, 1fr); padding: 4px; }
+  .team-slot > span { width: 24px; height: 24px; }
+  .team-selection-rule { padding-top: 5px; font-size: 6px; }
+  .team-selection-rule b { font-size: 13px; }
+  .team-selection-footer { padding-top: 6px; padding-bottom: 6px; }
+  .team-selection-footer button { min-height: 31px; padding-top: 4px; padding-bottom: 4px; }
+
+  .camp-location-plaque { top: 7px; padding-top: 4px; padding-bottom: 4px; }
+  .camp-npc { height: clamp(104px, 18vh, 150px); }
+  .camp-hotspot-copy { min-width: 104px; padding: 3px 7px; }
+  .camp-toolbar { gap: 4px; padding-top: 3px; padding-bottom: 4px; }
+  .camp-toolbar-ledger, .camp-toolbar-party { padding-top: 3px; padding-bottom: 3px; }
+  .camp-toolbar-actions button { padding-top: 2px; padding-bottom: 2px; }
+
+  .d2-resource-orb { width: clamp(100px, 15.5vh, 132px); }
+  .d2-center-console .mouse-skill-slot { height: 74px; }
+  .d2-center-console .mouse-skill-art { width: 39px; height: 39px; }
+  .d2-center-console .mouse-skill-center { height: 92px; }
+  .d2-belt-slot { height: 35px; }
+}
+
+/* Keep the permanent combat controls readable at the smallest supported view. */
+.d2-orb-label { font-size: 9px; }
+.d2-orb-value { bottom: 23%; }
+.d2-resource-caption strong { font-size: 10px; }
+.d2-resource-caption span { font-size: 8px; }
+.d2-selected-hero .mouse-hero-caption { font-size: 8px; }
+#mouse-skill-owner { font-size: 12px; }
+#mouse-skill-hint { font-size: 8px; }
+.d2-belt-slot kbd { font-size: 8px; }
+.d2-belt-slot b { font-size: 10px; }
+.d2-belt-slot small { font-size: 7px; }
+.d2-center-lower .mouse-hud-shortcuts button span { font-size: 8px; }
+.d2-end-turn small { font-size: 8px; }
+.d2-end-turn b { font-size: 10px; }
+.d2-system-controls button { font-size: 8px; }
+.d2-center-console .save-state { font-size: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .team-selection-card,
+  .team-selection-grid > button,
+  .camp-hotspot img,
+  .camp-hotspot-copy,
+  .camp-hotspot::before {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,344 @@
+/* Battle-only visual layer. The canvas, hex grid, controls and resource IDs stay
+   unchanged; all new ornament is non-interactive and outside the hit surface. */
+#app:not(.camp-mode) .combat-layout.stage-two-layout > .battlefield-shell {
+  z-index: 25;
+  overflow: visible;
+  isolation: isolate;
+  background: #070809;
+  box-shadow: 0 0 0 2px #050505, 0 12px 25px #000;
+}
+
+#app:not(.camp-mode) .battlefield-shell::before,
+#app:not(.camp-mode) .battlefield-shell::after {
+  display: none;
+}
+
+#app:not(.camp-mode) .battlefield-shell .scene-vignette {
+  background:
+    linear-gradient(180deg, rgba(3, 7, 9, .11), transparent 24% 77%, rgba(1, 3, 4, .15)),
+    radial-gradient(ellipse at 50% 44%, transparent 45%, rgba(1, 3, 5, .15) 100%);
+}
+
+.battle-ornate-frame {
+  position: absolute;
+  z-index: 4;
+  inset: -2px;
+  pointer-events: none;
+  border: 32px solid transparent;
+  border-image-source: url('/app/assets/exploration/map-ironframe-v0512.png');
+  border-image-slice: 158 fill;
+  border-image-width: 32px;
+  border-image-repeat: stretch;
+  filter: brightness(.76) saturate(.55) drop-shadow(0 3px 4px #000);
+}
+
+.battle-ornate-frame::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  right: 5px;
+  top: -29px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #45494b 12%, #777877 50%, #45494b 88%, transparent);
+  box-shadow: 0 2px 3px #000;
+}
+
+.battle-frame-title {
+  position: absolute;
+  left: 50%;
+  bottom: -31px;
+  min-width: 178px;
+  height: 30px;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  padding: 0 22px;
+  color: #b5b3aa;
+  font: small-caps 700 16px/1 Georgia, 'Palatino Linotype', serif;
+  letter-spacing: .16em;
+  white-space: nowrap;
+  text-shadow: 0 2px 2px #000, 0 -1px 1px #414447;
+  background: linear-gradient(180deg, #373b3b 0, #171b1c 15%, #0b0d0e 62%, #292c2d 100%);
+  border: 2px ridge #515557;
+  box-shadow: inset 0 0 0 2px #090b0c, inset 0 2px 8px #000, 0 2px 8px #000;
+  clip-path: polygon(5% 0, 95% 0, 100% 48%, 94% 100%, 6% 100%, 0 48%);
+}
+
+.battle-torch {
+  position: absolute;
+  z-index: 9;
+  top: -39px;
+  width: 94px;
+  height: 136px;
+  pointer-events: none;
+  filter: drop-shadow(0 5px 5px #000);
+}
+.battle-torch-left { left: 16px; }
+.battle-torch-right { right: 16px; }
+.battle-torch img {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: brightness(.82) contrast(1.08);
+}
+.torch-light {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: -22px;
+  width: 142px;
+  height: 112px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(205, 87, 23, .20), rgba(126, 43, 11, .10) 35%, transparent 71%);
+  mix-blend-mode: screen;
+  animation: torch-light-breathe 3.8s ease-in-out infinite;
+}
+.torch-flame {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: -18px;
+  width: 29px;
+  height: 58px;
+  transform-origin: 50% 92%;
+  background: radial-gradient(ellipse at 50% 86%, #ffe2a0 0 8%, #ffad3b 21%, #d74715 55%, rgba(137, 24, 7, .42) 79%, transparent 83%);
+  clip-path: polygon(50% 0, 64% 25%, 81% 13%, 77% 48%, 100% 65%, 75% 97%, 28% 100%, 0 66%, 24% 45%, 18% 27%, 39% 36%);
+  filter: drop-shadow(0 0 8px rgba(255, 113, 25, .8));
+  animation: torch-flame-sway 3.4s ease-in-out infinite;
+}
+.torch-flame i,
+.torch-flame b,
+.torch-flame em {
+  position: absolute;
+  display: block;
+  bottom: 2px;
+  border-radius: 62% 42% 48% 53%;
+  transform-origin: 50% 95%;
+}
+.torch-flame i {
+  left: 6px;
+  width: 17px;
+  height: 42px;
+  background: linear-gradient(8deg, #ffe8ac 5%, #ffae3b 43%, rgba(215, 54, 12, .08));
+  animation: torch-tongue-left 2.6s ease-in-out infinite;
+}
+.torch-flame b {
+  left: 1px;
+  width: 13px;
+  height: 35px;
+  background: linear-gradient(8deg, #ffba5a, #dd4312 64%, transparent);
+  animation: torch-tongue-right 3.1s ease-in-out infinite;
+}
+.torch-flame em {
+  right: 0;
+  width: 12px;
+  height: 39px;
+  background: linear-gradient(8deg, #ffbd66, #e35315 65%, transparent);
+  animation: torch-tongue-right 3.7s ease-in-out infinite reverse;
+}
+.battle-torch-right .torch-flame,
+.battle-torch-right .torch-light { animation-delay: -1.4s; }
+.battle-torch-right .torch-flame i { animation-delay: -.8s; }
+.battle-torch-right .torch-flame b { animation-delay: -2s; }
+
+@keyframes torch-flame-sway {
+  0%, 100% { transform: translateX(-50%) rotate(-4deg) scale(.94, 1.02); opacity: .93; }
+  23% { transform: translateX(-53%) rotate(6deg) scale(1.08, .88); opacity: 1; }
+  51% { transform: translateX(-45%) rotate(-7deg) scale(.93, 1.10); opacity: .96; }
+  77% { transform: translateX(-54%) rotate(3deg) scale(1.05, .96); opacity: 1; }
+}
+@keyframes torch-tongue-left {
+  0%, 100% { transform: rotate(-9deg) scaleY(1); }
+  37% { transform: rotate(11deg) scaleY(.74); }
+  72% { transform: rotate(-3deg) scaleY(1.17); }
+}
+@keyframes torch-tongue-right {
+  0%, 100% { transform: rotate(8deg) scaleY(.86); }
+  31% { transform: rotate(-13deg) scaleY(1.22); }
+  63% { transform: rotate(6deg) scaleY(.93); }
+}
+@keyframes torch-light-breathe {
+  0%, 100% { opacity: .58; transform: translateX(-50%) scale(.96); }
+  34% { opacity: .8; transform: translateX(-50%) scale(1.06); }
+  71% { opacity: .63; transform: translateX(-50%) scale(.98); }
+}
+
+#app:not(.camp-mode) .battlefield-shell .battle-state { top: 39px; left: 42px; }
+#app:not(.camp-mode) .battlefield-shell .enemy-plate { top: 37px; }
+#app:not(.camp-mode) .battlefield-shell .encounter-label { top: 39px; right: 42px; }
+#app:not(.camp-mode) .battlefield-shell .scene-hint { bottom: 35px; }
+
+/* Bottom bar: heavy graphite relief with the original live controls retained. */
+#app:not(.camp-mode) .d2r-command-hud {
+  z-index: 30;
+  grid-template-columns: clamp(205px, 15vw, 282px) minmax(540px, 1fr) clamp(205px, 15vw, 282px);
+  padding: 0 4px 2px;
+  border: 0;
+  background:
+    linear-gradient(180deg, #505354 0 2px, #0b0d0e 3px 9px, #232627 10px 13px, transparent 14px),
+    repeating-linear-gradient(105deg, transparent 0 11px, rgba(255,255,255,.015) 12px, transparent 14px),
+    linear-gradient(180deg, #181b1c, #080a0b 35%, #070808 83%, #1b1d1e);
+  box-shadow: inset 0 10px 22px #000, 0 -5px 18px rgba(0,0,0,.92);
+}
+#app:not(.camp-mode) .d2r-command-hud::before {
+  left: 11%;
+  right: 11%;
+  height: 68%;
+  background:
+    repeating-linear-gradient(90deg, transparent 0 21px, rgba(126,129,126,.08) 22px, transparent 24px),
+    linear-gradient(90deg, transparent, rgba(74,79,80,.25) 8%, rgba(30,34,35,.32) 50%, rgba(74,79,80,.25) 92%, transparent);
+  border-top: 1px solid #525657;
+}
+#app:not(.camp-mode) .d2r-command-hud::after { display: none; }
+
+#app:not(.camp-mode) .d2-guardian {
+  bottom: -4px;
+  width: clamp(190px, 22vw, 310px);
+  height: clamp(150px, 22vh, 238px);
+  opacity: .94;
+  background-repeat: no-repeat;
+  background-size: contain;
+  filter: brightness(.78) contrast(1.09) drop-shadow(0 5px 5px #000);
+}
+#app:not(.camp-mode) .d2-guardian::before,
+#app:not(.camp-mode) .d2-guardian::after,
+#app:not(.camp-mode) .d2-guardian > i,
+#app:not(.camp-mode) .d2-guardian > b,
+#app:not(.camp-mode) .d2-guardian > em { display: none; }
+#app:not(.camp-mode) .d2-guardian-left {
+  left: -24px;
+  background-image: url('/app/assets/battle-guardian-life-v0519.png');
+  background-position: left bottom;
+}
+#app:not(.camp-mode) .d2-guardian-right {
+  right: -62px;
+  background-image: url('/app/assets/battle-guardian-mana-v0519.png');
+  background-position: right bottom;
+}
+
+#app:not(.camp-mode) .d2-resource-orb {
+  width: clamp(112px, calc(18vh - 12px), 168px);
+  border: 5px solid #343838;
+  outline: 2px solid #111414;
+  background: radial-gradient(circle at 47% 40%, #191d1e 0 59%, #050708 78%, #000 100%);
+  box-shadow: 0 0 0 4px #090b0c, 0 0 0 6px #414546, inset 0 1px 5px #777d7e,
+    inset 0 0 23px 10px #000, 0 8px 18px #000;
+}
+#app:not(.camp-mode) .d2-life-panel .d2-resource-orb { margin-left: clamp(52px, 4.3vw, 82px); }
+#app:not(.camp-mode) .d2-mana-panel .d2-resource-orb { margin-right: clamp(52px, 4.3vw, 82px); }
+#app:not(.camp-mode) .d2-resource-orb::before {
+  inset: 3%;
+  border-color: rgba(202,210,212,.24);
+  box-shadow: inset 0 2px 12px rgba(229,236,240,.14), inset 0 -20px 29px rgba(0,0,0,.65);
+}
+#app:not(.camp-mode) .life-orb .d2-orb-liquid {
+  background:
+    radial-gradient(circle at 44% 22%, #fff1e7 0 1.5%, rgba(255,232,221,.65) 2.5%, transparent 9%),
+    radial-gradient(circle at 48% 39%, #ae2c29 0, #77100e 35%, #390302 72%, #100102 100%);
+}
+#app:not(.camp-mode) .mana-orb .d2-orb-liquid {
+  background:
+    radial-gradient(circle at 47% 22%, #f1f6ff 0 1.5%, rgba(203,221,255,.75) 2.5%, transparent 9%),
+    radial-gradient(circle at 46% 39%, #365bc1 0, #142c89 34%, #0a1450 71%, #02071c 100%);
+}
+#app:not(.camp-mode) .d2-orb-glass {
+  background:
+    radial-gradient(ellipse at 41% 19%, rgba(255,255,255,.22), transparent 20%),
+    linear-gradient(145deg, rgba(255,255,255,.045), transparent 34%, rgba(0,0,0,.13) 60%, rgba(0,0,0,.53));
+}
+#app:not(.camp-mode) .d2-orb-label { top: 13%; color: #c3c5c7; font-size: 9px; }
+#app:not(.camp-mode) .d2-orb-value { bottom: 19%; color: #e4e5e2; font-size: clamp(11px, 1.1vw, 16px); }
+#app:not(.camp-mode) .d2-resource-caption {
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(5,7,8,.86) 16%, rgba(5,7,8,.86) 84%, transparent);
+}
+#app:not(.camp-mode) .d2-life-panel .d2-resource-caption { left: clamp(52px, 4.3vw, 82px); }
+#app:not(.camp-mode) .d2-mana-panel .d2-resource-caption { right: clamp(52px, 4.3vw, 82px); }
+#app:not(.camp-mode) .d2-resource-caption strong { color: #c2c3c0; }
+#app:not(.camp-mode) .mana-caption strong { color: #aabce8; }
+
+#app:not(.camp-mode) .d2-center-console .mouse-skill-stage {
+  position: relative;
+  height: 100%;
+  background:
+    linear-gradient(180deg, #333738 0 3px, #0a0d0e 4px 10px, transparent 11px),
+    repeating-linear-gradient(108deg, transparent 0 8px, rgba(255,255,255,.013) 9px, transparent 11px),
+    linear-gradient(180deg, #242829 0, #121516 45%, #080a0b 100%);
+  border: 2px ridge #4b5050;
+  box-shadow: inset 0 0 0 3px #090b0c, inset 0 15px 28px #000, 0 4px 12px #000;
+}
+#app:not(.camp-mode) .d2-center-console .mouse-skill-stage::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 7px;
+  height: 4px;
+  pointer-events: none;
+  background: repeating-linear-gradient(90deg, #5c6161 0 5px, #202425 5px 8px, #0d1011 8px 14px);
+  box-shadow: 0 1px 2px #000;
+}
+#app:not(.camp-mode) .d2-center-console .mouse-skill-slot,
+#app:not(.camp-mode) .d2-center-console .mouse-skill-center,
+#app:not(.camp-mode) .d2-belt,
+#app:not(.camp-mode) .d2-belt-slot,
+#app:not(.camp-mode) .d2-center-lower .mouse-hud-shortcuts button,
+#app:not(.camp-mode) .d2-end-turn,
+#app:not(.camp-mode) .d2-system-controls button {
+  background: linear-gradient(150deg, #2b2e2e, #121516 36%, #080a0b 78%, #242728);
+  border-color: #565b5b;
+  box-shadow: inset 0 0 0 2px #090b0c, inset 0 1px 4px rgba(189,195,193,.12), inset 0 -7px 12px #000, 0 2px 5px #000;
+}
+#app:not(.camp-mode) .d2-center-console .mouse-skill-art {
+  background: radial-gradient(circle at 46% 36%, #363a39, #121617 55%, #050707 84%);
+  border-color: #676b69;
+  box-shadow: inset 0 2px 5px #6c7070, inset 0 -8px 15px #000, 0 1px 2px #000;
+}
+#app:not(.camp-mode) .d2-center-console .mouse-button-label {
+  color: #d3d5d4;
+  background: linear-gradient(#2e3437, #121617);
+  border-color: #697071;
+}
+#app:not(.camp-mode) .d2-center-console .mouse-skill-slot strong,
+#app:not(.camp-mode) .d2-end-turn b { color: #c5c7c2; }
+#app:not(.camp-mode) .d2-center-console .mouse-skill-slot small,
+#app:not(.camp-mode) .d2-center-console .save-state { color: #929996; }
+#app:not(.camp-mode) .d2-belt-slot kbd { color: #c3c7c3; }
+#app:not(.camp-mode) .d2-center-lower .mouse-hud-shortcuts button b { color: #aeb7b4; }
+#app:not(.camp-mode) .d2-center-lower .mouse-hud-shortcuts button span,
+#app:not(.camp-mode) .d2-system-controls button { color: #a7adab; }
+#app:not(.camp-mode) .d2-end-turn {
+  background: linear-gradient(#45302d, #1d0d0b 60%, #09090a);
+  border-color: #76605c;
+}
+
+@media (max-width: 1320px), (max-height: 850px) {
+  .battle-ornate-frame { border-width: 23px; border-image-width: 23px; }
+  .battle-frame-title { bottom: -23px; min-width: 142px; height: 23px; font-size: 12px; }
+  .battle-torch { top: -24px; width: 68px; height: 98px; }
+  .torch-flame { top: -12px; width: 23px; height: 44px; }
+  .torch-light { width: 100px; height: 84px; }
+  #app:not(.camp-mode) .battlefield-shell .battle-state { top: 31px; left: 28px; }
+  #app:not(.camp-mode) .battlefield-shell .enemy-plate { top: 28px; }
+  #app:not(.camp-mode) .battlefield-shell .encounter-label { top: 31px; right: 28px; }
+  #app:not(.camp-mode) .battlefield-shell .scene-hint { bottom: 28px; }
+  #app:not(.camp-mode) .d2r-command-hud { grid-template-columns: 205px minmax(540px, 1fr) 205px; }
+  #app:not(.camp-mode) .d2-resource-orb { width: clamp(110px, calc(18vh - 12px), 148px); }
+  #app:not(.camp-mode) .d2-guardian { height: clamp(145px, 22vh, 180px); width: 205px; }
+  #app:not(.camp-mode) .d2-guardian-right { right: -45px; }
+}
+
+@media (max-width: 1200px) {
+  #app:not(.camp-mode) .d2r-command-hud { grid-template-columns: 170px minmax(540px, 1fr) 170px; }
+  #app:not(.camp-mode) .d2-resource-orb { width: min(130px, calc(18vh - 12px)); }
+  #app:not(.camp-mode) .d2-life-panel .d2-resource-orb { margin-left: 32px; }
+  #app:not(.camp-mode) .d2-mana-panel .d2-resource-orb { margin-right: 32px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .torch-light, .torch-flame, .torch-flame i, .torch-flame b, .torch-flame em { animation: none !important; }
+}

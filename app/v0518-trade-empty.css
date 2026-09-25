@@ -1,0 +1,227 @@
+/* One shared Diablo trade frame beside the untouched canonical player window. */
+.panel-layer.trade-pair {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(12px, 1.1vw, 20px);
+  padding: 12px clamp(12px, 2vw, 48px);
+  overflow: auto;
+  background: rgba(3, 3, 3, .48);
+  backdrop-filter: blur(1px) saturate(.82);
+}
+
+.panel-layer.trade-pair > #game-panel {
+  flex: 0 0 auto;
+}
+
+.merchant-inventory-frame {
+  --merchant-edge: clamp(22px, 3.3dvh, 38px);
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(850px, calc(82dvh - 16px), calc(100vw - 24px));
+  aspect-ratio: 820 / 1015;
+  max-height: calc(100dvh - 24px);
+  padding: clamp(12px, 2dvh, 24px) clamp(10px, 1.5dvh, 18px);
+  border: var(--merchant-edge) solid transparent;
+  border-image-source: url('/app/assets/inventory-empty-canonical-v0518.png');
+  border-image-slice: 39 32 42 32;
+  border-image-width: var(--merchant-edge);
+  border-image-repeat: stretch;
+  background:
+    linear-gradient(rgba(80, 82, 84, .2), rgba(24, 24, 25, .26)),
+    url('/app/assets/exploration/map-ironstone-v0512.png') center / 340px 340px repeat;
+  box-shadow: 0 18px 70px #000, 0 0 0 1px #080706;
+  color: #d5c7a6;
+}
+
+.merchant-inventory-close {
+  position: absolute;
+  z-index: 3;
+  top: 1.18%;
+  left: 92.11%;
+  width: 5.1%;
+  height: 3.95%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: transparent;
+  font-size: 0;
+  cursor: pointer;
+}
+
+.merchant-inventory-close:hover { background: rgba(165, 48, 23, .18); }
+.merchant-inventory-close:focus-visible { outline: 2px solid #e8bd75; outline-offset: -2px; }
+
+.merchant-inventory-heading {
+  flex: 0 0 auto;
+  width: 100%;
+  text-align: center;
+  padding-bottom: clamp(4px, .7dvh, 8px);
+  border-bottom: 2px ridge #6f6659;
+  box-shadow: 0 2px 2px #090806;
+  text-shadow: 0 2px 3px #000;
+}
+
+.merchant-inventory-kicker {
+  display: block;
+  color: #aa9b81;
+  font: 600 clamp(8px, 1.2dvh, 12px)/1.2 Georgia, serif;
+  letter-spacing: .22em;
+}
+
+.merchant-inventory-heading h2 {
+  margin: 0;
+  color: #d9c18e;
+  font: small-caps 500 clamp(21px, 3.1dvh, 34px)/1.15 Georgia, serif;
+  letter-spacing: .19em;
+}
+
+.merchant-inventory-heading p {
+  margin: 0;
+  color: #d5c6a8;
+  font: small-caps clamp(13px, 1.7dvh, 19px)/1.3 Georgia, serif;
+  letter-spacing: .15em;
+}
+
+.merchant-empty-grid {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-rows: repeat(10, minmax(0, 1fr));
+  flex: 0 0 auto;
+  width: min(100%, 70dvh);
+  height: min(100%, 70dvh);
+  min-height: 0;
+  aspect-ratio: 1;
+  overflow: hidden;
+  margin: auto 0;
+  border: 3px ridge #746c5d;
+  box-shadow: 0 0 0 2px #100f0e, inset 0 0 0 1px #17130e, 0 6px 17px #000;
+  background: #0b0a09;
+}
+
+.merchant-empty-grid::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(to right, transparent 0 calc(10% - 1px), rgba(191, 174, 135, .78) calc(10% - 1px) 10%),
+    repeating-linear-gradient(to bottom, transparent 0 calc(10% - 1px), rgba(191, 174, 135, .78) calc(10% - 1px) 10%);
+  box-shadow: inset 0 0 0 1px rgba(191, 174, 135, .7);
+}
+
+.merchant-empty-cell {
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #655f56;
+  border-radius: 0;
+  background: linear-gradient(145deg, #151412, #0a0908 67%);
+  box-shadow: inset 1px 1px rgba(211, 191, 156, .07), inset -1px -1px #050505;
+  pointer-events: none;
+}
+
+.merchant-offer {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  margin: 1px;
+  padding: 2px;
+  border: 1px solid #786a54;
+  border-radius: 0;
+  background: radial-gradient(ellipse at 48% 35%, #302b24, #11100e 77%);
+  box-shadow: inset 0 0 10px #000, 0 1px 4px #000;
+  cursor: pointer;
+}
+
+.merchant-offer:hover,
+.merchant-offer:focus-visible {
+  z-index: 4;
+  outline: 2px solid #c9ad78;
+  outline-offset: -2px;
+  background: radial-gradient(ellipse at 48% 35%, #514335, #1a1611 77%);
+}
+
+.merchant-offer .d2-trade-item-art {
+  display: block;
+  width: 93%;
+  height: 93%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(1px 2px 2px #000);
+}
+
+.merchant-empty-status {
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: clamp(31px, 3.5dvh, 40px);
+  margin: 0;
+  padding: clamp(7px, 1dvh, 11px);
+  border: 1px solid #6b5840;
+  background: linear-gradient(#1b1916, #0c0b0a);
+  box-shadow: inset 0 0 0 2px #090807, 0 2px 5px #000;
+  color: #bfb297;
+  font: clamp(10px, 1.3dvh, 14px)/1.3 Georgia, serif;
+  text-align: center;
+}
+
+.merchant-action-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: clamp(40px, 5dvh, 54px);
+}
+
+.merchant-wallet {
+  min-width: 160px;
+  margin: 0;
+  padding: 7px 18px;
+  border: 3px ridge #756958;
+  background: linear-gradient(#25221c, #11100e);
+  box-shadow: inset 0 0 0 2px #100d09, 0 2px 6px #000;
+  color: #e0c68d;
+  font: small-caps 16px Georgia, serif;
+  letter-spacing: .12em;
+  text-align: center;
+}
+
+.merchant-repair {
+  position: absolute;
+  left: 5%;
+  width: 45px;
+  height: 45px;
+  border: 3px ridge #756958;
+  background: linear-gradient(#30291d, #100f0d);
+  box-shadow: inset 0 0 0 2px #100d09, 0 2px 6px #000;
+  color: #d6b471;
+  font: 28px Georgia, serif;
+  cursor: pointer;
+}
+
+.merchant-repair:hover,
+.merchant-repair:focus-visible {
+  outline: 2px solid #c9ad78;
+  outline-offset: -2px;
+  filter: brightness(1.3);
+}
+
+@media (max-width: 1120px) {
+  .panel-layer.trade-pair { justify-content: flex-start; }
+}

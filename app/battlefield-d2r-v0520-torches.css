@@ -1,0 +1,186 @@
+/* Battle-only torch treatment. Purely decorative: the scene keeps all clicks. */
+#app:not(.camp-mode) .battlefield-shell > .battle-torch {
+  --torch-width: clamp(250px, 20vw, 384px);
+  position: absolute;
+  z-index: 4;
+  top: clamp(26px, 2.8vw, 44px);
+  width: var(--torch-width);
+  height: calc(var(--torch-width) * 1.5);
+  pointer-events: none;
+  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .8));
+}
+
+#app:not(.camp-mode) .battlefield-shell > .battle-torch-left {
+  left: calc(var(--torch-width) * -.22);
+}
+
+#app:not(.camp-mode) .battlefield-shell > .battle-torch-right {
+  right: calc(var(--torch-width) * -.22);
+}
+
+/* Keep phase/location labels off the enlarged fire and ironwork. */
+#app:not(.camp-mode) .battlefield-shell .battle-state,
+#app:not(.camp-mode) .battlefield-shell .deployment-legend {
+  left: clamp(220px, 17vw, 330px);
+}
+#app:not(.camp-mode) .battlefield-shell .encounter-label {
+  right: clamp(220px, 17vw, 330px);
+}
+
+#app:not(.camp-mode) .battle-torch img {
+  z-index: 3;
+  object-fit: contain;
+  filter: brightness(.84) contrast(1.14);
+}
+
+/* A broad halo and a smaller reflected pool of firelight soften the stone. */
+#app:not(.camp-mode) .battle-torch .torch-light {
+  z-index: 0;
+  top: calc(var(--torch-width) * -.25);
+  width: calc(var(--torch-width) * 1.48);
+  height: calc(var(--torch-width) * 1.05);
+  background: radial-gradient(ellipse at 50% 44%,
+    rgba(255, 154, 57, .3) 0,
+    rgba(192, 80, 20, .19) 20%,
+    rgba(109, 42, 14, .095) 43%,
+    transparent 72%);
+  filter: blur(8px);
+  mix-blend-mode: screen;
+  animation: battle-torch-halo-v0520 5s ease-in-out infinite;
+}
+
+#app:not(.camp-mode) .battle-torch::before {
+  content: '';
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  top: calc(var(--torch-width) * .31);
+  width: calc(var(--torch-width) * .7);
+  height: calc(var(--torch-width) * .4);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(246, 109, 31, .17), rgba(114, 37, 11, .07) 48%, transparent 75%);
+  mix-blend-mode: screen;
+  animation: battle-torch-reflection-v0520 5s ease-in-out infinite;
+}
+
+/* Organic SVG silhouette is used as a mask, not as a new game asset. */
+#app:not(.camp-mode) .battle-torch .torch-flame {
+  z-index: 2;
+  top: calc(var(--torch-width) * -.22);
+  width: calc(var(--torch-width) * .29);
+  height: calc(var(--torch-width) * .55);
+  border-radius: 0;
+  clip-path: none;
+  background: radial-gradient(ellipse at 50% 84%,
+    #fff1bf 0 7%, #ffc45a 17%, #ee7822 39%, #bd340e 67%, rgba(115, 18, 7, .08) 96%);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 180'%3E%3Cpath fill='white' d='M48 2 C61 24 57 43 50 58 C63 50 69 34 66 21 C87 50 82 68 70 87 C84 78 89 67 84 52 C106 79 104 103 88 125 C102 113 103 102 98 92 C111 133 90 174 51 178 C15 180 -5 148 6 112 C10 137 22 142 24 121 C24 102 39 89 35 68 C49 88 38 104 50 111 C65 87 59 54 48 2 Z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 180'%3E%3Cpath fill='white' d='M48 2 C61 24 57 43 50 58 C63 50 69 34 66 21 C87 50 82 68 70 87 C84 78 89 67 84 52 C106 79 104 103 88 125 C102 113 103 102 98 92 C111 133 90 174 51 178 C15 180 -5 148 6 112 C10 137 22 142 24 121 C24 102 39 89 35 68 C49 88 38 104 50 111 C65 87 59 54 48 2 Z'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  filter: drop-shadow(0 0 14px rgba(255, 109, 24, .55));
+  animation: battle-torch-sway-v0520 5s ease-in-out infinite;
+}
+
+#app:not(.camp-mode) .battle-torch .torch-flame i,
+#app:not(.camp-mode) .battle-torch .torch-flame b,
+#app:not(.camp-mode) .battle-torch .torch-flame em {
+  bottom: 4%;
+  border-radius: 70% 23% 57% 43% / 81% 63% 31% 24%;
+  filter: blur(1px);
+}
+#app:not(.camp-mode) .battle-torch .torch-flame i {
+  left: 28%; width: 46%; height: 75%;
+  background: linear-gradient(8deg, #fff9d7 5%, #ffcb61 38%, rgba(239, 113, 28, .4) 82%, transparent);
+  animation: battle-torch-tongue-a-v0520 5s ease-in-out infinite;
+}
+#app:not(.camp-mode) .battle-torch .torch-flame b {
+  left: 10%; width: 37%; height: 62%;
+  background: linear-gradient(12deg, #ffd076 3%, #e8661d 54%, transparent);
+  animation: battle-torch-tongue-b-v0520 5s ease-in-out infinite;
+}
+#app:not(.camp-mode) .battle-torch .torch-flame em {
+  right: 7%; width: 35%; height: 67%;
+  background: linear-gradient(-11deg, #ffc96d 2%, #df5218 58%, transparent);
+  animation: battle-torch-tongue-b-v0520 5s ease-in-out infinite reverse;
+}
+
+#app:not(.camp-mode) .battle-torch-right .torch-light,
+#app:not(.camp-mode) .battle-torch-right .torch-flame,
+#app:not(.camp-mode) .battle-torch-right::before { animation-delay: -1.7s; }
+#app:not(.camp-mode) .battle-torch-right .torch-flame i { animation-delay: -1s; }
+#app:not(.camp-mode) .battle-torch-right .torch-flame b { animation-delay: -2s; }
+
+/* Transparent raster fire replaces the flat geometric flame; the independent
+   translucent core and halo retain motion without a repeated GIF sequence. */
+#app:not(.camp-mode) .battle-torch .torch-flame {
+  width: calc(var(--torch-width) * .42);
+  height: calc(var(--torch-width) * .7);
+  background: url('/app/assets/battle-torch-flame-v0520.png') center / contain no-repeat;
+  -webkit-mask: none;
+  mask: none;
+  filter: drop-shadow(0 0 18px rgba(241, 98, 15, .55));
+}
+#app:not(.camp-mode) .battle-torch .torch-flame i,
+#app:not(.camp-mode) .battle-torch .torch-flame b,
+#app:not(.camp-mode) .battle-torch .torch-flame em { display: none; }
+#app:not(.camp-mode) .battle-torch .torch-flame::before {
+  content: '';
+  position: absolute;
+  inset: 18% 12% 5%;
+  background: url('/app/assets/battle-torch-flame-v0520.png') center / contain no-repeat;
+  opacity: .28;
+  mix-blend-mode: screen;
+  animation: battle-torch-inner-v0520 5s ease-in-out infinite;
+}
+#app:not(.camp-mode) .battle-torch-right .torch-flame::before { animation-delay: -1.1s; }
+@keyframes battle-torch-inner-v0520 {
+  0%, 100% { transform: translateX(-5%) rotate(-4deg) scale(.86, 1); opacity: .24; }
+  33% { transform: translateX(6%) rotate(5deg) scale(1.06, .86); opacity: .4; }
+  70% { transform: translateX(-2%) rotate(-3deg) scale(.93, 1.08); opacity: .3; }
+}
+
+@keyframes battle-torch-sway-v0520 {
+  0%, 100% { transform: translateX(-50%) rotate(-3deg) scale(.96, 1.01); opacity: .93; }
+  24% { transform: translateX(-51%) rotate(4deg) scale(1.03, .91); opacity: .99; }
+  51% { transform: translateX(-48%) rotate(-5deg) scale(.95, 1.08); opacity: .94; }
+  78% { transform: translateX(-52%) rotate(3deg) scale(1.05, .97); opacity: 1; }
+}
+@keyframes battle-torch-tongue-a-v0520 {
+  0%, 100% { transform: rotate(-7deg) scaleY(.95); }
+  38% { transform: rotate(9deg) scaleY(.8); }
+  71% { transform: rotate(-4deg) scaleY(1.14); }
+}
+@keyframes battle-torch-tongue-b-v0520 {
+  0%, 100% { transform: rotate(7deg) scaleY(.9); }
+  32% { transform: rotate(-12deg) scaleY(1.15); }
+  67% { transform: rotate(4deg) scaleY(.83); }
+}
+@keyframes battle-torch-halo-v0520 {
+  0%, 100% { opacity: .65; transform: translateX(-50%) scale(.97); }
+  38% { opacity: .85; transform: translateX(-50%) scale(1.05); }
+  72% { opacity: .7; transform: translateX(-50%) scale(.99); }
+}
+@keyframes battle-torch-reflection-v0520 {
+  0%, 100% { opacity: .58; transform: translateX(-50%) scale(.96); }
+  49% { opacity: .79; transform: translateX(-50%) scale(1.05); }
+}
+
+@media (max-width: 1320px), (max-height: 850px) {
+  #app:not(.camp-mode) .battlefield-shell > .battle-torch {
+    --torch-width: clamp(230px, 19.5vw, 290px);
+    top: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #app:not(.camp-mode) .battle-torch .torch-light,
+  #app:not(.camp-mode) .battle-torch .torch-flame,
+  #app:not(.camp-mode) .battle-torch .torch-flame i,
+  #app:not(.camp-mode) .battle-torch .torch-flame b,
+  #app:not(.camp-mode) .battle-torch .torch-flame em,
+  #app:not(.camp-mode) .battle-torch .torch-flame::before,
+  #app:not(.camp-mode) .battle-torch::before { animation: none !important; }
+}

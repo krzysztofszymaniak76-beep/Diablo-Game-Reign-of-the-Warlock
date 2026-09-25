@@ -1,0 +1,127 @@
+/* The camp plate is the scene itself. Hotspots follow painted features in
+   main.js, while these shapes keep neighboring interactions separate. */
+.camp-scene .camp-hotspot {
+  pointer-events: none;
+  cursor: pointer;
+}
+
+.camp-scene .camp-hotspot::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: auto;
+}
+
+.camp-scene .camp-npc::after {
+  clip-path: polygon(33% 0, 67% 0, 79% 18%, 86% 46%, 77% 62%, 82% 100%, 18% 100%, 23% 62%, 14% 46%, 21% 18%);
+}
+
+.camp-scene .camp-npc img,
+.camp-scene .camp-place-glyph {
+  pointer-events: none;
+}
+
+.camp-scene .camp-place-glyph {
+  display: none;
+}
+
+.camp-scene .camp-place::after {
+  clip-path: ellipse(48% 47% at 50% 50%);
+}
+
+.camp-scene .camp-stash::after {
+  clip-path: polygon(12% 13%, 88% 13%, 98% 43%, 90% 91%, 10% 91%, 2% 43%);
+}
+
+.camp-scene .camp-gate::after {
+  clip-path: polygon(20% 5%, 80% 5%, 100% 96%, 0 96%);
+}
+
+.camp-scene .camp-hotspot:focus-visible {
+  outline: 0;
+}
+
+.camp-scene .camp-hotspot:focus-visible::before,
+.camp-scene .camp-hotspot:hover::before,
+.camp-scene .camp-hotspot.is-invoked::before {
+  border-color: rgba(225, 183, 111, .55);
+  box-shadow: 0 0 13px rgba(213, 146, 67, .36), inset 0 0 8px rgba(225, 181, 105, .16);
+}
+
+.camp-scene .camp-npc:focus-visible img,
+.camp-scene .camp-npc:hover img {
+  filter: saturate(1) contrast(1.07) brightness(1.09) drop-shadow(0 0 5px rgba(224, 179, 106, .38));
+}
+
+.camp-scene .camp-stash::before {
+  bottom: 7%;
+  width: 83%;
+  height: 62%;
+  border-radius: 18%;
+  background: rgba(63, 39, 17, .11);
+  box-shadow: inset 0 0 8px rgba(243, 191, 111, .09);
+}
+
+.camp-scene .camp-gate::before {
+  bottom: 3%;
+  width: 89%;
+  height: 57%;
+  background: rgba(115, 76, 34, .09);
+}
+
+.camp-scene .camp-waypoint::before {
+  z-index: 0;
+  bottom: 8%;
+  width: 90%;
+  height: 72%;
+  border-radius: 50%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  background: radial-gradient(ellipse, rgba(78, 137, 193, .08) 15%, rgba(56, 112, 174, .09) 48%, transparent 73%);
+  border-color: rgba(97, 156, 213, .17);
+  box-shadow: inset 0 0 16px rgba(112, 180, 240, .11), 0 0 11px rgba(53, 122, 196, .1);
+}
+
+.camp-scene .camp-waypoint.is-active::before {
+  border-color: rgba(121, 178, 231, .29);
+  background: radial-gradient(ellipse, rgba(111, 173, 224, .28) 8%, rgba(59, 120, 187, .2) 50%, transparent 76%);
+  box-shadow: inset 0 0 19px rgba(135, 197, 247, .29), 0 0 20px rgba(73, 145, 212, .28);
+  animation: camp-waypoint-breathe 5.2s ease-in-out infinite;
+}
+
+.camp-scene .camp-waypoint:hover::before,
+.camp-scene .camp-waypoint:focus-visible::before {
+  border-color: rgba(153, 198, 236, .48);
+  background: radial-gradient(ellipse, rgba(117, 181, 234, .29), rgba(55, 120, 184, .18) 55%, transparent 79%);
+  box-shadow: inset 0 0 21px rgba(154, 206, 249, .27), 0 0 25px rgba(83, 160, 226, .3);
+}
+
+.camp-scene .camp-waypoint.is-activating::before,
+.camp-scene .camp-waypoint.is-invoked::before {
+  animation: camp-waypoint-activate 1.05s ease-out 1;
+}
+
+.camp-scene .camp-waypoint .camp-hotspot-copy {
+  bottom: -14px;
+}
+
+@keyframes camp-waypoint-breathe {
+  0%, 100% { opacity: .58; transform: translateX(-50%) scale(.97); }
+  50% { opacity: .88; transform: translateX(-50%) scale(1.025); }
+}
+
+@keyframes camp-waypoint-activate {
+  0% { opacity: .58; transform: translateX(-50%) scale(.9); }
+  32% { opacity: 1; transform: translateX(-50%) scale(1.09); box-shadow: inset 0 0 25px rgba(178, 219, 249, .5), 0 0 31px rgba(104, 179, 238, .48); }
+  100% { opacity: .75; transform: translateX(-50%) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .camp-scene .camp-waypoint::before,
+  .camp-scene .camp-waypoint.is-active::before,
+  .camp-scene .camp-waypoint.is-activating::before,
+  .camp-scene .camp-waypoint.is-invoked::before {
+    animation: none;
+  }
+}

@@ -1,0 +1,73 @@
+/* Shared frame anatomy. Themes supply materials only; no world/input styles.
+   Current routing uses the existing public profile. Future explicit themes may
+   set data-map-theme on this panel; see docs/MAP_FRAME_SYSTEM_v0.5.13.md. */
+.game-panel.sanctuary-map {
+ --map-theme-id:act1-exterior;
+ --frame-image:url('/app/assets/exploration/map-ironframe-v0512.png');
+ --frame-material:url('/app/assets/exploration/map-ironstone-v0512.png');
+ --frame-wash:linear-gradient(#171d2480,#06090ddd);
+ --frame-edge:#505760;--frame-accent:#8c969f;--frame-ink:#c1c1ba;
+ --frame-relief-filter:saturate(.55) brightness(.9);
+ --frame-panel-shadow:inset 0 0 24px #000;
+ grid-template-rows:100px minmax(0,1fr) 26px;
+ overflow:visible;
+ border-image-source:var(--frame-image);
+ background:var(--frame-wash),var(--frame-material);background-size:auto,640px;
+}
+.game-panel.sanctuary-map:has(.exploration-map-shell[data-profile="cave"]),
+.game-panel.sanctuary-map[data-map-theme="act1-cave"] {
+ --map-theme-id:act1-cave;
+ --frame-image:url('/app/assets/exploration/map-caveframe-v0513.png');
+ --frame-material:url('/app/assets/exploration/den-earth-v059.png');
+ --frame-wash:linear-gradient(#21170edd,#080605ed);
+ --frame-edge:#45403b;--frame-accent:#97877b;--frame-ink:#c8b8a4;
+ --frame-relief-filter:sepia(.65) saturate(.7) brightness(.7);
+ --frame-panel-shadow:inset 0 0 48px #000,inset 6px 0 12px #000,inset -6px 0 12px #000;
+}
+.sanctuary-map .game-panel-header {
+ grid-template-columns:88px minmax(0,1fr) 88px;padding:0 24px 8px;
+ background:linear-gradient(90deg,#000b,transparent 30% 70%,#000b),var(--frame-wash),var(--frame-material);
+ background-size:auto,auto,500px;border-color:var(--frame-edge);
+}
+.sanctuary-map .game-panel-header>div {grid-column:2;align-self:end;}
+.sanctuary-map .game-panel-header::before,.sanctuary-map .game-panel-header::after {
+ content:'';position:absolute;inset:auto;top:-32px;width:96px;height:144px;
+ background:url('/app/assets/exploration/map-sentinel-v0513.png') center/contain no-repeat;
+ border:none;box-shadow:none;clip-path:none;opacity:1;pointer-events:none;z-index:2;
+ filter:var(--frame-relief-filter) drop-shadow(0 3px 2px #000);
+}
+.sanctuary-map .game-panel-header::before {left:-32px;}
+.sanctuary-map .game-panel-header::after {right:-32px;transform:scaleX(-1);}
+.sanctuary-map .panel-sigil {
+ position:absolute;left:50%;top:-21px;transform:translateX(-50%);width:174px;height:58px;
+ background:url('/app/assets/exploration/map-crest-v0513.png') center/contain no-repeat;
+ filter:var(--frame-relief-filter) drop-shadow(0 3px 2px #000);pointer-events:none;z-index:1;
+}
+.sanctuary-map .panel-close {grid-column:3;justify-self:start;align-self:center;border-color:var(--frame-edge);}
+.sanctuary-map #panel-context {color:var(--frame-ink);font-size:9px;}
+.sanctuary-map #panel-title {font-size:28px;letter-spacing:.08em;}
+.sanctuary-map .exploration-toolbar,.sanctuary-map .travel-decisions,.sanctuary-map .exploration-hint {
+ background:var(--frame-wash),var(--frame-material);background-size:auto,440px;border-color:var(--frame-edge);
+}
+.sanctuary-map .exploration-map-shell {border-color:var(--frame-edge);}
+.sanctuary-map .exploration-info {
+ border-image-source:var(--frame-image);background:var(--frame-wash),var(--frame-material);background-size:auto,470px;
+ box-shadow:var(--frame-panel-shadow),0 0 0 2px #050506;
+}
+.sanctuary-map .exploration-info::after {background:url('/app/assets/exploration/map-crest-v0513.png') center/150px auto no-repeat;filter:var(--frame-relief-filter);opacity:.13;}
+.sanctuary-map .exploration-info>.overline,.sanctuary-map .map-status,.sanctuary-map .exploration-info .map-discovery,.sanctuary-map .exploration-info>.data-warning {border-color:var(--frame-edge);}
+.sanctuary-map .exploration-info p,.sanctuary-map .travel-card small,.sanctuary-map .travel-caption small {color:var(--frame-ink);}
+.sanctuary-map button:not(.panel-close) {border-color:var(--frame-edge);background:var(--frame-wash),var(--frame-material);background-size:auto,330px;}
+.sanctuary-map button:not(:disabled):hover {border-color:var(--frame-accent);color:#efdfc2;}
+.sanctuary-map button:not(:disabled):active {border-color:#3b3029;box-shadow:inset 0 4px 10px #000;}
+.sanctuary-map button:focus-visible {outline:2px solid #d2b389;outline-offset:2px;}
+.sanctuary-map button.travel-card {border-width:5px;background:linear-gradient(90deg,#0008,transparent 20% 80%,#0008),var(--frame-wash),var(--frame-material);background-size:auto,auto,400px;}
+.sanctuary-map button.travel-card:focus,.sanctuary-map button.travel-card:focus-visible {outline:none;box-shadow:inset 0 0 0 2px #d2b389,inset 0 0 18px #000;}
+.sanctuary-map .game-panel-footer {background:var(--frame-wash);border-color:var(--frame-edge);}
+@media(max-height:780px) {
+ .game-panel.sanctuary-map {grid-template-rows:88px minmax(0,1fr) 25px;}
+ .sanctuary-map .game-panel-header::before,.sanctuary-map .game-panel-header::after {top:-24px;width:84px;height:126px;}
+ .sanctuary-map .game-panel-header::before {left:-24px;}.sanctuary-map .game-panel-header::after {right:-24px;}
+ .sanctuary-map .panel-sigil {top:-17px;width:144px;height:48px;}
+ .sanctuary-map #panel-title {font-size:24px;}
+}

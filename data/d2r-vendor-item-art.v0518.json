@@ -1,0 +1,145 @@
+{
+  "schemaVersion": 1,
+  "projectVersion": "0.5.18",
+  "purpose": "source-extracted vendor armor and consumable item art; not a complete item catalogue",
+  "artworkOrigin": "Lossless RGBA PNG conversions of selected .sprite files from the local Diablo II: Resurrected installation; no generated or redrawn item shapes.",
+  "localBuildInfoSha256": "e2c6965f6d5f3b37df68c4fb1b9554ddfaeec4963d3b2e67d9cbaf92dca80285",
+  "assets": [
+    {
+      "canonicalId": "cap",
+      "file": "app/assets/items/cap.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\armor\\helmet\\cap_hat.sprite",
+      "width": 196,
+      "height": 196,
+      "sha256": "35bdb873a6133e2019f2a4257e1c313951f64a44816e4ce03e2de9e3b15f06f7"
+    },
+    {
+      "canonicalId": "quilted_armor",
+      "file": "app/assets/items/quilted_armor.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\armor\\armor\\quilted_armor.sprite",
+      "width": 196,
+      "height": 294,
+      "sha256": "de136976d2b690aa3b07572cd2f955dd028d9a91ae814cb8b163a3ee33ada031"
+    },
+    {
+      "canonicalId": "buckler",
+      "file": "app/assets/items/buckler.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\armor\\shield\\buckler.sprite",
+      "width": 196,
+      "height": 196,
+      "sha256": "03b167e4d52ac22390e5c81f7229920c23c9b4109a884f76c0709c1aec050147"
+    },
+    {
+      "canonicalId": "targe",
+      "file": "app/assets/items/targe.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\armor\\shield\\targe.sprite",
+      "width": 196,
+      "height": 196,
+      "sha256": "8b500c82eafd82e4f1a3503f6334b4b4e1f43ac7c5306816380e4ab02b775979"
+    },
+    {
+      "canonicalId": "leather_gloves",
+      "file": "app/assets/items/leather_gloves.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\armor\\glove\\gloves_l.sprite",
+      "width": 196,
+      "height": 196,
+      "sha256": "3d6a57c935d10852c6061a4335893e4680fbcf53038ef0d6335153b9dc153fb0"
+    },
+    {
+      "canonicalId": "boots",
+      "file": "app/assets/items/boots.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\armor\\boot\\leather_boots.sprite",
+      "width": 196,
+      "height": 196,
+      "sha256": "f950af9d88c01a906b93dad7f117d527f5eee0b4c675555e84dc891bb57cbfba"
+    },
+    {
+      "canonicalId": "sash",
+      "file": "app/assets/items/sash.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\armor\\belt\\sash_l.sprite",
+      "width": 196,
+      "height": 98,
+      "sha256": "c8781f70c4975f5643f652041d1da8ef5807f3c8a5cbea5dba5c7bd8a4e0d344"
+    },
+    {
+      "canonicalId": "tome_identify",
+      "file": "app/assets/items/tome_identify.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\misc\\book\\identify_book.sprite",
+      "width": 98,
+      "height": 196,
+      "sha256": "639f922b8e0033cc87fed188e5e7d172304316bb4f488601c7d6dff66b82ba98"
+    },
+    {
+      "canonicalId": "tome_town_portal",
+      "file": "app/assets/items/tome_town_portal.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\misc\\book\\town_portal_book.sprite",
+      "width": 98,
+      "height": 196,
+      "sha256": "eb4b233daa71e58db4a1c83d340f111cf06884115495d7f994c5918b44f2f9b0"
+    },
+    {
+      "canonicalId": "scroll_identify",
+      "file": "app/assets/items/scroll_identify.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\misc\\scroll\\identify_scroll.sprite",
+      "width": 98,
+      "height": 98,
+      "sha256": "040b804316a9a2b63529748b31b9b8cda0a23de4d00cd7cea1eba6e2eed5d00d"
+    },
+    {
+      "canonicalId": "scroll_town_portal",
+      "file": "app/assets/items/scroll_town_portal.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\misc\\scroll\\town_portal_scroll.sprite",
+      "width": 98,
+      "height": 98,
+      "sha256": "26d256ba65e11d528c0c2bee194abe14502c0d3c263aefb68a8e0a65e1a66dea"
+    },
+    {
+      "canonicalId": "potion_health_lesser",
+      "file": "app/assets/items/potion_health_lesser.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\misc\\potion\\lesser_healing_potion.sprite",
+      "width": 98,
+      "height": 98,
+      "sha256": "e92980391d2281c7dca1aba68f6352f87e280966c2c0ee9f8d1b792f6060918d"
+    },
+    {
+      "canonicalId": "potion_health_light",
+      "file": "app/assets/items/potion_health_light.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\misc\\potion\\light_healing_potion.sprite",
+      "width": 98,
+      "height": 98,
+      "sha256": "3780225388aae72794053698239bdd0c6936d667c4b94c0a9da9c94dd83c2998"
+    },
+    {
+      "canonicalId": "potion_health",
+      "file": "app/assets/items/potion_health.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\misc\\potion\\healing_potion.sprite",
+      "width": 98,
+      "height": 98,
+      "sha256": "42cbbfd8e57c4e678d4438d84d35cc2a17066006a9ce7650c90cc69c76284e7d"
+    },
+    {
+      "canonicalId": "potion_mana_lesser",
+      "file": "app/assets/items/potion_mana_lesser.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\misc\\potion\\lesser_mana_potion.sprite",
+      "width": 98,
+      "height": 98,
+      "sha256": "ba78cf00ae4bba326a018409aee1c110334cd187b32ef63cea9545538cc64454"
+    },
+    {
+      "canonicalId": "potion_mana_light",
+      "file": "app/assets/items/potion_mana_light.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\misc\\potion\\light_mana_potion.sprite",
+      "width": 98,
+      "height": 98,
+      "sha256": "b598bfb3939ad21d9107991a3fc8d8967fae17064818745a24639cd5ee4fb140"
+    },
+    {
+      "canonicalId": "potion_mana",
+      "file": "app/assets/items/potion_mana.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\misc\\potion\\mana_potion.sprite",
+      "width": 98,
+      "height": 98,
+      "sha256": "487fb7ba4d6cca855d3a0c465c13f7e42b5553d6ab3acf493e69ec5fab4e58c8"
+    }
+  ]
+}

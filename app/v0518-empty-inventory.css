@@ -1,0 +1,488 @@
+/* Canonical empty inventory: the supplied stone artwork is the ornamental
+   surface. Equipment slots, weapon tabs and all 40 backpack cells remain
+   separate, focusable UI elements positioned on that surface. */
+.game-panel.diablo-panel.empty-inventory-template {
+  box-sizing: border-box;
+  display: block;
+  position: relative;
+  width: min(820px, calc(77.4384dvh - 18.585px), calc(100vw - 24px));
+  height: auto;
+  aspect-ratio: 786 / 1015;
+  min-width: 0;
+  min-height: 0;
+  max-height: calc(100dvh - 24px);
+  overflow: hidden;
+  border: 0;
+  border-image-source: none;
+  background: #1a1918 url('/app/assets/inventory-empty-canonical-v0518.png') center / 100% 100% no-repeat;
+  box-shadow: 0 18px 70px #000, 0 0 0 1px #080706;
+}
+
+.empty-inventory-template .game-panel-header {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  pointer-events: none;
+}
+.empty-inventory-template .game-panel-header::after,
+.empty-inventory-template .panel-sigil,
+.empty-inventory-template #panel-context {
+  display: none;
+}
+.empty-inventory-template .game-panel-header > div {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.empty-inventory-template .panel-close {
+  position: absolute;
+  top: 1.18%;
+  left: 92.11%;
+  width: 5.1%;
+  height: 3.95%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: transparent;
+  font-size: 0;
+  pointer-events: auto;
+}
+.empty-inventory-template .panel-close:hover {
+  border: 0;
+  background: rgba(165, 48, 23, .18);
+  filter: none;
+}
+.empty-inventory-template .panel-close:focus-visible {
+  outline: 2px solid #e8bd75;
+  outline-offset: -2px;
+}
+
+.diablo-panel.empty-inventory-template .game-panel-body.d2-empty-inventory {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  background: transparent;
+}
+.empty-inventory-template .d2-empty-layout,
+.empty-inventory-template .d2-empty-equipment {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.empty-inventory-template .d2-empty-equipment {
+  pointer-events: none;
+}
+
+/* Live inventory keeps its accepted slot geometry; its paper-doll figure is
+   the selected hero, cropped from the same canonical class art as battle. */
+.empty-inventory-template .d2-live-inventory #equipment-slots::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 31%;
+  top: 4%;
+  width: 38%;
+  height: 54%;
+  background-image: var(--inventory-canonical-hero);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: .34;
+  filter: saturate(.72) brightness(.76) drop-shadow(0 5px 5px #000);
+  pointer-events: none;
+}
+
+.empty-inventory-template .d2-empty-slot {
+  position: absolute;
+  box-sizing: border-box;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  pointer-events: auto;
+  cursor: pointer;
+}
+.empty-inventory-template .d2-empty-slot:hover,
+.empty-inventory-template .d2-empty-cell:hover {
+  background: rgba(193, 163, 102, .09);
+  box-shadow: inset 0 0 0 2px rgba(217, 185, 113, .58);
+}
+.empty-inventory-template :is(.d2-empty-slot, .d2-empty-cell, .d2-empty-weapon-tabs button):focus-visible {
+  outline: 2px solid #ead29e;
+  outline-offset: -2px;
+}
+
+.empty-inventory-template .d2-empty-slot[data-slot='weapon']     { left: 8.27%;  top: 15.47%; width: 18.58%; height: 26.5%; }
+.empty-inventory-template .d2-empty-slot[data-slot='offhand']    { left: 72.14%; top: 15.47%; width: 18.58%; height: 26.5%; }
+.empty-inventory-template .d2-empty-slot[data-slot='head']       { left: 40.08%; top: 11.92%; width: 18.58%; height: 14.2%; }
+.empty-inventory-template .d2-empty-slot[data-slot='chest']      { left: 40.08%; top: 27.68%; width: 18.7%;  height: 20.9%; }
+.empty-inventory-template .d2-empty-slot[data-slot='amulet']     { left: 60.18%; top: 22.76%; width: 10.18%; height: 7.9%; }
+.empty-inventory-template .d2-empty-slot[data-slot='hands']      { left: 8.27%;  top: 43.65%; width: 18.58%; height: 14.3%; }
+.empty-inventory-template .d2-empty-slot[data-slot='ring-left']  { left: 28.24%; top: 50.15%; width: 10.56%; height: 7.9%; }
+.empty-inventory-template .d2-empty-slot[data-slot='belt']       { left: 40.08%; top: 50.15%; width: 18.58%; height: 7.9%; }
+.empty-inventory-template .d2-empty-slot[data-slot='ring-right'] { left: 60.18%; top: 50.15%; width: 10.43%; height: 7.9%; }
+.empty-inventory-template .d2-empty-slot[data-slot='feet']       { left: 72.14%; top: 43.65%; width: 18.58%; height: 14.3%; }
+
+.empty-inventory-template .d2-empty-weapon-tabs {
+  position: absolute;
+  top: 11.92%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 18.58%;
+  height: 3.55%;
+  pointer-events: auto;
+}
+.empty-inventory-template .d2-empty-weapon-tabs[data-side='left'] { left: 8.27%; }
+.empty-inventory-template .d2-empty-weapon-tabs[data-side='right'] { left: 72.14%; }
+.empty-inventory-template .d2-empty-weapon-tabs button {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: transparent;
+  font-size: 0;
+  cursor: pointer;
+}
+.empty-inventory-template .d2-empty-weapon-tabs button:hover {
+  background: rgba(221, 187, 113, .1);
+}
+.empty-inventory-template .d2-empty-weapon-tabs button[data-weapon-set='2'].active {
+  box-shadow: inset 0 -2px rgba(145, 200, 238, .8);
+}
+
+.empty-inventory-template .d2-empty-grid {
+  position: absolute;
+  box-sizing: border-box;
+  left: 7.76%;
+  top: 59.41%;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  width: 83.08%;
+  height: 25.42%;
+  gap: 0;
+}
+.empty-inventory-template .d2-empty-cell {
+  box-sizing: border-box;
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.empty-inventory-template .d2-empty-gold {
+  position: absolute;
+  left: 33.33%;
+  top: 86.9%;
+  width: 31.8%;
+  height: 6.6%;
+}
+.empty-inventory-template .d2-empty-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.game-panel.diablo-panel.empty-inventory-template .game-panel-footer.d2-empty-footer {
+  display: none;
+}
+
+/* The approved artwork is also the live inventory for every hero. Its slot and
+   backpack hit areas are shared with the diagnostic empty view above. */
+.game-panel.diablo-panel.empty-inventory-template:has(.d2-live-inventory) {
+  overflow: visible;
+}
+.diablo-panel.empty-inventory-template .game-panel-body.d2-live-inventory {
+  display: block;
+  padding: 0;
+  overflow: visible;
+  min-height: 0;
+  background: transparent;
+}
+.empty-inventory-template .d2-live-inventory .d2-empty-grid.inventory-grid {
+  position: absolute;
+  isolation: isolate;
+  min-height: 0;
+  padding: 0;
+  gap: 0;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.empty-inventory-template .d2-live-inventory .d2-empty-grid.inventory-grid::after {
+  content: "";
+  position: absolute;
+  z-index: 6;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(to right, transparent 0 calc(10% - 1px), rgba(191, 174, 135, .78) calc(10% - 1px) 10%),
+    repeating-linear-gradient(to bottom, transparent 0 calc(25% - 1px), rgba(191, 174, 135, .78) calc(25% - 1px) 25%);
+  box-shadow: inset 0 0 0 1px rgba(191, 174, 135, .72);
+}
+.empty-inventory-template .d2-live-inventory .d2-empty-cell.inventory-cell {
+  min-height: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+.empty-inventory-template .d2-live-inventory .d2-empty-slot.equipped {
+  display: grid;
+  place-items: center;
+  padding: 3px;
+  border: 1px solid rgba(171, 131, 68, .7);
+  background: radial-gradient(ellipse at 50% 38%, rgba(99, 72, 35, .55), rgba(12, 10, 9, .48) 76%);
+  box-shadow: inset 0 0 14px rgba(0, 0, 0, .7), 0 0 6px rgba(199, 148, 62, .25);
+  color: #ead3a5;
+}
+.empty-inventory-template .d2-live-inventory .d2-empty-slot.equipped:hover,
+.empty-inventory-template .d2-live-inventory .d2-empty-slot.item-selected {
+  border-color: #ebcc86;
+  box-shadow: inset 0 0 14px #000, 0 0 8px rgba(233, 194, 116, .65);
+}
+.empty-inventory-template .d2-live-inventory .d2-empty-weapon-tabs button:disabled {
+  cursor: not-allowed;
+}
+.empty-inventory-template .d2-live-item-art {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-width: 0;
+  height: 77%;
+  color: #d7c29a;
+  font: clamp(22px, 4dvh, 49px)/1 Georgia, serif;
+  text-shadow: 0 2px 3px #000, 0 0 8px #af7c39;
+  pointer-events: none;
+}
+.empty-inventory-template .d2-live-item-art .d2-trade-item-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(1px 3px 3px #000);
+}
+/* Long weapons must fit the hand slots rather than painting over the gloves below. */
+.empty-inventory-template .d2-live-inventory .d2-empty-slot.equipped:is([data-slot='weapon'], [data-slot='offhand']) {
+  display: block;
+  overflow: hidden;
+}
+.empty-inventory-template .d2-live-inventory .d2-empty-slot.equipped:is([data-slot='weapon'], [data-slot='offhand']) > .d2-live-item-art {
+  position: absolute;
+  inset: 4px 4px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  overflow: hidden;
+}
+.empty-inventory-template .d2-live-inventory .d2-empty-slot.equipped:is([data-slot='weapon'], [data-slot='offhand']) > .d2-live-item-art .d2-trade-item-art {
+  width: 100%;
+  height: 100%;
+}
+.empty-inventory-template .d2-live-inventory .d2-empty-slot.equipped:is([data-slot='weapon'], [data-slot='offhand']) > .d2-live-item-name {
+  position: absolute;
+  left: 3px;
+  right: 3px;
+  bottom: 2px;
+  width: auto;
+  max-height: 14px;
+}
+.empty-inventory-template .d2-live-item-name {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-height: 25%;
+  overflow: hidden;
+  color: #e7d6b0;
+  font: 600 clamp(8px, 1.05dvh, 12px)/1.1 Georgia, serif;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px #000;
+  pointer-events: none;
+}
+.empty-inventory-template .d2-live-inventory .inventory-item.d2-live-pack-item {
+  z-index: 2;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  margin: 1px;
+  padding: 2px;
+  border: 1px solid #695436;
+  border-radius: 1px;
+  background: radial-gradient(ellipse at center, rgba(77, 61, 39, .8), rgba(19, 15, 12, .93));
+  box-shadow: inset 1px 1px rgba(207, 174, 113, .14), inset -1px -1px #080706, 0 2px 3px #000;
+  color: #e5d0a6;
+  font: inherit;
+}
+.empty-inventory-template .d2-live-inventory .inventory-item.d2-live-pack-item:hover,
+.empty-inventory-template .d2-live-inventory .inventory-item.d2-live-pack-item.item-selected {
+  z-index: 4;
+  border-color: #e4bf78;
+  box-shadow: inset 0 0 7px #000, 0 0 8px rgba(234, 183, 104, .6);
+}
+.empty-inventory-template .d2-live-pack-item.requirements-not-met { border-color: #a35443; }
+.empty-inventory-template .d2-live-pack-item .d2-live-item-art { height: 100%; min-height: 0; }
+.empty-inventory-template .d2-live-pack-item .d2-live-item-name {
+  display: none;
+}
+.empty-inventory-template .d2-live-inventory .d2-empty-gold {
+  display: block;
+  padding: 0;
+  color: #e8d7ad;
+  font: 700 clamp(10px, 1.65dvh, 17px) Georgia, serif;
+  text-shadow: 0 1px 3px #000;
+}
+.empty-inventory-template .d2-live-gold-count {
+  position: absolute;
+  left: 39%;
+  top: 35%;
+  width: 40%;
+  overflow: hidden;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.empty-inventory-template #open-horadric-cube {
+  position: absolute;
+  top: 14%;
+  right: 4%;
+  width: 14%;
+  height: 72%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #c5ae78;
+  font: clamp(14px, 2.2dvh, 24px) Georgia, serif;
+  cursor: pointer;
+}
+.empty-inventory-template #open-horadric-cube:hover,
+.empty-inventory-template #open-horadric-cube:focus-visible { color: #f8dda0; outline: 1px solid #bc9758; }
+.empty-inventory-template .d2-live-owner-tabs {
+  position: absolute;
+  z-index: 3;
+  left: 16%;
+  top: 93.65%;
+  width: 68%;
+  height: 3.2%;
+}
+.empty-inventory-template .d2-live-owner-tabs .owner-tabs {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 1.2%;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.empty-inventory-template .d2-live-owner-tabs .owner-tabs button {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  padding: 1px 3px;
+  border: 1px solid #5b513e;
+  border-radius: 1px;
+  background: linear-gradient(#302b25, #12110f);
+  color: #b9aa8e;
+  font: 600 clamp(8px, 1.12dvh, 12px) Georgia, serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.empty-inventory-template .d2-live-owner-tabs .owner-tabs button.active {
+  border-color: #c7a264;
+  background: linear-gradient(#554531, #221c15);
+  box-shadow: inset 0 0 7px #000, 0 0 4px #a9864f;
+  color: #f0d9aa;
+}
+.empty-inventory-template .d2-live-notice,
+.empty-inventory-template .d2-live-item-details {
+  position: absolute;
+  z-index: 7;
+  left: calc(100% + 12px);
+  width: min(290px, calc((100vw - 100%) / 2 - 28px));
+  box-sizing: border-box;
+  border: 5px ridge #71644e;
+  background: linear-gradient(#36312a, #171513 15%, #11100e);
+  box-shadow: inset 0 0 0 2px #0a0908, 0 12px 32px #000;
+  color: #d4c6a8;
+}
+.empty-inventory-template .d2-live-item-details {
+  top: 10%;
+  max-height: 76%;
+  overflow: auto;
+  padding: 18px 12px 12px;
+}
+.empty-inventory-template .d2-live-notice {
+  top: 87%;
+  max-height: 11%;
+  overflow: auto;
+  padding: 5px 7px;
+  font: 11px/1.25 Georgia, serif;
+}
+.empty-inventory-template .d2-live-item-details[hidden],
+.empty-inventory-template .d2-live-notice[hidden] { display: none; }
+.empty-inventory-template .d2-live-detail-close {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  padding: 0 4px;
+  border: 1px solid #70573a;
+  background: #19120f;
+  color: #e2b77a;
+  font: 19px/1 Georgia, serif;
+  cursor: pointer;
+}
+.empty-inventory-template .d2-live-item-details h3 { padding-right: 16px; font-size: 16px; }
+.empty-inventory-template .d2-live-item-details p { font-size: 11px; }
+.empty-inventory-template .d2-live-item-details .equipment-primary { min-width: 0; min-height: 30px; width: 100%; font-size: 10px; }
+@media (max-width: 1100px) {
+  .empty-inventory-template .d2-live-notice,
+  .empty-inventory-template .d2-live-item-details {
+    position: fixed;
+    left: auto;
+    right: 10px;
+    width: min(280px, 46vw);
+  }
+  .empty-inventory-template .d2-live-item-details { top: 10px; max-height: calc(100dvh - 100px); }
+  .empty-inventory-template .d2-live-notice { top: auto; bottom: 10px; max-height: 80px; }
+}

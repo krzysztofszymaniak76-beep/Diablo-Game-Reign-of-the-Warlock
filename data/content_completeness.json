@@ -1,0 +1,241 @@
+{
+  "datasetId": "d2r-rotw-3.3-private-offline-audit-2026-09-12-v1",
+  "status": "CATEGORY_AUDIT_ONLY_NOT_A_COMPLETE_LIBRARY",
+  "dimensions": [
+    "required",
+    "acquired",
+    "verified",
+    "mechanicsImplemented",
+    "presentationReady",
+    "testsPassed"
+  ],
+  "categories": {
+    "Classes": {
+      "required": 8,
+      "acquired": 8,
+      "verified": 8,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "manifest": "data/skills_manifest.csv",
+      "note": "0 complete classes. Three playable adaptation loadouts plus a reserve profile are not full classes."
+    },
+    "Skills": {
+      "required": 240,
+      "acquired": 232,
+      "verified": 22,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "manifest": "data/skills_manifest.csv",
+      "missingIdentifiers": [
+        "warlock.unresolved.23",
+        "warlock.unresolved.24",
+        "warlock.unresolved.25",
+        "warlock.unresolved.26",
+        "warlock.unresolved.27",
+        "warlock.unresolved.28",
+        "warlock.unresolved.29",
+        "warlock.unresolved.30"
+      ]
+    },
+    "Auras": {
+      "required": null,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "ALL_CANONICAL_AURA_IDS_NOT_IMPORTED"
+      ]
+    },
+    "ItemBases": {
+      "required": null,
+      "acquired": 15,
+      "verified": 15,
+      "mechanicsImplemented": 0,
+      "presentationReady": 3,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "ALL_NON_GRIMOIRE_BASE_IDS_NOT_IMPORTED"
+      ]
+    },
+    "Affixes": {
+      "required": null,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "ALL_CANONICAL_AFFIX_IDS_NOT_IMPORTED"
+      ]
+    },
+    "UniqueItems": {
+      "required": null,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "ALL_CANONICAL_UNIQUE_ITEM_IDS_NOT_IMPORTED"
+      ]
+    },
+    "Sets": {
+      "required": null,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "ALL_CANONICAL_SET_IDS_NOT_IMPORTED"
+      ]
+    },
+    "Runes": {
+      "required": 33,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "r01-r33_NOT_IMPORTED"
+      ]
+    },
+    "Runewords": {
+      "required": null,
+      "acquired": 5,
+      "verified": 5,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "manifest": "data/runewords.rotw-3.3.json",
+      "matcherCoreRecipesTested": 5,
+      "note": "5 matcher recipes tested in core; properties and gameplay pipeline remain missing."
+    },
+    "Gems": {
+      "required": null,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "ALL_CANONICAL_GEM_IDS_NOT_IMPORTED"
+      ]
+    },
+    "Jewels": {
+      "required": null,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "ALL_CANONICAL_JEWEL_IDS_NOT_IMPORTED"
+      ]
+    },
+    "Charms": {
+      "required": null,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "ALL_CANONICAL_CHARM_IDS_NOT_IMPORTED"
+      ]
+    },
+    "Recipes": {
+      "required": null,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "ALL_CANONICAL_RECIPE_IDS_NOT_IMPORTED"
+      ]
+    },
+    "Hirelings": {
+      "required": 4,
+      "acquired": 4,
+      "verified": 4,
+      "mechanicsImplemented": 0,
+      "presentationReady": 4,
+      "testsPassed": 0,
+      "manifest": "data/hireling_manifest.json"
+    },
+    "Monsters": {
+      "required": null,
+      "acquired": 1,
+      "verified": 0,
+      "mechanicsImplemented": 1,
+      "presentationReady": 1,
+      "testsPassed": 1,
+      "missingIdentifiers": [
+        "COMPLETE_PATCH_3_3_MONSTER_TABLE_NOT_IMPORTED"
+      ]
+    },
+    "Areas": {
+      "required": 126,
+      "acquired": 126,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 1,
+      "testsPassed": 0,
+      "manifest": "data/area_manifest.csv"
+    },
+    "Quests": {
+      "required": 27,
+      "acquired": 27,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 1,
+      "testsPassed": 0,
+      "manifest": "data/quest_manifest.csv"
+    },
+    "NPCServices": {
+      "required": null,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "ALL_CANONICAL_NPC_SERVICE_IDS_NOT_IMPORTED"
+      ]
+    },
+    "EndgameContent": {
+      "required": null,
+      "acquired": 0,
+      "verified": 0,
+      "mechanicsImplemented": 0,
+      "presentationReady": 0,
+      "testsPassed": 0,
+      "missingIdentifiers": [
+        "PATCH_3_3_ENDGAME_CONTENT_TABLE_NOT_IMPORTED"
+      ]
+    }
+  },
+  "runtimeMilestones": {
+    "equipment_v051": {
+      "catalog": "data/equipment.v051.json",
+      "baseDefinitions": 15,
+      "classAttributeProfiles": 4,
+      "scope": "normal base items only: requirements, slots, equip/unequip, weapon damage, armor defense sum, save",
+      "status": "IMPLEMENTED_SUBSET_PATCH_UNVERIFIED",
+      "notImplemented": [
+        "affixes",
+        "socket effects",
+        "block",
+        "attack rating/defense hit checks",
+        "durability wear",
+        "complete skill formulas"
+      ]
+    }
+  }
+}

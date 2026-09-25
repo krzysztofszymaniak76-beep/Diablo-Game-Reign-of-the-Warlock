@@ -1,0 +1,71 @@
+/* v0.5.12: cosmetic skin only. No map geometry, world layers or input rules. */
+.game-panel.sanctuary-map {
+ --map-iron:url('/app/assets/exploration/map-ironstone-v0512.png');
+ --map-stone:linear-gradient(#10101255,#060608aa),var(--map-iron);
+ border-width:32px;border-image:url('/app/assets/exploration/map-ironframe-v0512.png') 16% stretch;
+ background:var(--map-stone);background-size:auto,640px;
+ box-shadow:0 0 0 2px #080708,0 0 0 3px #3f3b36,0 30px 100px #000,inset 0 0 0 3px #000,inset 0 0 70px #000;
+}
+.sanctuary-map .game-panel-header {
+ background:linear-gradient(90deg,#030304de,transparent 25% 75%,#030304de),linear-gradient(#1e1c1970,#080709bb),var(--map-iron);
+ background-size:auto,auto,550px;border-bottom:4px ridge #373333;
+ box-shadow:inset 0 2px #5a5146,inset 0 -10px 14px #000;
+}
+.sanctuary-map .game-panel-header::before {
+ inset:7px 90px 10px;background:none;border:1px solid #39342e;box-shadow:0 1px #000,inset 0 1px #000;
+ clip-path:polygon(0 0,38% 0,38% 5%,1% 5%,1% 95%,38% 95%,38% 100%,0 100%,0 0,100% 0,100% 100%,62% 100%,62% 95%,99% 95%,99% 5%,62% 5%,62% 0);
+ opacity:.7;
+}
+.sanctuary-map .game-panel-header::after {height:1px;background:linear-gradient(90deg,transparent,#704435,transparent);}
+.sanctuary-map #panel-title {color:#c3aa7a;letter-spacing:.09em;text-shadow:0 2px 1px #000,0 -1px #ddd2ae33,2px 3px 8px #000;}
+.sanctuary-map #panel-context {color:#a39a88;}
+.sanctuary-map .panel-sigil {background:url('/app/assets/exploration/map-seal-v0512.svg') center/40px 57px no-repeat;filter:drop-shadow(0 3px 2px #000);}
+.sanctuary-map .game-panel-body {background:linear-gradient(90deg,#07070866,transparent 10% 85%,#07070888);}
+.sanctuary-map .exploration-map-shell {border-color:#373536;border-style:ridge;box-shadow:0 0 0 2px #060607,0 0 0 3px #45403a,inset 0 0 0 3px #000;}
+.sanctuary-map .exploration-toolbar {background:linear-gradient(#16161855,#060607a8),var(--map-iron);background-size:auto,440px;border-bottom-color:#373434;box-shadow:inset 0 1px #544b42,inset 0 -6px 8px #000;}
+.sanctuary-map .exploration-toolbar h3 {color:#b9aa91;}
+.sanctuary-map .exploration-toolbar small {color:#aaa196;}
+.sanctuary-map button:not(.panel-close) {
+ border:3px ridge #514941;color:#c8b79b;
+ background:linear-gradient(#44403c55,#080808bb),var(--map-iron);background-size:auto,340px;
+ box-shadow:inset 0 0 0 1px #000,inset 0 2px 1px #8e7f6229,inset 0 -5px 9px #000,0 3px 4px #000;
+}
+.sanctuary-map button:not(:disabled):hover {border-color:#8e7760;color:#f0debd;background-color:#49382c;filter:brightness(1.15);}
+.sanctuary-map button:not(:disabled):active {box-shadow:inset 0 4px 8px #000;}
+.sanctuary-map button:focus-visible {outline:2px solid #c4a477;outline-offset:2px;}
+.sanctuary-map .panel-close {color:#c3ae83;border:3px ridge #625444;background:linear-gradient(#342e2690,#09090bee),var(--map-iron);background-size:auto,180px;box-shadow:0 0 0 2px #060607,inset 0 0 6px #000;}
+.sanctuary-map .exploration-info {
+ border:9px ridge #373435;background:linear-gradient(#08080988,#080609b5),var(--map-iron);background-size:auto,470px;
+ border-image:url('/app/assets/exploration/map-ironframe-v0512.png') 16% stretch;
+ box-shadow:inset 0 0 0 2px #030304,inset 8px 0 16px #000,inset -8px 0 16px #000,inset 0 0 45px #000,0 0 0 2px #050506;
+}
+.sanctuary-map .exploration-info::after {inset:auto 28px 16px;height:200px;background:url('/app/assets/exploration/map-seal-v0512.svg') center/100px 140px no-repeat;opacity:.17;filter:drop-shadow(0 4px 1px #000);}
+.sanctuary-map .exploration-info>.overline {color:#b6a082;border-color:#514239;text-shadow:0 2px #000;}
+.sanctuary-map .exploration-info h3 {color:#cbbba0;text-shadow:0 2px 3px #000;}
+.sanctuary-map .exploration-info p {color:#b5ada0;}
+.sanctuary-map .exploration-info .map-location-copy {color:#bfb3a2;}
+.sanctuary-map .exploration-info .map-discovery {border-color:#423932;}
+.sanctuary-map .exploration-info .map-discovery b {color:#d1bb94;}
+.sanctuary-map .map-status {border-color:#423932;color:#b4ab9b;}
+.sanctuary-map .map-status b {color:#bfad92;}
+.sanctuary-map .act-overview summary {color:#c3af90;}
+.sanctuary-map .exploration-info>.data-warning {border-color:#44392f;color:#afa18d;}
+.sanctuary-map .travel-decisions {border-top-color:#3f3935;background:linear-gradient(#17151766,#080609ad),var(--map-iron);background-size:auto,480px;box-shadow:inset 0 3px 5px #000;}
+.sanctuary-map .travel-caption {color:#c2af90;}
+.sanctuary-map .travel-caption small {color:#ada393;}
+.sanctuary-map button.travel-card {
+ border:5px ridge #514b45;padding:7px 15px;
+ background:linear-gradient(100deg,#090a0ddd,transparent 18% 80%,#090a0ddd),linear-gradient(#17171955,#100809aa),var(--map-iron);
+ background-size:auto,auto,420px;clip-path:polygon(7px 0,calc(100% - 7px) 0,100% 7px,100% calc(100% - 7px),calc(100% - 7px) 100%,7px 100%,0 calc(100% - 7px),0 7px);
+ box-shadow:inset 0 0 0 2px #050507,inset 0 0 18px #000,0 3px 4px #000;
+}
+.sanctuary-map .travel-card::before,.sanctuary-map .travel-card::after {content:'';position:absolute;pointer-events:none;top:calc(50% - 3px);width:5px;height:5px;background:linear-gradient(135deg,#817362,#171616 80%);border:1px solid #080809;box-shadow:0 1px 2px #000;transform:rotate(45deg);}
+.sanctuary-map .travel-card::before {left:3px;}.sanctuary-map .travel-card::after {right:3px;}
+.sanctuary-map .travel-card strong {color:#d3bfa1;}
+.sanctuary-map .travel-direction {color:#b4a18a;}
+.sanctuary-map .travel-card small {color:#b1a797;}
+.sanctuary-map .travel-card:focus-visible {outline:none;border-color:#b69c74;box-shadow:inset 0 0 0 2px #ccb081,inset 0 0 18px #000;}
+.sanctuary-map .exploration-hint {border-color:#3c3530;background:linear-gradient(#09090a77,#08080aaa),var(--map-iron);background-size:auto,400px;color:#b0a594;}
+.sanctuary-map .game-panel-footer {border-color:#393532;background:#05050680;color:#aa9e8b;}
+.sanctuary-map .game-panel-footer kbd {border-color:#53483c;background:#100e0d;color:#c7b696;}
+@media(max-height:780px) {.game-panel.sanctuary-map {border-width:24px;}.sanctuary-map button.travel-card {padding:4px 13px;}}

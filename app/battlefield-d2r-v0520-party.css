@@ -1,0 +1,147 @@
+/* Battle-only compact party selector. The original #party buttons and their
+   click/focus handlers remain in the DOM; only their presentation changes. */
+#app:not(.camp-mode) .combat-layout.stage-two-layout {
+  grid-template-columns: clamp(136px, 8.4vw, 164px) minmax(0, 1fr);
+  gap: 0;
+}
+
+#app:not(.camp-mode) .combat-layout.stage-two-layout > .party-panel {
+  z-index: 8;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  min-width: 0;
+  padding: 11px 5px 6px 6px;
+  overflow: hidden;
+  border: 0;
+  border-right: 1px solid rgba(99, 104, 104, .36);
+  background: linear-gradient(90deg, rgba(7, 9, 10, .91), rgba(16, 20, 21, .68) 68%, rgba(7, 9, 10, .46));
+  box-shadow: inset -3px 0 12px rgba(0, 0, 0, .62);
+}
+
+#app:not(.camp-mode) .party-panel::before,
+#app:not(.camp-mode) .party-panel::after,
+#app:not(.camp-mode) .party-panel > .panel-heading,
+#app:not(.camp-mode) .party-panel > .identity-legend,
+#app:not(.camp-mode) .party-panel > .party-footer {
+  display: none;
+}
+
+#app:not(.camp-mode) .party-panel > .party-list {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 0;
+  padding: 0;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(105, 112, 112, .35) transparent;
+}
+
+#app:not(.camp-mode) .party-list > .hero {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 48px;
+  margin: 0;
+  padding: 3px 5px 3px 3px;
+  overflow: hidden;
+  border: 1px solid rgba(87, 95, 96, .34);
+  border-radius: 1px;
+  background: linear-gradient(90deg, rgba(33, 39, 39, .50), rgba(7, 10, 11, .28));
+  box-shadow: inset 0 1px rgba(196, 199, 194, .05);
+  transform: none;
+}
+
+#app:not(.camp-mode) .party-list > .hero::before { display: none; }
+#app:not(.camp-mode) .party-list > .hero::after {
+  top: 7px;
+  bottom: 7px;
+  width: 2px;
+  opacity: .55;
+  box-shadow: none;
+}
+#app:not(.camp-mode) .party-list > .hero:hover {
+  border-color: rgba(153, 161, 157, .68);
+  background: linear-gradient(90deg, rgba(43, 49, 48, .69), rgba(10, 14, 15, .47));
+  transform: none;
+}
+#app:not(.camp-mode) .party-list > .hero:focus-visible {
+  outline: 2px solid #9caeaa;
+  outline-offset: -2px;
+}
+#app:not(.camp-mode) .party-list > .hero.inspected,
+#app:not(.camp-mode) .party-list > .hero.active,
+#app:not(.camp-mode) .party-list > .hero.acting {
+  border-color: rgba(174, 183, 178, .72);
+  background: linear-gradient(90deg, rgba(54, 61, 61, .77), rgba(10, 13, 14, .46));
+  box-shadow: inset 0 0 0 1px rgba(169, 183, 178, .12);
+}
+#app:not(.camp-mode) .party-list > .hero.inspected::after,
+#app:not(.camp-mode) .party-list > .hero.active::after,
+#app:not(.camp-mode) .party-list > .hero.acting::after {
+  width: 3px;
+  background: #9aada9;
+  box-shadow: 0 0 5px rgba(153, 174, 169, .5);
+}
+
+#app:not(.camp-mode) .party-list .hero-portrait-frame {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(132, 139, 136, .60);
+  border-radius: 1px;
+  clip-path: none;
+  background: #121718;
+  box-shadow: inset 0 0 8px #000;
+}
+#app:not(.camp-mode) .party-list .hero-portrait-frame img {
+  opacity: .76;
+  filter: saturate(.65) contrast(1.05) brightness(.83);
+}
+#app:not(.camp-mode) .party-list > .hero:hover .hero-portrait-frame img,
+#app:not(.camp-mode) .party-list > .hero.acting .hero-portrait-frame img {
+  opacity: .9;
+}
+#app:not(.camp-mode) .party-list .portrait-fallback {
+  opacity: .75;
+  font-size: 19px;
+}
+#app:not(.camp-mode) .party-list .hero-info { align-self: center; }
+#app:not(.camp-mode) .party-list .hero-title {
+  display: block;
+  min-width: 0;
+  margin: 0;
+}
+#app:not(.camp-mode) .party-list .hero-title b {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #d4d7d3;
+  font: 500 10px/1.16 Georgia, "Palatino Linotype", serif;
+  letter-spacing: .01em;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+#app:not(.camp-mode) .party-list .hero-title em,
+#app:not(.camp-mode) .party-list .hero-title::after,
+#app:not(.camp-mode) .party-list .hero-class,
+#app:not(.camp-mode) .party-list .resource-line,
+#app:not(.camp-mode) .party-list .hero-build,
+#app:not(.camp-mode) .party-list .hero-statuses {
+  display: none;
+}
+
+@media (max-width: 850px) {
+  #app:not(.camp-mode) .combat-layout.stage-two-layout {
+    grid-template-columns: 115px minmax(0, 1fr);
+  }
+  #app:not(.camp-mode) .party-list > .hero {
+    grid-template-columns: 34px minmax(0, 1fr);
+    min-height: 40px;
+    gap: 4px;
+  }
+  #app:not(.camp-mode) .party-list .hero-portrait-frame { width: 34px; height: 34px; }
+  #app:not(.camp-mode) .party-list .hero-title b { font-size: 9px; }
+}

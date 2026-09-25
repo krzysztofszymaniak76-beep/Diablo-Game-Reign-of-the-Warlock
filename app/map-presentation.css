@@ -1,0 +1,102 @@
+/* Presentation is deliberately limited to the two accepted Act I landscapes. */
+.sanctuary-map .exploration-map-shell {grid-template-rows:auto minmax(0,1fr) auto auto;}
+.sanctuary-map .travel-decisions {padding:9px 12px 11px;border-top:3px ridge #4c503f;background:linear-gradient(#1d221bf2,#090d0bf5),url('/app/assets/exploration/den-earth-v059.png') center/400px;}
+.sanctuary-map .travel-caption {display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px;font:small-caps 15px Georgia,serif;color:#c7b785;}
+.sanctuary-map .travel-caption small {font:italic 11px Georgia,serif;color:#929883;}
+.sanctuary-map .travel-cards {display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;}
+.sanctuary-map button.travel-card {position:relative;display:flex;flex-direction:column;align-items:flex-start;gap:5px;min-height:80px;padding:9px 12px;text-align:left;border-width:3px 5px;}
+.sanctuary-map .travel-card strong {font:small-caps 15px/1.2 Georgia,serif;color:#d0bd90;}
+.sanctuary-map .travel-direction {font:10px Georgia,serif;letter-spacing:.08em;color:#a79b77;}
+.sanctuary-map .travel-card small {font:italic 11px Georgia,serif;color:#969d85;}
+.sanctuary-map .travel-card:focus-visible {outline:2px solid #d1bf83;outline-offset:2px;}
+.sanctuary-map .travel-map-number {font:bold 19px Georgia,serif;fill:#dfce98;stroke:#11180f;stroke-width:4px;paint-order:stroke;text-anchor:middle;pointer-events:none;}
+.sanctuary-map .decision-focus .land-step {stroke:#ead496;stroke-width:3px;}
+.sanctuary-map .travel-route-preview {fill:none;stroke:#ead496;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:10 8;opacity:0;pointer-events:none;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 3px #16120b);transition:opacity .14s ease;}
+.sanctuary-map .travel-route-preview.is-route-preview-active {opacity:.96;animation:travel-route-march 1.1s linear infinite;}
+.sanctuary-map #travel-route-arrow path {fill:#ead496;stroke:#201a10;stroke-width:1.2;}
+@keyframes travel-route-march {to {stroke-dashoffset:-18;}}
+
+/* Remembered ground remains legible; only the present surroundings keep their light. */
+.sanctuary-map .land-memory-shade {fill:#020403;opacity:.6;pointer-events:none;}
+.sanctuary-map .den-landscape .land-memory-shade {fill:#020101;opacity:.68;}
+.sanctuary-map .landscape-sector.fog .land-step {opacity:0;}
+.sanctuary-map .landscape-sector.fog.reachable:hover .land-step,
+.sanctuary-map .landscape-sector.fog.reachable:focus-visible .land-step {opacity:.72;fill:#c2b07720;stroke:#d8c898;stroke-dasharray:3 5;}
+.sanctuary-map .land-waypoint-glow {fill:#2e6dbe;opacity:.29;filter:url(#map-glow);animation:land-waypoint-pulse 3.6s ease-in-out infinite;}
+.sanctuary-map .land-waypoint-ring {fill:#142033;stroke:#709bc7;stroke-width:2;opacity:.9;}
+.sanctuary-map .land-waypoint-runes {fill:none;stroke:#9abde5;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;opacity:.87;}
+@keyframes land-waypoint-pulse {50% {opacity:.44;}}
+@media(max-height:780px) {
+ .sanctuary-map .travel-decisions {padding:5px 8px 7px;}
+ .sanctuary-map button.travel-card {min-height:64px;padding:6px 8px;gap:3px;}
+ .sanctuary-map .travel-caption {margin-bottom:5px;font-size:13px;}
+ .sanctuary-map .travel-caption small {font-size:10px;}
+}
+.game-panel.sanctuary-map {
+  --map-stone: linear-gradient(#242623d9,#151713eb),url('/app/assets/exploration/den-earth-v059.png');
+  width:min(1460px,calc(100vw - 44px));height:min(880px,calc(100vh - 38px));
+  grid-template-rows:78px minmax(0,1fr) 26px;
+  border:24px solid transparent;border-image:url('/app/assets/exploration/map-stoneframe-v0510.svg') 32 round;
+  background:var(--map-stone);background-size:auto,400px;
+  box-shadow:0 0 0 2px #050604,0 0 0 3px #5d5c4d,0 24px 90px #000,inset 0 0 60px #000;
+}
+.sanctuary-map::before,.sanctuary-map::after {display:none;}
+.sanctuary-map .game-panel-header {
+  grid-template-columns:58px minmax(0,1fr) 58px;gap:14px;padding:6px 24px 12px;
+  background:linear-gradient(90deg,#090c0aea,transparent 30% 70%,#090c0aea),var(--map-stone);
+  border-bottom:4px ridge #57594d;box-shadow:inset 0 1px #99917a,inset 0 -8px 10px #0008;
+}
+.sanctuary-map .game-panel-header::after {left:28%;right:28%;height:3px;bottom:0;background:linear-gradient(90deg,transparent,#b3a071,transparent);}
+.sanctuary-map .game-panel-header::before {content:'';position:absolute;inset:0;pointer-events:none;background:url('/app/assets/exploration/map-flourish-v0510.svg') left 75px center/205px 38px no-repeat,url('/app/assets/exploration/map-flourish-v0510.svg') right 75px center/205px 38px no-repeat;opacity:.7;}
+.sanctuary-map .game-panel-header>div {text-align:center;}
+.sanctuary-map #panel-context {font:10px Georgia,serif;letter-spacing:.22em;color:#9e987f;}
+.sanctuary-map #panel-title {font:small-caps 500 30px/1.2 Georgia,serif;letter-spacing:.1em;color:#cbb77c;text-shadow:0 2px 2px #000,0 -1px #e8dca533;margin:5px 0 0;}
+.sanctuary-map .panel-sigil {width:52px;height:60px;transform:none;border:none;color:transparent;text-shadow:none;background:url('/app/assets/exploration/map-relief-v0510.svg') center/52px 66px no-repeat;filter:drop-shadow(0 2px 1px #000);}
+.sanctuary-map .panel-close {justify-self:end;width:32px;height:32px;font-size:25px;color:#bea575;border:3px ridge #79705b;background:linear-gradient(135deg,#454237,#121713 70%);box-shadow:inset 0 0 0 1px #040605,0 2px 4px #000;}
+.sanctuary-map .game-panel-body {padding:14px 12px 10px;overflow:hidden;}
+.sanctuary-map .exploration-layout {grid-template-columns:minmax(0,1fr) 248px;gap:16px;}
+.sanctuary-map .exploration-map-shell {border:6px ridge #41473c;box-shadow:0 0 0 1px #050706,inset 0 0 0 2px #000;background:#050806;}
+.sanctuary-map .exploration-toolbar {min-height:52px;padding:5px 11px;background:linear-gradient(#21271fed,#0e140feb),url('/app/assets/exploration/den-earth-v059.png') center/400px;border-bottom:3px ridge #555449;gap:8px;}
+.sanctuary-map .exploration-toolbar h3 {font:small-caps 16px/1.2 Georgia,serif;letter-spacing:.08em;color:#b4aa8b;}
+.sanctuary-map .exploration-toolbar small {font:10px Georgia,serif;color:#8e927f;}
+.sanctuary-map button:not(.panel-close) {border:3px ridge #535746;color:#c7b785;background:linear-gradient(#3e4238bb,#131a15dd),url('/app/assets/exploration/den-earth-v059.png') center/280px;box-shadow:inset 0 0 0 1px #080c07,inset 0 0 9px #000,0 2px 3px #000;min-height:32px;font:small-caps 12px Georgia,serif;letter-spacing:.04em;text-shadow:0 1px 2px #000;}
+.sanctuary-map button:not(:disabled):hover {border-color:#a69b76;color:#eee0b1;background-color:#706349;filter:brightness(1.15);}
+.sanctuary-map button:disabled {opacity:.55;cursor:not-allowed;}
+.sanctuary-map .exploration-toolbar button:first-child,.sanctuary-map .exploration-toolbar button:last-child {font-size:19px;width:30px;}
+.sanctuary-map .exploration-map {min-height:0;}
+.sanctuary-map .exploration-hint {padding:6px 8px;border-top:3px ridge #42473a;background:var(--map-stone);font:10px Georgia,serif;letter-spacing:.02em;color:#9e9b85;}
+.sanctuary-map .exploration-info {position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:stretch;padding:20px 15px 12px;border:9px ridge #41473c;background:linear-gradient(#1e2119cf,#090c08ed),url('/app/assets/exploration/den-earth-v059.png') center/400px;box-shadow:inset 0 0 25px #000,0 0 0 1px #050604;}
+.sanctuary-map .exploration-info::after {content:'';position:absolute;z-index:-1;pointer-events:none;inset:auto 16px 8px;height:230px;background:url('/app/assets/exploration/map-relief-v0510.svg') bottom center/180px 230px no-repeat;opacity:.2;}
+.sanctuary-map .exploration-info>.overline {font:small-caps 13px Georgia,serif;letter-spacing:.13em;color:#b8ac82;text-align:center;padding-bottom:12px;border-bottom:3px double #595743;}
+.sanctuary-map .exploration-info h3 {font:small-caps 22px Georgia,serif;color:#caba8c;text-align:center;margin:17px 0 9px;}
+.sanctuary-map .exploration-info p {font:13px/1.6 Georgia,serif;color:#a5a58f;}
+.sanctuary-map .exploration-info .map-location-copy {font-style:italic;color:#beb59d;text-align:center;margin:0 0 16px;}
+.sanctuary-map .exploration-info .map-discovery {border-top:1px solid #454a39;padding-top:13px;margin:0;}
+.sanctuary-map .exploration-info .map-discovery b {color:#d4c491;font-weight:normal;}
+.sanctuary-map .map-status {background:transparent;border:none;border-top:1px solid #454a39;border-bottom:1px solid #454a39;margin:14px 0 10px;padding:12px 0;font:12px Georgia,serif;color:#a3aa92;}
+.sanctuary-map .map-status b {font-weight:normal;color:#c0b78d;}
+.sanctuary-map .map-status.active {color:#db9578;}
+.sanctuary-map .map-status.completed {color:#91aa7c;}
+.sanctuary-map .map-exits {border:0;margin:0;padding:0;}
+.sanctuary-map .exploration-info .metal-button {font-size:14px;min-height:43px;padding:8px 6px;line-height:1.35;}
+.sanctuary-map .act-overview {margin:15px 0 5px;font:12px/1.5 Georgia,serif;}
+.sanctuary-map .act-overview summary {color:#b8ac84;letter-spacing:.02em;}
+.sanctuary-map .act-overview p {font-size:11px;}
+.sanctuary-map .exploration-info>.data-warning {margin-top:auto;padding:16px 0 0;border:0;border-top:3px double #444938;background:transparent;font:italic 11px/1.5 Georgia,serif;color:#909681;}
+.sanctuary-map .game-panel-footer {border-top:3px ridge #4b5142;background:transparent;color:#898d79;font:10px Georgia,serif;letter-spacing:.03em;padding:3px 10px;}
+.sanctuary-map .game-panel-footer kbd {border:2px ridge #585d4a;background:#121710;color:#bdb18b;font:9px Georgia,serif;min-width:28px;padding:1px 5px;}
+@media(max-height:780px) {
+ .game-panel.sanctuary-map {border-width:16px;grid-template-rows:65px minmax(0,1fr) 25px;}
+ .sanctuary-map #panel-title {font-size:25px;}
+ .sanctuary-map .game-panel-body {padding:9px 8px 7px;}
+ .sanctuary-map .exploration-info {padding:13px 12px 8px;}
+ .sanctuary-map .exploration-info h3 {font-size:19px;margin:11px 0 7px;}
+ .sanctuary-map .exploration-info p {font-size:12px;}
+ .sanctuary-map .exploration-info .map-location-copy {margin-bottom:10px;}
+}
+@media(max-width:1300px) {
+ .sanctuary-map .exploration-layout {grid-template-columns:minmax(0,1fr) 224px;gap:10px;}
+ .sanctuary-map .exploration-toolbar button {padding:3px 6px;}
+ .sanctuary-map .exploration-toolbar small {display:none;}
+ .sanctuary-map .exploration-toolbar h3 {font-size:15px;}
+}

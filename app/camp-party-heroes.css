@@ -1,0 +1,74 @@
+.camp-party-heroes {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.camp-party-hero {
+  position: absolute;
+  left: var(--camp-hero-x);
+  top: var(--camp-hero-y);
+  width: clamp(108px, 8vw, 216px);
+  height: clamp(120px, 15.5vh, 224px);
+  margin: 0;
+  transform: translate(-50%, -100%);
+  filter: drop-shadow(2px 11px 7px rgba(0, 0, 0, .9));
+}
+
+.camp-party-hero::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 25%;
+  right: 25%;
+  bottom: 17px;
+  height: 13px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, .58);
+  filter: blur(5px);
+}
+
+.camp-party-hero img {
+  position: absolute;
+  left: 50%;
+  bottom: 19px;
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: calc(100% - 19px);
+  object-fit: contain;
+  object-position: center bottom;
+  transform: translateX(-50%);
+}
+
+.camp-party-hero figcaption {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 0;
+  width: max-content;
+  max-width: 100%;
+  padding: 2px 7px;
+  color: #e0cba2;
+  background: rgba(6, 5, 4, .76);
+  font: 11px Georgia, serif;
+  text-align: center;
+  text-shadow: 0 1px 2px #000;
+  transform: translateX(-50%);
+}
+
+/* Portrait busts are exact crops from the same canonical class art as camp and battle. */
+.hero-portrait-frame img {
+  object-fit: cover;
+  object-position: 50% 12%;
+  transform: none;
+}
+
+.hero-portrait-frame img:not([hidden]) + .portrait-fallback { display: none; }
+
+.active-portrait img {
+  object-fit: cover;
+  object-position: 50% 10%;
+  transform: none;
+}

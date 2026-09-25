@@ -1,0 +1,127 @@
+area_id,english_name,act,kind,data_status,implementation_status
+act1.rogue_encampment,Rogue Encampment,1,town,historical_revalidation_required,not_implemented
+act1.blood_moor,Blood Moor,1,overworld,historical_revalidation_required,presentation_prototype
+act1.den_of_evil,Den of Evil,1,dungeon,historical_revalidation_required,not_implemented
+act1.cold_plains,Cold Plains,1,overworld,historical_revalidation_required,not_implemented
+act1.cave_1,Cave Level 1,1,dungeon,historical_revalidation_required,not_implemented
+act1.cave_2,Cave Level 2,1,dungeon,historical_revalidation_required,not_implemented
+act1.burial_grounds,Burial Grounds,1,overworld,historical_revalidation_required,not_implemented
+act1.crypt,Crypt,1,dungeon,historical_revalidation_required,not_implemented
+act1.mausoleum,Mausoleum,1,dungeon,historical_revalidation_required,not_implemented
+act1.stony_field,Stony Field,1,overworld,historical_revalidation_required,not_implemented
+act1.tristram,Tristram,1,quest_area,historical_revalidation_required,not_implemented
+act1.underground_passage_1,Underground Passage Level 1,1,dungeon,historical_revalidation_required,not_implemented
+act1.underground_passage_2,Underground Passage Level 2,1,dungeon,historical_revalidation_required,not_implemented
+act1.dark_wood,Dark Wood,1,overworld,historical_revalidation_required,not_implemented
+act1.black_marsh,Black Marsh,1,overworld,historical_revalidation_required,not_implemented
+act1.hole_1,Hole Level 1,1,dungeon,historical_revalidation_required,not_implemented
+act1.hole_2,Hole Level 2,1,dungeon,historical_revalidation_required,not_implemented
+act1.forgotten_tower,Forgotten Tower,1,entrance,historical_revalidation_required,not_implemented
+act1.tower_cellar_1,Tower Cellar Level 1,1,dungeon,historical_revalidation_required,not_implemented
+act1.tower_cellar_2,Tower Cellar Level 2,1,dungeon,historical_revalidation_required,not_implemented
+act1.tower_cellar_3,Tower Cellar Level 3,1,dungeon,historical_revalidation_required,not_implemented
+act1.tower_cellar_4,Tower Cellar Level 4,1,dungeon,historical_revalidation_required,not_implemented
+act1.tower_cellar_5,Tower Cellar Level 5,1,dungeon,historical_revalidation_required,not_implemented
+act1.tamoe_highland,Tamoe Highland,1,overworld,historical_revalidation_required,not_implemented
+act1.pit_1,Pit Level 1,1,dungeon,historical_revalidation_required,not_implemented
+act1.pit_2,Pit Level 2,1,dungeon,historical_revalidation_required,not_implemented
+act1.monastery_gate,Monastery Gate,1,overworld,historical_revalidation_required,not_implemented
+act1.outer_cloister,Outer Cloister,1,overworld,historical_revalidation_required,not_implemented
+act1.barracks,Barracks,1,dungeon,historical_revalidation_required,not_implemented
+act1.jail_1,Jail Level 1,1,dungeon,historical_revalidation_required,not_implemented
+act1.jail_2,Jail Level 2,1,dungeon,historical_revalidation_required,not_implemented
+act1.jail_3,Jail Level 3,1,dungeon,historical_revalidation_required,not_implemented
+act1.inner_cloister,Inner Cloister,1,overworld,historical_revalidation_required,not_implemented
+act1.cathedral,Cathedral,1,dungeon,historical_revalidation_required,not_implemented
+act1.catacombs_1,Catacombs Level 1,1,dungeon,historical_revalidation_required,not_implemented
+act1.catacombs_2,Catacombs Level 2,1,dungeon,historical_revalidation_required,not_implemented
+act1.catacombs_3,Catacombs Level 3,1,dungeon,historical_revalidation_required,not_implemented
+act1.catacombs_4,Catacombs Level 4,1,boss_area,historical_revalidation_required,not_implemented
+act2.lut_gholein,Lut Gholein,2,town,historical_revalidation_required,not_implemented
+act2.sewers_1,Sewers Level 1,2,dungeon,historical_revalidation_required,not_implemented
+act2.sewers_2,Sewers Level 2,2,dungeon,historical_revalidation_required,not_implemented
+act2.sewers_3,Sewers Level 3,2,dungeon,historical_revalidation_required,not_implemented
+act2.rocky_waste,Rocky Waste,2,overworld,historical_revalidation_required,not_implemented
+act2.stony_tomb_1,Stony Tomb Level 1,2,dungeon,historical_revalidation_required,not_implemented
+act2.stony_tomb_2,Stony Tomb Level 2,2,dungeon,historical_revalidation_required,not_implemented
+act2.dry_hills,Dry Hills,2,overworld,historical_revalidation_required,not_implemented
+act2.halls_dead_1,Halls of the Dead Level 1,2,dungeon,historical_revalidation_required,not_implemented
+act2.halls_dead_2,Halls of the Dead Level 2,2,dungeon,historical_revalidation_required,not_implemented
+act2.halls_dead_3,Halls of the Dead Level 3,2,dungeon,historical_revalidation_required,not_implemented
+act2.far_oasis,Far Oasis,2,overworld,historical_revalidation_required,not_implemented
+act2.maggot_lair_1,Maggot Lair Level 1,2,dungeon,historical_revalidation_required,not_implemented
+act2.maggot_lair_2,Maggot Lair Level 2,2,dungeon,historical_revalidation_required,not_implemented
+act2.maggot_lair_3,Maggot Lair Level 3,2,dungeon,historical_revalidation_required,not_implemented
+act2.lost_city,Lost City,2,overworld,historical_revalidation_required,not_implemented
+act2.ancient_tunnels,Ancient Tunnels,2,dungeon,historical_revalidation_required,not_implemented
+act2.valley_snakes,Valley of Snakes,2,overworld,historical_revalidation_required,not_implemented
+act2.claw_viper_1,Claw Viper Temple Level 1,2,dungeon,historical_revalidation_required,not_implemented
+act2.claw_viper_2,Claw Viper Temple Level 2,2,dungeon,historical_revalidation_required,not_implemented
+act2.harem_1,Harem Level 1,2,dungeon,historical_revalidation_required,not_implemented
+act2.harem_2,Harem Level 2,2,dungeon,historical_revalidation_required,not_implemented
+act2.palace_cellar_1,Palace Cellar Level 1,2,dungeon,historical_revalidation_required,not_implemented
+act2.palace_cellar_2,Palace Cellar Level 2,2,dungeon,historical_revalidation_required,not_implemented
+act2.palace_cellar_3,Palace Cellar Level 3,2,dungeon,historical_revalidation_required,not_implemented
+act2.arcane_sanctuary,Arcane Sanctuary,2,dungeon,historical_revalidation_required,not_implemented
+act2.canyon_magi,Canyon of the Magi,2,overworld,historical_revalidation_required,not_implemented
+act2.tal_rasha_tombs,Tal Rasha's Tombs,2,dungeon_group,historical_revalidation_required,not_implemented
+act2.duriels_lair,Duriel's Lair,2,boss_area,historical_revalidation_required,not_implemented
+act3.kurast_docks,Kurast Docks,3,town,historical_revalidation_required,not_implemented
+act3.spider_forest,Spider Forest,3,overworld,historical_revalidation_required,not_implemented
+act3.spider_cavern,Spider Cavern,3,dungeon,historical_revalidation_required,not_implemented
+act3.arachnid_lair,Arachnid Lair,3,dungeon,historical_revalidation_required,not_implemented
+act3.great_marsh,Great Marsh,3,overworld,historical_revalidation_required,not_implemented
+act3.flayer_jungle,Flayer Jungle,3,overworld,historical_revalidation_required,not_implemented
+act3.flayer_dungeon_1,Flayer Dungeon Level 1,3,dungeon,historical_revalidation_required,not_implemented
+act3.flayer_dungeon_2,Flayer Dungeon Level 2,3,dungeon,historical_revalidation_required,not_implemented
+act3.flayer_dungeon_3,Flayer Dungeon Level 3,3,dungeon,historical_revalidation_required,not_implemented
+act3.swampy_pit_1,Swampy Pit Level 1,3,dungeon,historical_revalidation_required,not_implemented
+act3.swampy_pit_2,Swampy Pit Level 2,3,dungeon,historical_revalidation_required,not_implemented
+act3.swampy_pit_3,Swampy Pit Level 3,3,dungeon,historical_revalidation_required,not_implemented
+act3.lower_kurast,Lower Kurast,3,overworld,historical_revalidation_required,not_implemented
+act3.kurast_bazaar,Kurast Bazaar,3,overworld,historical_revalidation_required,not_implemented
+act3.kurast_sewers_1,Sewers Level 1,3,dungeon,historical_revalidation_required,not_implemented
+act3.kurast_sewers_2,Sewers Level 2,3,dungeon,historical_revalidation_required,not_implemented
+act3.ruined_temple,Ruined Temple,3,dungeon,historical_revalidation_required,not_implemented
+act3.disused_fane,Disused Fane,3,dungeon,historical_revalidation_required,not_implemented
+act3.forgotten_reliquary,Forgotten Reliquary,3,dungeon,historical_revalidation_required,not_implemented
+act3.forgotten_temple,Forgotten Temple,3,dungeon,historical_revalidation_required,not_implemented
+act3.ruined_fane,Ruined Fane,3,dungeon,historical_revalidation_required,not_implemented
+act3.disused_reliquary,Disused Reliquary,3,dungeon,historical_revalidation_required,not_implemented
+act3.upper_kurast,Upper Kurast,3,overworld,historical_revalidation_required,not_implemented
+act3.kurast_causeway,Kurast Causeway,3,overworld,historical_revalidation_required,not_implemented
+act3.travincal,Travincal,3,overworld,historical_revalidation_required,not_implemented
+act3.durance_1,Durance of Hate Level 1,3,dungeon,historical_revalidation_required,not_implemented
+act3.durance_2,Durance of Hate Level 2,3,dungeon,historical_revalidation_required,not_implemented
+act3.durance_3,Durance of Hate Level 3,3,boss_area,historical_revalidation_required,not_implemented
+act4.pandemonium_fortress,Pandemonium Fortress,4,town,historical_revalidation_required,not_implemented
+act4.outer_steppes,Outer Steppes,4,overworld,historical_revalidation_required,not_implemented
+act4.plains_despair,Plains of Despair,4,overworld,historical_revalidation_required,not_implemented
+act4.city_damned,City of the Damned,4,overworld,historical_revalidation_required,not_implemented
+act4.river_flame,River of Flame,4,overworld,historical_revalidation_required,not_implemented
+act4.chaos_sanctuary,Chaos Sanctuary,4,boss_area,historical_revalidation_required,not_implemented
+act5.harrogath,Harrogath,5,town,historical_revalidation_required,not_implemented
+act5.bloody_foothills,Bloody Foothills,5,overworld,historical_revalidation_required,not_implemented
+act5.frigid_highlands,Frigid Highlands,5,overworld,historical_revalidation_required,not_implemented
+act5.abaddon,Abaddon,5,dungeon,historical_revalidation_required,not_implemented
+act5.arreat_plateau,Arreat Plateau,5,overworld,historical_revalidation_required,not_implemented
+act5.pit_acheron,Pit of Acheron,5,dungeon,historical_revalidation_required,not_implemented
+act5.crystalline_passage,Crystalline Passage,5,dungeon,historical_revalidation_required,not_implemented
+act5.frozen_river,Frozen River,5,dungeon,historical_revalidation_required,not_implemented
+act5.glacial_trail,Glacial Trail,5,dungeon,historical_revalidation_required,not_implemented
+act5.drifter_cavern,Drifter Cavern,5,dungeon,historical_revalidation_required,not_implemented
+act5.frozen_tundra,Frozen Tundra,5,overworld,historical_revalidation_required,not_implemented
+act5.infernal_pit,Infernal Pit,5,dungeon,historical_revalidation_required,not_implemented
+act5.ancients_way,The Ancients' Way,5,dungeon,historical_revalidation_required,not_implemented
+act5.icy_cellar,Icy Cellar,5,dungeon,historical_revalidation_required,not_implemented
+act5.arreat_summit,Arreat Summit,5,quest_area,historical_revalidation_required,not_implemented
+act5.nihlathaks_temple,Nihlathak's Temple,5,dungeon,historical_revalidation_required,not_implemented
+act5.halls_anguish,Halls of Anguish,5,dungeon,historical_revalidation_required,not_implemented
+act5.halls_pain,Halls of Pain,5,dungeon,historical_revalidation_required,not_implemented
+act5.halls_vaught,Halls of Vaught,5,dungeon,historical_revalidation_required,not_implemented
+act5.worldstone_keep_1,Worldstone Keep Level 1,5,dungeon,historical_revalidation_required,not_implemented
+act5.worldstone_keep_2,Worldstone Keep Level 2,5,dungeon,historical_revalidation_required,not_implemented
+act5.worldstone_keep_3,Worldstone Keep Level 3,5,dungeon,historical_revalidation_required,not_implemented
+act5.throne_destruction,Throne of Destruction,5,boss_area,historical_revalidation_required,not_implemented
+act5.worldstone_chamber,Worldstone Chamber,5,boss_area,historical_revalidation_required,not_implemented
+endgame.secret_cow_level,Secret Cow Level,endgame,endgame_area,historical_revalidation_required,not_implemented

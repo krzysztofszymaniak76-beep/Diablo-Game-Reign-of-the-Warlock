@@ -1,0 +1,269 @@
+/* Vendor trade window in the approved stone/iron inventory language. The left
+   grid is merchant stock; the right grid belongs to the inspected hero. */
+.panel-layer:has(.d2-shop-v0518) {
+  background: rgba(3, 3, 3, .46);
+  backdrop-filter: blur(1.5px) saturate(.76);
+}
+.diablo-panel .game-panel-body.d2-shop-v0518 {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px 8px;
+  background: #151413 url('/app/assets/exploration/map-ironstone-v0512.png') center / cover;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-owner-tabs {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 1px 4px 4px;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-columns {
+  flex: 1 1 auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 8px;
+  min-height: 0;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-wing {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 5px;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(7px, .8vw, 12px);
+  overflow: auto;
+  border: 2px ridge #84796b;
+  background:
+    linear-gradient(120deg, rgba(207, 192, 163, .055), transparent 32% 75%, rgba(189, 170, 133, .03)),
+    #1e1c1a url('/app/assets/exploration/map-ironstone-v0512.png') center / cover;
+  box-shadow: inset 0 0 0 3px #141211, inset 0 0 0 5px #5e5448, inset 0 0 26px #090807, 0 2px 6px #070605;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-wing::before {
+  top: 3px;
+  left: 8px;
+  right: 8px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #b4aa96 20%, #50483d 50%, #b4aa96 80%, transparent);
+  opacity: .65;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-heading {
+  display: grid;
+  grid-template-columns: 46px minmax(0, 1fr);
+  gap: 9px;
+  align-items: center;
+  flex: 0 0 auto;
+  min-height: 62px;
+  padding: 3px 8px;
+  border: 1px solid #50483b;
+  background: linear-gradient(90deg, #161513, #292621 48%, #141311);
+  box-shadow: inset 0 0 0 1px #100e0c, inset 0 0 9px #070605;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-heading h3 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: #dfc996;
+  font: 500 21px/1.1 Georgia, serif;
+  letter-spacing: .11em;
+  text-align: left;
+  text-shadow: 0 2px 3px #000;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-heading small,
+.diablo-panel .d2-shop-v0518 .d2-shop-heading p {
+  display: block;
+  margin: 1px 0;
+  color: #9d9587;
+  font: 9px/1.2 Georgia, serif;
+  letter-spacing: .15em;
+}
+.diablo-panel .d2-shop-v0518 .d2-npc-portrait {
+  width: 46px;
+  height: 55px;
+  filter: drop-shadow(0 2px 3px #000);
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-crest {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 48px;
+  border: 1px solid #8c7654;
+  background: radial-gradient(circle at 50% 32%, #504533, #100f0e 72%);
+  box-shadow: inset 0 0 0 2px #211b14, 0 1px 5px #000;
+  color: #b59d69;
+  font: 30px/1 Georgia, serif;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-categories {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2px;
+  flex: 0 0 auto;
+  min-height: 31px;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-categories button {
+  min-width: 0;
+  padding: 3px 4px;
+  border: 1px solid #71624e;
+  border-bottom-color: #30271f;
+  background: linear-gradient(#46413a, #181614 75%);
+  box-shadow: inset 0 1px rgba(209, 194, 163, .16);
+  color: #a99c82;
+  font: 600 clamp(9px, .8vw, 12px)/1 Georgia, serif;
+  letter-spacing: .09em;
+  cursor: pointer;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-categories button:hover,
+.diablo-panel .d2-shop-v0518 .d2-shop-categories button:focus-visible,
+.diablo-panel .d2-shop-v0518 .d2-shop-categories button.is-active {
+  border-color: #bd9d62;
+  background: linear-gradient(#6a5540, #2a2119 75%);
+  color: #f1d6a0;
+  box-shadow: inset 0 2px rgba(248, 220, 172, .2), 0 0 8px rgba(194, 151, 82, .16);
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-categories button:disabled {
+  color: #756f65;
+  background: #1a1917;
+  cursor: not-allowed;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-goods,
+.diablo-panel .d2-shop-v0518 .d2-shop-backpack {
+  flex: 0 0 auto;
+  width: min(100%, 47dvh);
+  max-width: none;
+  aspect-ratio: 10 / 8;
+  align-self: center;
+  margin: 2px auto;
+  padding: 3px;
+  border: 3px ridge #8d806b;
+  background: #3c352a;
+  box-shadow: inset 0 0 0 2px #100e0c, inset 0 0 18px #000, 0 2px 5px #000;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-paperdoll {
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+  flex: 0 0 auto;
+  align-self: center;
+  width: min(100%, 47dvh);
+  height: clamp(148px, 24dvh, 255px);
+  margin: 2px auto 3px;
+  padding: 5px;
+  border: 3px ridge #8d806b;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(114, 106, 92, .15), transparent 42%),
+    #1a1917 url('/app/assets/exploration/map-ironstone-v0512.png') center / cover;
+  box-shadow: inset 0 0 0 2px #0c0b0a, inset 0 0 18px #000, 0 2px 5px #000;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-equip-slot {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  padding: 2px;
+  overflow: hidden;
+  border: 1px solid #554d41;
+  background: radial-gradient(ellipse at center, #292723, #10100f 72%);
+  box-shadow: inset 0 0 7px #050505;
+  cursor: default;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-equip-slot.is-equipped {
+  border-color: #897756;
+  box-shadow: inset 0 0 8px #070606, 0 0 2px rgba(204, 169, 105, .3);
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-equip-slot[data-slot='weapon'] { grid-column: 1 / 3; grid-row: 1 / 3; }
+.diablo-panel .d2-shop-v0518 .d2-shop-equip-slot[data-slot='offhand'] { grid-column: 6 / 8; grid-row: 1 / 3; }
+.diablo-panel .d2-shop-v0518 .d2-shop-equip-slot[data-slot='head'] { grid-column: 4 / 5; grid-row: 1 / 2; }
+.diablo-panel .d2-shop-v0518 .d2-shop-equip-slot[data-slot='chest'] { grid-column: 3 / 6; grid-row: 2 / 3; }
+.diablo-panel .d2-shop-v0518 .d2-shop-equip-slot[data-slot='hands'] { grid-column: 2 / 3; grid-row: 3 / 4; }
+.diablo-panel .d2-shop-v0518 .d2-shop-equip-slot[data-slot='belt'] { grid-column: 4 / 5; grid-row: 3 / 4; }
+.diablo-panel .d2-shop-v0518 .d2-shop-equip-slot[data-slot='feet'] { grid-column: 6 / 7; grid-row: 3 / 4; }
+.diablo-panel .d2-shop-v0518 .d2-shop-slot-name {
+  color: #777166;
+  font: 600 clamp(6px, .55vw, 9px)/1.1 Georgia, serif;
+  letter-spacing: .02em;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-equip-slot .d2-trade-item-art {
+  width: 98%;
+  height: 98%;
+  max-width: 98%;
+  max-height: 98%;
+  object-fit: contain;
+  filter: drop-shadow(1px 2px 2px #000);
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-backpack {
+  aspect-ratio: 10 / 4;
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+}
+.diablo-panel .d2-shop-v0518 .d2-grid-cell {
+  border-color: #514b43;
+  background: linear-gradient(140deg, #171615, #080808 78%);
+  box-shadow: inset 1px 1px #34302b, inset -1px -1px #030303;
+}
+.diablo-panel .d2-shop-v0518 .d2-trade-item.d2-grid-item {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  padding: 1px;
+  border: 1px solid #67583d;
+  border-radius: 0;
+  background: radial-gradient(ellipse at 50% 38%, #302c25, #11100e 75%);
+  box-shadow: inset 0 0 9px #000, 0 0 2px #000;
+  cursor: pointer;
+}
+.diablo-panel .d2-shop-v0518 .d2-trade-item.d2-grid-item:hover,
+.diablo-panel .d2-shop-v0518 .d2-trade-item.d2-grid-item:focus-visible {
+  z-index: 5;
+  border-color: #d2b272;
+  background: radial-gradient(ellipse, #4c4030, #1b1712 75%);
+  box-shadow: inset 0 0 9px #000, 0 0 8px #d4a861;
+  outline: none;
+}
+.diablo-panel .d2-shop-v0518 .d2-trade-item.d2-grid-item:disabled {
+  filter: grayscale(.35);
+  cursor: not-allowed;
+}
+.diablo-panel .d2-shop-v0518 .d2-trade-item[hidden] { display: none; }
+.diablo-panel .d2-shop-v0518 .d2-trade-item .d2-trade-item-art {
+  display: block;
+  width: 94%;
+  height: 94%;
+  max-width: 94%;
+  max-height: 94%;
+  object-fit: contain;
+  pointer-events: none;
+  filter: drop-shadow(1px 2px 2px #000);
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-detail,
+.diablo-panel .d2-shop-v0518 .d2-shop-wallet {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-height: 26px;
+  margin: 2px 0 0;
+  padding: 3px 8px;
+  border: 2px ridge #766849;
+  background: linear-gradient(#201a15, #0d0b0a);
+  box-shadow: inset 0 0 8px #000;
+  color: #c9b389;
+  font: 11px/1.2 Georgia, serif;
+}
+.diablo-panel .d2-shop-v0518 .d2-shop-wallet { justify-content: center; gap: 8px; letter-spacing: .08em; }
+.diablo-panel .d2-shop-v0518 .d2-shop-wallet span { color: #d1a852; font-size: 20px; }
+.diablo-panel .d2-shop-v0518 .d2-shop-wallet strong { color: #f3d69a; font-size: 15px; }
+.diablo-panel .d2-shop-v0518 .d2-shop-empty { margin: 6px 0; color: #b7a58a; font: 12px Georgia, serif; text-align: center; }
+
+@media (max-width: 760px) {
+  .diablo-panel .d2-shop-v0518 .d2-shop-columns { grid-template-columns: minmax(0, 1fr); }
+  .diablo-panel .d2-shop-v0518 .d2-shop-goods { width: min(100%, 70dvw); }
+  .diablo-panel .d2-shop-v0518 .d2-shop-backpack { width: min(100%, 70dvw); }
+}

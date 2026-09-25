@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="data:,">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090706">
+  <title>Reign of the Warlock — wyprawa Aktu I</title>
+  <link rel="stylesheet" href="/app/styles.css">
+  <link rel="stylesheet" href="/app/map-presentation.css">
+  <link rel="stylesheet" href="/app/map-iron-ui.css">
+  <link rel="stylesheet" href="/app/map-frame-themes.css">
+  <link rel="stylesheet" href="/app/v0517-ui.css">
+  <link rel="stylesheet" href="/app/v0518-camp.css">
+  <link rel="stylesheet" href="/app/camp-party-heroes.css">
+  <link rel="stylesheet" href="/app/v0518-cube.css">
+  <link rel="stylesheet" href="/app/v0518-panels.css">
+  <link rel="stylesheet" href="/app/v0518-empty-inventory.css">
+  <link rel="stylesheet" href="/app/v0518-trade-empty.css">
+  <link rel="stylesheet" href="/app/v0518-cain-identify.css">
+  <link rel="stylesheet" href="/app/item-tooltip-v0518.css">
+  <link rel="stylesheet" href="/app/battlefield-d2r-v0519.css">
+  <link rel="stylesheet" href="/app/battlefield-d2r-v0520-party.css">
+  <link rel="stylesheet" href="/app/battlefield-d2r-v0520-hud.css">
+  <link rel="stylesheet" href="/app/battlefield-d2r-v0520-torches.css">
+  <link rel="stylesheet" href="/app/battlefield-d2r-v0520-frame.css">
+  <link rel="stylesheet" href="/app/battlefield-d2r-v0521-torches.css">
+  <link rel="stylesheet" href="/app/main-menu.css">
+  <link rel="stylesheet" href="/app/character-creation.css">
+</head>
+<body>
+  <div id="app" class="game-shell">
+    <header class="top-frame">
+      <div class="brand-block">
+        <div class="brand-rune" aria-hidden="true">W</div>
+        <div><span class="overline">TUROWE RPG</span><strong>REIGN <i>OF THE</i> WARLOCK</strong></div>
+      </div>
+      <section class="location-block" aria-label="Akt i lokacja">
+        <span class="overline">AKT <b id="act">I</b> · LOKACJA ZEWNĘTRZNA</span>
+        <strong>LOKACJA WALKI</strong>
+        <span class="location-sub" aria-hidden="true"></span>
+      </section>
+      <section class="world-block" aria-label="Parametry świata">
+        <div><span class="overline">TRUDNOŚĆ</span><strong id="difficulty">NORMALNY</strong></div>
+        <label><span class="overline">ŚWIAT</span><select id="players" aria-label="Ustawienie liczby graczy"></select></label>
+        <div><span class="overline">DRUŻYNA BOJOWA</span><strong id="party-size">3 / 3</strong></div>
+        <div class="turn-clock"><span class="overline">CZAS SYMULACJI</span><strong id="sim-time">0.00 s</strong></div>
+      </section>
+    </header>
+
+    <section id="camp-layer" class="camp-layer hidden" aria-label="Obozowisko Łotrzyc" aria-hidden="true">
+      <div class="camp-scene">
+        <div class="camp-scene-shade" aria-hidden="true"></div>
+        <div id="camp-party-heroes" class="camp-party-heroes" role="group" aria-label="Wybrani bohaterowie przy skrytce"></div>
+
+        <button class="camp-hotspot camp-npc camp-akara" type="button" data-camp-action="akara" aria-label="Otwórz handel u Akary — automatyczne leczenie">
+          <img src="/app/assets/npc-akara-v0517.png" alt="" aria-hidden="true" draggable="false" loading="lazy" decoding="async">
+          <span class="camp-hotspot-copy"><strong>AKARA</strong><small>Handel i leczenie</small></span>
+        </button>
+        <button class="camp-hotspot camp-npc camp-charsi" type="button" data-camp-action="charsi" aria-label="Porozmawiaj z Charsi — handel i naprawa">
+          <img src="/app/assets/npc-charsi-v0517.png" alt="" aria-hidden="true" draggable="false" loading="lazy" decoding="async">
+          <span class="camp-hotspot-copy"><strong>CHARSI</strong><small>Handel i naprawa</small></span>
+        </button>
+        <button class="camp-hotspot camp-npc camp-kashya" type="button" data-camp-action="kashya" aria-label="Porozmawiaj z Kashyą — najemnicy">
+          <img src="/app/assets/npc-kashya-v0517.png" alt="" aria-hidden="true" draggable="false" loading="lazy" decoding="async">
+          <span class="camp-hotspot-copy"><strong>KASHYA</strong><small>Najemnicy</small></span>
+        </button>
+        <button class="camp-hotspot camp-npc camp-gheed" type="button" data-camp-action="gheed" aria-label="Porozmawiaj z Gheedem — handel i hazard">
+          <img src="/app/assets/npc-gheed-v0517.png" alt="" aria-hidden="true" draggable="false" loading="lazy" decoding="async">
+          <span class="camp-hotspot-copy"><strong>GHEED</strong><small>Handel i hazard</small></span>
+        </button>
+        <button class="camp-hotspot camp-npc camp-warriv" type="button" data-camp-action="warriv" aria-label="Porozmawiaj z Warrivem — podróż">
+          <img src="/app/assets/npc-warriv-v0517.png" alt="" aria-hidden="true" draggable="false" loading="lazy" decoding="async">
+          <span class="camp-hotspot-copy"><strong>WARRIV</strong><small>Podróż</small></span>
+        </button>
+        <button class="camp-hotspot camp-npc camp-cain hidden" type="button" data-camp-action="cain" aria-label="Porozmawiaj z Deckardem Cainem — wiedza i identyfikacja" aria-hidden="true">
+          <img src="/app/assets/npc-cain-v0517.png" alt="" aria-hidden="true" draggable="false" loading="lazy" decoding="async">
+          <span class="camp-hotspot-copy"><strong>DECKARD CAIN</strong><small>Wiedza i identyfikacja</small></span>
+        </button>
+
+        <button class="camp-hotspot camp-place camp-stash" type="button" data-camp-action="stash" aria-label="Otwórz wspólną skrytkę">
+          <span class="camp-place-glyph" aria-hidden="true">▣</span>
+          <span class="camp-hotspot-copy"><strong>SKRYTKA</strong><small>Przedmioty drużyny</small></span>
+        </button>
+        <button class="camp-hotspot camp-place camp-waypoint" type="button" data-camp-action="waypoint" aria-label="Otwórz punkt nawigacyjny">
+          <span class="camp-place-glyph" aria-hidden="true">✧</span>
+          <span class="camp-hotspot-copy"><strong>PUNKT NAWIGACYJNY</strong><small>Odkryte lokacje</small></span>
+        </button>
+        <button class="camp-hotspot camp-place camp-gate" type="button" data-camp-action="gate" aria-label="Wyjdź z obozu na wyprawę">
+          <span class="camp-place-glyph" aria-hidden="true">⌁</span>
+          <span class="camp-hotspot-copy"><strong>BRAMA OBOZU</strong><small>Wyrusz na wyprawę</small></span>
+        </button>
+
+        <div class="camp-location-plaque" aria-hidden="true">
+          <span>AKT I</span><strong>OBOZOWISKO ŁOTRZYC</strong>
+        </div>
+      </div>
+
+      <nav class="camp-toolbar" aria-label="Polecenia obozu">
+        <div class="camp-toolbar-ledger">
+          <span>ZŁOTO</span><strong id="camp-gold">0</strong>
+        </div>
+        <div id="camp-party" class="camp-toolbar-party" aria-label="Aktywna drużyna" aria-live="polite">
+          <span>DRUŻYNA</span><strong>—</strong>
+        </div>
+        <div class="camp-toolbar-actions">
+          <button id="camp-open-team" type="button"><i aria-hidden="true">♟</i><span>DRUŻYNA</span><kbd>D</kbd></button>
+          <button id="camp-open-inventory" type="button"><i aria-hidden="true">▦</i><span>EKWIPUNEK</span><kbd>I</kbd></button>
+          <button id="camp-open-map" type="button"><i aria-hidden="true">◈</i><span>MAPA</span><kbd>TAB</kbd></button>
+          <button id="camp-save" type="button"><i aria-hidden="true">◇</i><span>ZAPISZ</span><kbd>S</kbd></button>
+          <button id="camp-load" type="button"><i aria-hidden="true">◆</i><span>WCZYTAJ</span><kbd>L</kbd></button>
+        </div>
+      </nav>
+    </section>
+
+    <main class="combat-layout stage-two-layout">
+      <aside class="side-panel party-panel ornate-panel">
+        <div class="panel-heading">
+          <span class="heading-icon" aria-hidden="true">◆</span>
+          <div><span class="overline">FORMACJA 1–3</span><h1>DRUŻYNA</h1></div>
+          <span class="panel-count">3</span>
+        </div>
+        <div class="identity-legend"><span><i class="turn-dot"></i> wykonuje turę</span><span><i class="inspect-dot"></i> oglądana</span></div>
+        <div id="party" class="party-list"></div>
+        <div class="party-footer preparation-guide">
+          <div class="prep-rule"><b>1</b><span><strong>USTAW FORMACJĘ</strong><small>Poruszaj się w 3 zielonych kolumnach bez aktywacji AI.</small></span></div>
+          <div class="prep-rule"><b>2</b><span><strong>PRZYGOTUJ BUILD</strong><small>Okrzyki, aura i summony są darmowe przed starciem.</small></span></div>
+          <div class="reserve-profile" data-reserve-class="druid" data-loadout="druid.maul,druid.spirit_wolf,druid.oak_sage,druid.grizzly">
+            <b>REZERWA · DRUID MAEL</b><small>Maul · Spirit Wolf · Oak Sage · Grizzly</small>
+          </div>
+          <p class="rule-note">Kliknij portret, aby zmienić aktywnego bohatera podczas przygotowania.</p>
+        </div>
+      </aside>
+
+      <section class="battlefield-shell ornate-panel" aria-label="Pole walki">
+        <canvas id="scene" width="1280" height="720" tabindex="0" role="application"
+          aria-label="Taktyczne pole walki na siatce heksagonalnej"
+          aria-describedby="phase-detail targeting-copy"
+          aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight W A S D Enter Space"
+          data-deployment-columns="3" data-deployment-cells="26">Pole walki wymaga obsługi elementu canvas.</canvas>
+        <div class="scene-vignette"></div>
+        <div class="battle-ornate-frame" aria-hidden="true">
+          <span class="battle-frame-runes battle-frame-runes-left">
+            <img src="/app/assets/battle-runes-v0520/r01.gif" alt=""><img src="/app/assets/battle-runes-v0520/r02.gif" alt=""><img src="/app/assets/battle-runes-v0520/r03.gif" alt=""><img src="/app/assets/battle-runes-v0520/r04.gif" alt=""><img src="/app/assets/battle-runes-v0520/r05.gif" alt=""><img src="/app/assets/battle-runes-v0520/r06.gif" alt=""><img src="/app/assets/battle-runes-v0520/r07.gif" alt=""><img src="/app/assets/battle-runes-v0520/r08.gif" alt=""><img src="/app/assets/battle-runes-v0520/r09.gif" alt=""><img src="/app/assets/battle-runes-v0520/r10.gif" alt=""><img src="/app/assets/battle-runes-v0520/r11.gif" alt=""><img src="/app/assets/battle-runes-v0520/r12.gif" alt=""><img src="/app/assets/battle-runes-v0520/r13.gif" alt=""><img src="/app/assets/battle-runes-v0520/r14.gif" alt=""><img src="/app/assets/battle-runes-v0520/r15.gif" alt=""><img src="/app/assets/battle-runes-v0520/r16.gif" alt=""><img src="/app/assets/battle-runes-v0520/r17.gif" alt="">
+          </span>
+          <span class="battle-frame-runes battle-frame-runes-right">
+            <img src="/app/assets/battle-runes-v0520/r18.gif" alt=""><img src="/app/assets/battle-runes-v0520/r19.gif" alt=""><img src="/app/assets/battle-runes-v0520/r20.gif" alt=""><img src="/app/assets/battle-runes-v0520/r21.gif" alt=""><img src="/app/assets/battle-runes-v0520/r22.gif" alt=""><img src="/app/assets/battle-runes-v0520/r23.gif" alt=""><img src="/app/assets/battle-runes-v0520/r24.gif" alt=""><img src="/app/assets/battle-runes-v0520/r25.gif" alt=""><img src="/app/assets/battle-runes-v0520/r26.gif" alt=""><img src="/app/assets/battle-runes-v0520/r27.gif" alt=""><img src="/app/assets/battle-runes-v0520/r28.gif" alt=""><img src="/app/assets/battle-runes-v0520/r29.gif" alt=""><img src="/app/assets/battle-runes-v0520/r30.gif" alt=""><img src="/app/assets/battle-runes-v0520/r31.gif" alt=""><img src="/app/assets/battle-runes-v0520/r32.gif" alt=""><img src="/app/assets/battle-runes-v0520/r33.gif" alt="">
+          </span>
+          <span class="battle-frame-title">Diablo Game</span>
+        </div>
+        <div class="battle-torch battle-torch-left" aria-hidden="true">
+          <span class="torch-light"></span><span class="torch-flame"><i></i><b></b><em></em></span>
+          <img src="/app/assets/battle-torch-sconce-v0519.png" alt="" draggable="false">
+        </div>
+        <div class="battle-torch battle-torch-right" aria-hidden="true">
+          <span class="torch-light"></span><span class="torch-flame"><i></i><b></b><em></em></span>
+          <img src="/app/assets/battle-torch-sconce-v0519.png" alt="" draggable="false">
+        </div>
+        <div class="battle-state" data-battle-phase="preparation"><span class="pulse-dot"></span><b id="phase-label">PRZYGOTOWANIE</b><small id="phase-detail">Wrogowie nie wykonują tur i nie widzą drużyny</small></div>
+        <div id="battle-turn-guide" class="battle-turn-guide hidden" role="status" aria-live="polite">
+          <strong id="battle-guide-hero">PRZYGOTOWANIE</strong>
+          <span id="battle-guide-copy">Wybierz postać i zielony heks.</span>
+          <small id="battle-guide-skills">LPM / PPM: przypisane umiejętności</small>
+          <button type="button" id="battle-guide-end-turn" class="metal-button" hidden>ZAKOŃCZ TURĘ</button>
+        </div>
+        <div class="deployment-legend" data-deployment-zone><b>STREFA ROZSTAWIENIA</b><span>3 ZIELONE KOLUMNY · AI UŚPIONE</span></div>
+        <div class="enemy-plate">
+          <div class="enemy-title"><span class="skull-mark">◆</span><strong id="enemy-name">UPADŁY</strong><span class="enemy-rank">DEMON</span></div>
+          <div class="enemy-health-row"><span>POZIOM 1</span><b id="enemy-hp">—</b></div>
+          <div class="bar enemy-bar"><i id="enemy-hp-bar"></i></div>
+          <div class="enemy-effects"><span title="Cel wrogi">⌖</span></div>
+        </div>
+<div id="targeting-banner" class="targeting-banner hidden" role="alert"><b id="targeting-title">WYBIERZ HEKS</b><span id="targeting-copy">—</span><button type="button" id="cancel-targeting">ANULUJ · ESC</button></div>
+<button type="button" id="start-battle" class="start-battle" data-action="start-battle"><span>GOTOWI</span><b>ROZPOCZNIJ STARCIE</b><small>Wrogowie zaczną działać</small></button>
+        <div class="scene-hint"><span>LPM / ENTER</span> zatwierdź heks <i></i><span>STRZAŁKI / WASD</span> zmień heks <i></i><span>ESC</span> anuluj / panel / pauza</div>
+        <div id="encounter-actions" class="encounter-actions">
+          <button id="loot-toast" class="metal-button hidden" type="button"><b id="ground-loot-count">ŁUP</b><small>Zobacz / zbierz</small></button>
+          <button id="next-encounter" class="metal-button hidden" type="button"><b>NASTĘPNE STARCIE</b><small>Bez resetowania drużyny</small></button>
+        </div>
+        <span id="encounter-label" class="encounter-label">Krwawe Wrzosowisko · starcie 1</span>
+        <div id="game-toast" class="game-toast hidden" role="status"></div>
+        <div id="pause-overlay" class="pause hidden" role="dialog" aria-modal="true"
+          aria-labelledby="pause-title" aria-describedby="pause-description" aria-hidden="true">
+          <div class="pause-frame ornate-panel">
+            <span class="overline">GRA WSTRZYMANA</span><h2 id="pause-title">PAUZA</h2>
+            <p id="pause-description">Zegar symulacji stoi. Kolejka, instancja lokacji i wszystkie zasoby pozostają bez zmian.</p>
+<button type="button" id="resume" class="metal-button">POWRÓT DO WALKI</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side-panel intel-panel compact-intel">
+        <section class="turn-identity ornate-panel">
+          <div class="section-title"><span>STAN DOWODZENIA</span><small id="command-mode">PRZYGOTOWANIE</small></div>
+          <div class="identity-row acting-row"><i></i><span><small>WYKONUJE TURĘ</small><b id="acting-name">Korgan</b></span></div>
+          <div class="identity-row inspected-row"><i></i><span><small>OGLĄDASZ</small><b id="inspected-name-side">Korgan</b></span></div>
+          <p id="mechanical-permission">W przygotowaniu wybierasz dowolnego z 3 bohaterów.</p>
+          <div class="preparation-status" data-preparation-status>
+            <span data-warcry-status><i>◉</i><b>OKRZYK</b><small id="warcry-status">nieaktywny</small></span>
+            <span data-aura-status><i>✦</i><b>AURA</b><small id="aura-status">nieaktywna</small></span>
+            <span data-summon-count="0"><i>♟</i><b>SUMMONY</b><small id="summon-status">0 / 4</small></span>
+          </div>
+        </section>
+        <section class="quest-panel ornate-panel">
+          <div class="section-title"><span>CEL ZADANIA</span><small>1 / 1</small></div>
+          <div class="quest-body"><span class="quest-sigil">✦</span><div><b>Siedlisko Zła</b><p>Oczyść skażone siedlisko poza Krwawym Wrzosowiskiem.</p></div></div>
+        </section>
+        <section class="initiative-panel ornate-panel">
+          <div class="section-title"><span>NAJBLIŻSZE DZIAŁANIA</span><small id="queue-state">AI UŚPIONE</small></div>
+          <div id="initiative-row" class="initiative-row" aria-label="Kolejka gotowości"></div>
+          <p id="queue-preview" class="queue-preview">Przygotowanie nie przesuwa zegara walki</p>
+        </section>
+        <section class="journal-panel compact-log ornate-panel">
+<div class="section-title"><span>OSTATNIE ZDARZENIA</span><button type="button" id="clear-log" title="Wyczyść widok dziennika">×</button></div>
+          <ol id="combat-log"></ol>
+          <div class="empty-log" id="empty-log">Wybierz kartę lub otwórz panel skrótem.</div>
+        </section>
+        <section class="quick-panel ornate-panel">
+          <div class="section-title"><span>PANELE I ROZKAZY</span><small>SKRÓTY</small></div>
+          <div class="quick-actions">
+<button type="button" data-open-panel="inventory"><b>I / B</b><span>Ekwipunek</span></button>
+<button type="button" data-open-panel="hireling"><b>O</b><span>Najemnik</span></button>
+<button type="button" data-open-panel="character"><b>C / A</b><span>Statystyki</span></button>
+<button type="button" data-open-panel="skills"><b>T</b><span>Umiejętności</span></button>
+<button type="button" data-open-panel="quests"><b>Q</b><span>Zadania</span></button>
+<button type="button" data-open-panel="map"><b>TAB</b><span>Mapa</span></button>
+<button type="button" id="portal-quick"><b>P</b><span>Portal</span></button>
+<button type="button" data-open-panel="options"><b>⚙</b><span>Opcje</span></button>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="command-deck ornate-panel diablo-command-deck d2r-command-hud" aria-label="Dolny panel walki">
+      <section class="d2-resource-side d2-life-panel" aria-label="Życie aktywnej postaci">
+        <div class="d2-guardian d2-guardian-left" aria-hidden="true"><i></i><b></b><em></em></div>
+        <div id="life-orb" class="d2-resource-orb life-orb" style="--orb-fill:100%">
+          <div id="life-orb-liquid" class="d2-orb-liquid" aria-hidden="true"></div>
+          <div class="d2-orb-glass" aria-hidden="true"></div>
+          <span class="d2-orb-label">ŻYCIE</span>
+          <strong id="life-orb-value" class="d2-orb-value">—</strong>
+        </div>
+        <div class="d2-resource-caption">
+          <strong id="active-name">—</strong>
+          <span id="life-orb-detail">—</span>
+          <span id="active-resource" class="visually-hidden">—</span>
+        </div>
+        <div class="hud-compatibility-data" aria-hidden="true">
+          <div class="active-portrait"><span id="active-portrait-fallback">C</span><img id="active-portrait" src="/app/assets/unit-canonical-amazon-portrait-v1.png" alt=""></div>
+          <span id="acting-caption">ROZKAZY WYKONUJE</span><b id="acting-summary">—</b>
+          <b id="damage-stat">—</b><b id="active-build-stat">—</b><b id="portal-count-stat">—</b>
+        </div>
+      </section>
+
+      <section class="skill-command-area mouse-skill-command-area d2-center-console" aria-label="Sterowanie umiejętnościami LPM i PPM">
+        <div class="mouse-skill-stage">
+          <button id="mouse-skill-left" class="mouse-skill-slot left-slot" type="button" aria-haspopup="listbox" aria-expanded="false">
+            <span class="mouse-button-label">LPM</span>
+            <span class="mouse-skill-art"><i id="mouse-skill-left-glyph">⚔</i></span>
+            <strong id="mouse-skill-left-name">—</strong>
+            <small id="mouse-skill-left-copy">ziemia: ruch · wróg: użyj skilla</small>
+          </button>
+
+          <div class="mouse-skill-center">
+            <div class="d2-xp-rail" role="progressbar" aria-label="Doświadczenie wybranej postaci" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" title="EXP 0% · 0/10 pól"><i id="hud-xp-fill" style="width:0%"></i><span id="hud-xp-label">EXP 0%</span></div>
+            <div class="d2-selected-hero">
+              <span class="mouse-hero-caption">AKTYWNA POSTAĆ</span>
+              <strong id="mouse-skill-owner">—</strong>
+              <span id="mouse-skill-hint">LPM / PPM — kliknij ikonę, aby wybrać legalną umiejętność.</span>
+            </div>
+
+            <div id="hud-belt" class="d2-belt" aria-label="Pas postaci — klawisze 1–4">
+              <button id="hud-belt-slot-1" class="d2-belt-slot" type="button" data-belt-index="0"><kbd>1</kbd><i>♥</i><b id="hud-belt-count-1">—</b><small id="hud-belt-name-1">Puste</small></button>
+              <button id="hud-belt-slot-2" class="d2-belt-slot" type="button" data-belt-index="1"><kbd>2</kbd><i>◆</i><b id="hud-belt-count-2">—</b><small id="hud-belt-name-2">Puste</small></button>
+              <button id="hud-belt-slot-3" class="d2-belt-slot" type="button" data-belt-index="2"><kbd>3</kbd><i>◇</i><b id="hud-belt-count-3">—</b><small id="hud-belt-name-3">Puste</small></button>
+              <button id="hud-belt-slot-4" class="d2-belt-slot" type="button" data-belt-index="3"><kbd>4</kbd><i>◇</i><b id="hud-belt-count-4">—</b><small id="hud-belt-name-4">Puste</small></button>
+            </div>
+
+            <div class="d2-center-lower">
+              <div class="mouse-hud-shortcuts" aria-label="Panele postaci">
+                <button type="button" data-open-panel="character" title="Postać (C)"><b>☗</b><span>C</span></button>
+                <button type="button" data-open-panel="inventory" title="Ekwipunek (I)"><b>▦</b><span>I</span></button>
+                <button type="button" data-open-panel="skills" title="Umiejętności (T)"><b>✦</b><span>T</span></button>
+                <button type="button" data-open-panel="quests" title="Zadania (Q)"><b>≡</b><span>Q</span></button>
+                <button type="button" data-open-panel="map" title="Mapa (TAB)"><b>◈</b><span>TAB</span></button>
+                <button type="button" data-open-panel="hireling" title="Najemnik (O)"><b>♟</b><span>O</span></button>
+                <button type="button" data-open-panel="options" title="Opcje gry (ESC)"><b>⚙</b><span>ESC</span></button>
+              </div>
+              <button id="end-turn" class="d2-end-turn" data-action="wait" type="button"><small>ZAKOŃCZ</small><b>KOLEJKĘ</b></button>
+              <div class="d2-system-controls">
+                <button id="save" type="button">ZAPISZ</button>
+                <button id="load" type="button" title="Wczytaj zapis lub zaimportuj zgodną starszą wersję">WCZYTAJ</button>
+                <button id="pause" type="button">PAUZA</button>
+              </div>
+            </div>
+            <span class="save-state">Krwawe Wrzosowisko i Siedlisko Zła</span>
+          </div>
+
+          <button id="mouse-skill-right" class="mouse-skill-slot right-slot" type="button" aria-haspopup="listbox" aria-expanded="false">
+            <span class="mouse-button-label">PPM</span>
+            <span class="mouse-skill-art"><i id="mouse-skill-right-glyph">◆</i></span>
+            <strong id="mouse-skill-right-name">—</strong>
+            <small id="mouse-skill-right-copy">prawy przycisk myszy</small>
+          </button>
+          <div id="mouse-skill-chooser" class="mouse-skill-chooser hidden" role="listbox" aria-label="Wybór umiejętności"></div>
+        </div>
+
+        <section id="cards" class="cards skill-cards legacy-skill-cards hidden" aria-hidden="true">
+<button type="button" id="skill-card-left" class="card skill-card selected" data-action="skill" data-slot-role="left" data-skill-id=""><span class="card-cost">LPM</span><span class="card-kind">LEWY SLOT</span><span class="card-art"><i class="card-glyph">⚔</i><em></em></span><span class="card-name">—</span><small class="card-copy">—</small></button>
+<button type="button" id="skill-card-right-1" class="card skill-card" data-action="skill" data-slot-role="right" data-right-index="0" data-skill-id=""><span class="card-cost">PPM 1</span><span class="card-kind">PRAWY SLOT</span><span class="card-art"><i class="card-glyph">◆</i><em></em></span><span class="card-name">—</span><small class="card-copy">—</small></button>
+<button type="button" id="skill-card-right-2" class="card skill-card" data-action="skill" data-slot-role="right" data-right-index="1" data-skill-id=""><span class="card-cost">PPM 2</span><span class="card-kind">PRAWY SLOT</span><span class="card-art"><i class="card-glyph">◆</i><em></em></span><span class="card-name">—</span><small class="card-copy">—</small></button>
+<button type="button" id="skill-card-right-3" class="card skill-card" data-action="skill" data-slot-role="right" data-right-index="2" data-skill-id=""><span class="card-cost">PPM 3</span><span class="card-kind">PRAWY SLOT</span><span class="card-art"><i class="card-glyph">◆</i><em></em></span><span class="card-name">—</span><small class="card-copy">—</small></button>
+        </section>
+      </section>
+
+      <section class="turn-controls utility-deck d2-resource-side d2-mana-panel" aria-label="Mana i polecenia użytkowe">
+        <div class="d2-guardian d2-guardian-right" aria-hidden="true"><i></i><b></b><em></em></div>
+        <div id="mana-orb" class="d2-resource-orb mana-orb" style="--orb-fill:100%">
+          <div id="mana-orb-liquid" class="d2-orb-liquid" aria-hidden="true"></div>
+          <div class="d2-orb-glass" aria-hidden="true"></div>
+          <span class="d2-orb-label">MANA</span>
+          <strong id="mana-orb-value" class="d2-orb-value">—</strong>
+        </div>
+        <div class="d2-resource-caption mana-caption"><strong id="mana-orb-title">MANA</strong><span id="mana-orb-detail">—</span></div>
+
+        <div class="legacy-utility-hooks" aria-hidden="true">
+          <div class="utility-heading">NARZĘDZIA</div>
+<button type="button" id="move-command" class="utility-command move-command" data-action="move"><b>⬡</b><span>RUCH</span><small>legalne heksy</small></button>
+<button type="button" id="potion-health" class="utility-command potion-command" data-action="potion" data-potion="health"><b>♥</b><span>LECZENIE</span><small id="health-potion-count">×2</small></button>
+<button type="button" id="potion-mana" class="utility-command potion-command mana-command" data-action="potion" data-potion="mana"><b>●</b><span>MANA</span><small id="mana-potion-count">×1</small></button>
+<button type="button" id="inventory-command" class="utility-command" data-open-panel="inventory"><b>▦</b><span>EKWIPUNEK</span><small>1 zestaw broni</small></button>
+<button type="button" id="change-loadout" class="utility-command" data-action="change-loadout"><b>↻</b><span>ZMIEŃ SKILL</span><small id="loadout-cost">bez kosztu</small></button>
+        </div>
+      </section>
+    </footer>
+  </div>
+
+  <div id="team-selection-layer" class="team-selection-layer hidden" role="dialog" aria-modal="true" aria-labelledby="team-selection-title" aria-describedby="team-selection-description" aria-hidden="true">
+    <section class="team-selection-panel ornate-panel">
+      <header class="team-selection-header">
+        <span class="team-selection-sigil" aria-hidden="true">◆</span>
+        <div>
+          <span class="overline">OŚMIU BOHATERÓW · DO TRZECH MIEJSC</span>
+          <h2 id="team-selection-title">WYBIERZ DRUŻYNĘ</h2>
+          <p id="team-selection-description">Wskaż od jednej do trzech postaci. Pozostali bohaterowie zaczekają w rezerwie obozu.</p>
+        </div>
+      </header>
+
+      <div class="team-selection-body">
+        <div id="team-selection-grid" class="team-selection-grid" role="listbox" aria-label="Dostępni bohaterowie" aria-multiselectable="true"></div>
+        <aside class="team-selection-roster" aria-label="Wybrane miejsca drużyny">
+          <span class="overline">AKTYWNA TRÓJKA</span>
+          <h3>SKŁAD WYPRAWY</h3>
+          <div class="team-selection-slots" aria-live="polite">
+            <div id="team-slot-1" class="team-slot" data-team-slot="0"><span>1</span><strong>Wolne miejsce</strong></div>
+            <div id="team-slot-2" class="team-slot" data-team-slot="1"><span>2</span><strong>Wolne miejsce</strong></div>
+            <div id="team-slot-3" class="team-slot" data-team-slot="2"><span>3</span><strong>Wolne miejsce</strong></div>
+          </div>
+          <p class="team-selection-rule"><b>3 / 8</b><span>Każdą klasę reprezentuje jedna postać. Skład można później zmienić w bezpiecznym obozie.</span></p>
+        </aside>
+      </div>
+
+      <footer class="team-selection-footer">
+        <button id="team-selection-cancel" class="team-selection-cancel" type="button">ANULUJ</button>
+          <span id="team-selection-status" role="status">Wybierz od jednej do trzech postaci.</span>
+        <button id="team-selection-confirm" class="team-selection-confirm" type="button" disabled>ZATWIERDŹ DRUŻYNĘ</button>
+      </footer>
+    </section>
+  </div>
+
+  <div id="panel-layer" class="panel-layer hidden" aria-hidden="true">
+    <section id="game-panel" class="game-panel ornate-panel" role="dialog" aria-modal="true" aria-labelledby="panel-title">
+      <header class="game-panel-header">
+        <span class="panel-sigil" aria-hidden="true">◆</span>
+        <div><span id="panel-context" class="overline">—</span><h2 id="panel-title">—</h2></div>
+<button type="button" id="close-panel" class="panel-close" aria-label="Zamknij panel">×</button>
+      </header>
+      <div id="panel-body" class="game-panel-body"></div>
+      <footer class="game-panel-footer"><span>Czas symulacji jest zatrzymany podczas przeglądania.</span><kbd>ESC</kbd></footer>
+    </section>
+  </div>
+
+  <template id="map-template">
+    <div class="full-map" aria-label="Mapa obszaru">
+      <span class="map-path p1"></span><span class="map-path p2"></span><span class="map-path p3"></span>
+      <b class="full-map-node camp">Obozowisko Łotrzyc</b><b class="full-map-node field">Krwawe Wrzosowisko</b><b class="full-map-node cave">Siedlisko Zła</b>
+    </div>
+  </template>
+  <section id="main-menu" class="main-menu" role="dialog" aria-modal="true" aria-labelledby="main-menu-title" aria-hidden="false">
+    <div class="main-menu-content">
+      <div class="main-menu-heading">
+        <h1 id="main-menu-title" class="main-menu-title">DIABLO</h1>
+        <div class="main-menu-rule" aria-hidden="true"></div>
+      </div>
+
+      <nav id="main-menu-actions" class="main-menu-actions" aria-label="Menu główne">
+        <button id="menu-new-game" class="main-menu-button" type="button"><span>Nowa gra</span></button>
+        <button id="menu-continue" class="main-menu-button" type="button" disabled><span>Kontynuuj</span></button>
+        <button id="menu-open-settings" class="main-menu-button" type="button"><span>Ustawienia</span></button>
+        <button id="menu-save-exit" class="main-menu-button" type="button"><span>Zapisz i wyjdź</span></button>
+      </nav>
+
+      <section id="main-menu-settings" class="main-menu-settings" aria-labelledby="menu-settings-title" hidden>
+        <h2 id="menu-settings-title">Ustawienia</h2>
+        <label class="main-menu-setting" for="menu-music-volume">
+          <span>Głośność muzyki <output id="menu-music-value" for="menu-music-volume">20%</output></span>
+          <input id="menu-music-volume" type="range" min="0" max="100" step="1" value="20">
+        </label>
+        <label class="main-menu-setting" for="menu-effects-volume">
+          <span>Głośność efektów <output id="menu-effects-value" for="menu-effects-volume">70%</output></span>
+          <input id="menu-effects-volume" type="range" min="0" max="100" step="1" value="70">
+        </label>
+        <p class="main-menu-setting-note">Osobne efekty dźwiękowe nie są jeszcze odtwarzane w tej wersji.</p>
+        <div class="main-menu-display-setting">
+          <span>Tryb obrazu</span>
+          <button id="menu-fullscreen" class="main-menu-button main-menu-button-small" type="button">Pełny ekran</button>
+        </div>
+        <button id="menu-settings-back" class="main-menu-button main-menu-button-back" type="button">Powrót do menu</button>
+      </section>
+      <p id="main-menu-status" class="main-menu-status" role="status" aria-live="polite"></p>
+    </div>
+    <div class="main-menu-release-corner">
+      <button id="menu-release-open" class="main-menu-release-tile" type="button" aria-haspopup="dialog" aria-controls="menu-release-dialog">
+        <span>Aktualizacja</span>
+        <small>Aktualna wersja <output id="menu-current-version">0.1</output></small>
+      </button>
+      <p class="main-menu-release-credit">Kris Labs PL · 2026</p>
+    </div>
+    <section id="menu-release-dialog" class="main-menu-release-dialog" role="dialog" aria-modal="true" aria-labelledby="menu-release-title" hidden>
+      <div class="main-menu-release-frame">
+        <div class="main-menu-release-header">
+          <div>
+            <p class="main-menu-release-kicker">Kris Labs PL</p>
+            <h2 id="menu-release-title">Aktualizacje</h2>
+          </div>
+          <button id="menu-release-close" class="main-menu-release-close" type="button" aria-label="Zamknij historię aktualizacji">×</button>
+        </div>
+        <p id="menu-release-status" class="main-menu-release-status" role="status" aria-live="polite"></p>
+        <div id="menu-release-list" class="main-menu-release-list" aria-label="Historia aktualizacji"></div>
+        <div class="main-menu-release-actions">
+          <button id="menu-release-check" class="main-menu-release-action" type="button">Sprawdź aktualizacje</button>
+          <button id="menu-release-install" class="main-menu-release-action main-menu-release-action-primary" type="button" hidden>Zainstaluj aktualizację</button>
+        </div>
+      </div>
+    </section>
+  </section>
+  <section id="character-creation" class="character-creation" role="dialog" aria-modal="true" aria-labelledby="character-creation-title" aria-hidden="true" hidden>
+    <div class="character-creation-scene">
+      <h2 id="character-creation-title" class="character-creation-visually-hidden">Wybierz klasę postaci</h2>
+      <div id="character-creation-classes" class="character-creation-classes" role="group" aria-label="Wybierz od jednej do trzech postaci"></div>
+      <p id="character-creation-selection" class="character-creation-selection">Wybierz od jednej do trzech postaci.</p>
+      <label class="character-creation-visually-hidden" for="character-creation-name">Imię wybranej postaci</label>
+      <input id="character-creation-name" class="character-creation-name" type="text" maxlength="24" autocomplete="off" spellcheck="false" placeholder="Wybierz postać" disabled>
+      <div class="character-creation-modes" role="group" aria-label="Tryb gry">
+        <button id="character-creation-normal" class="character-creation-mode character-creation-mode-normal" type="button" aria-pressed="true" title="Normal"><span aria-hidden="true">✦</span> NORMAL</button>
+        <button id="character-creation-hardcore" class="character-creation-mode character-creation-mode-hardcore" type="button" aria-pressed="false" title="Hardkor — zasady śmierci postaci powstaną w późniejszym etapie"><span aria-hidden="true">☠</span> HARDKOR</button>
+      </div>
+      <button id="character-creation-back" class="character-creation-back" type="button" aria-label="Wstecz do menu"></button>
+      <button id="character-creation-confirm" class="character-creation-confirm" type="button" aria-label="Stwórz drużynę i wejdź do Obozowiska Łotrzyc" disabled></button>
+      <p id="character-creation-status" class="character-creation-status" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+  <script type="module" src="/app/main.js"></script>
+  <script type="module" src="/app/torch-flames.js"></script>
+</body>
+</html>

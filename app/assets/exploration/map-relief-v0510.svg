@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="230" viewBox="0 0 180 230">
+ <defs><linearGradient id="iron"><stop stop-color="#a59a7f"/><stop offset=".4" stop-color="#44483c"/><stop offset=".7" stop-color="#736e59"/><stop offset="1" stop-color="#262b24"/></linearGradient><filter id="cut"><feDropShadow dx="0" dy="2" stdDeviation="1.2" flood-color="#000" flood-opacity="1"/></filter></defs>
+ <g fill="none" stroke="url(#iron)" filter="url(#cut)">
+  <path d="M30 212V70Q30 39 90 9Q150 39 150 70V212ZM37 209V72Q37 47 90 20Q143 47 143 72V209Z" stroke-width="3"/>
+  <path d="M55 206V105Q55 77 90 55Q125 77 125 105V206M61 206V108Q61 88 90 66Q119 88 119 108V206" stroke-width="2"/>
+  <path d="M90 72V204M53 143Q17 120 37 99Q57 85 56 112Q54 125 42 114M127 143Q163 120 143 99Q123 85 124 112Q126 125 138 114M52 174Q17 163 32 146Q48 138 47 155M128 174Q163 163 148 146Q132 138 133 155" stroke-width="2"/>
+  <path d="M66 145Q89 113 114 145Q90 170 66 145ZM66 189Q89 156 114 189Q90 214 66 189Z"/>
+  <circle cx="90" cy="39" r="9" stroke-width="2"/><path d="M90 28V50M79 39H101"/>
+  <path d="M22 215H158M20 222H160" stroke-width="3"/>
+ </g>
+</svg>

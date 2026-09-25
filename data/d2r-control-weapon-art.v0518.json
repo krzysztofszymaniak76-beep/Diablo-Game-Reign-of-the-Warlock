@@ -1,0 +1,295 @@
+{
+  "schemaVersion": 1,
+  "projectVersion": "0.5.18",
+  "purpose": "staged D2R weapon art/control batch; not a complete item catalogue",
+  "artworkOrigin": "Local Diablo II: Resurrected installation CASC .sprite files; decoded losslessly to RGBA PNG, no generated or redrawn weapon shapes.",
+  "controlBatch": [
+    "hand_axe",
+    "great_axe",
+    "short_sword",
+    "two_handed_sword",
+    "great_sword",
+    "dagger",
+    "war_hammer",
+    "flail",
+    "spear",
+    "war_staff",
+    "wand",
+    "hunters_bow",
+    "light_crossbow",
+    "throwing_axe",
+    "katar"
+  ],
+  "assets": [
+    {
+      "canonicalId": "club",
+      "file": "app/assets/items/club.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\club\\club.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "clb",
+        "line": 16,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 98,
+      "height": 294,
+      "sha256": "315c71740f915bd2460b0389fdaa90a8699d521f32d099e2572d6eed33da6690"
+    },
+    {
+      "canonicalId": "hand_axe",
+      "file": "app/assets/items/hand_axe.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\axe\\hand_axe.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "hax",
+        "line": 2,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 98,
+      "height": 294,
+      "sha256": "ec6e629e285c027a46345a7ad5cc55771add03753a6b15cc3ee1e51a853f7a06"
+    },
+    {
+      "canonicalId": "great_axe",
+      "file": "app/assets/items/great_axe.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\axe\\great_axe.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "gax",
+        "line": 10,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 196,
+      "height": 392,
+      "sha256": "2e04c060edf2015ed06fac205bf59c34c3c6b3deeb6a00c3bfcb53db150ab86f"
+    },
+    {
+      "canonicalId": "short_sword",
+      "file": "app/assets/items/short_sword.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\sword\\short_sword.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "ssd",
+        "line": 27,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 98,
+      "height": 294,
+      "sha256": "0a29072c8c40ef659cbe26270cf40698b0bcd9a5ee3099aedbfcfb9a185b164c"
+    },
+    {
+      "canonicalId": "two_handed_sword",
+      "file": "app/assets/items/two_handed_sword.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\sword\\two_handed_sword.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "2hs",
+        "line": 35,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 98,
+      "height": 392,
+      "sha256": "b0a6a6183d8f9e6a192aa8ed5264b0977e40a87163dd76db23ca0742b9137bbf"
+    },
+    {
+      "canonicalId": "great_sword",
+      "file": "app/assets/items/great_sword.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\sword\\great_sword.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "gsd",
+        "line": 40,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 196,
+      "height": 392,
+      "sha256": "5c786aaab97c89aa75d491c1e3c105cd920853057c19ec8b6451b5954a8e3c3c"
+    },
+    {
+      "canonicalId": "dagger",
+      "file": "app/assets/items/dagger.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\knife\\dagger.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "dgr",
+        "line": 41,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 98,
+      "height": 196,
+      "sha256": "aadb5b5676e2c3e0685f6eb56529787e2e1fc191a3cb3136d3e728c3b739395b"
+    },
+    {
+      "canonicalId": "war_hammer",
+      "file": "app/assets/items/war_hammer.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\hammer\\war_hammer.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "whm",
+        "line": 24,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 196,
+      "height": 294,
+      "sha256": "9c871b1b7c4f0ed7eb231752b050416351ab6682d32b373ed3be24a2e9186a63"
+    },
+    {
+      "canonicalId": "spear",
+      "file": "app/assets/items/spear.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\spear\\spear.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "spr",
+        "line": 54,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 196,
+      "height": 392,
+      "sha256": "6d4255581ece4d8f068398b618a276a1bd72c968e8057d3bccf4eb8ac88c3c93"
+    },
+    {
+      "canonicalId": "war_staff",
+      "file": "app/assets/items/war_staff.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\staff\\war_staff.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "wst",
+        "line": 69,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 196,
+      "height": 392,
+      "sha256": "24a790c7629fa35cea0b60ff23f1aaf4cf7000407437afd2caa720d899dd6fef"
+    },
+    {
+      "canonicalId": "wand",
+      "file": "app/assets/items/wand.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\wand\\wand.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "wnd",
+        "line": 12,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 98,
+      "height": 196,
+      "sha256": "721e2e1406a7e2c77b62c9c49a2eaeb45af6e56d2e568dd39ec99d1628b8b3ef"
+    },
+    {
+      "canonicalId": "hunters_bow",
+      "file": "app/assets/items/hunters_bow.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\bow\\hunters_bow.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "hbw",
+        "line": 71,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 196,
+      "height": 294,
+      "sha256": "8e9218bc2e80fb27ec94cfb6ee0f38511ef1d4cc2766185803467391837c1a40"
+    },
+    {
+      "canonicalId": "light_crossbow",
+      "file": "app/assets/items/light_crossbow.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\bow\\light_crossbow.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "lxb",
+        "line": 78,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 196,
+      "height": 294,
+      "sha256": "3f5807eda29400c607fbf4535d4018fd7a544a6076214b35a6bea9f0f4834a70"
+    },
+    {
+      "canonicalId": "throwing_axe",
+      "file": "app/assets/items/throwing_axe.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\axe\\throwing_axe.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "tax",
+        "line": 46,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 98,
+      "height": 196,
+      "sha256": "7a5f13a8f11cc458f15c9f09c146b15ae304c76e7a9de0537adc6c34c21b02db"
+    },
+    {
+      "canonicalId": "katar",
+      "file": "app/assets/items/katar.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\h2h\\katar.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "ktr",
+        "line": 178,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 98,
+      "height": 294,
+      "sha256": "be9a56b3aa2c84698fbf4bcd20ae37e5601990f81a164bd38fc77d7b1ecaf504"
+    },
+    {
+      "canonicalId": "flail",
+      "file": "app/assets/items/flail.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\mace\\flail.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "fla",
+        "line": 23,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 196,
+      "height": 294,
+      "sha256": "e0aa24719c72babc5c47af762cdc0bcc2c52fc50da7b7c68d176d84e0abedb6c"
+    },
+    {
+      "canonicalId": "scepter",
+      "file": "app/assets/items/scepter.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\scepter\\scepter.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "scp",
+        "line": 17,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 98,
+      "height": 294,
+      "sha256": "bc15f4b94328aabfa22ca27b0f9d05ddab4aa785961c73f5d6f0d16e95520461"
+    },
+    {
+      "canonicalId": "grand_scepter",
+      "file": "app/assets/items/grand_scepter.png",
+      "sourceVirtualPath": "data:data\\hd\\global\\ui\\items\\weapon\\scepter\\grand_scepter.sprite",
+      "sourceRecord": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "weapons.txt",
+        "code": "gsc",
+        "line": 18,
+        "sha256": "b0890901f87fd42fcb474ce835b6e1a9fe1e66dbab4e7c2f236a3d9c3224f923"
+      },
+      "width": 98,
+      "height": 294,
+      "sha256": "a86f190c6870dea4044a5ec76f35e6b64f83e11d1437568625aefd0e73b5c350"
+    }
+  ]
+}

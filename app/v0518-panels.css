@@ -1,0 +1,967 @@
+/* v0.5.18 — the town's stone inventory, merchant and storage windows.
+   This sheet is scoped to the new panel markup; battlefield rendering is untouched. */
+
+.game-panel.diablo-panel {
+  --d2-stone: #312f2b;
+  --d2-stone-light: #898177;
+  --d2-seam: #71685a;
+  --d2-gold: #c8ac73;
+  --d2-frame: clamp(28px, 2.7vw, 40px);
+  position: relative;
+  box-sizing: border-box;
+  width: min(1320px, calc(100vw - 44px));
+  height: min(930px, calc(100dvh - 36px));
+  grid-template-rows: clamp(42px, 5.8vh, 58px) minmax(0, 1fr) clamp(72px, 10.7vh, 98px);
+  border: var(--d2-frame) solid transparent;
+  border-image-source: url('/app/assets/exploration/map-ironframe-v0512.png');
+  border-image-slice: 158;
+  border-image-width: 1;
+  border-image-repeat: stretch;
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(94, 89, 80, .21), transparent 72%),
+    repeating-linear-gradient(117deg, rgba(255, 255, 255, .019) 0 1px, transparent 1px 8px),
+    linear-gradient(110deg, #292824, #11100e 45%, #292723);
+  box-shadow: 0 20px 85px #000, 0 0 0 2px #050404;
+  color: #c9bda7;
+}
+
+.game-panel.diablo-panel::before,
+.game-panel.diablo-panel::after { display: none; }
+
+.diablo-panel .game-panel-header {
+  min-width: 0;
+  min-height: 0;
+  padding: 4px 12px;
+  border-bottom: 2px ridge #77716a;
+  background:
+    linear-gradient(90deg, rgba(238, 230, 216, .08), transparent 24% 76%, rgba(238, 230, 216, .08)),
+    linear-gradient(#33312e, #171614 58%, #25231f);
+  box-shadow: inset 0 1px rgba(233, 224, 204, .24), inset 0 -4px 7px #090807;
+}
+
+.diablo-panel .game-panel-header::after { opacity: .25; }
+.diablo-panel .game-panel-header h2 {
+  overflow: hidden;
+  color: #ded2b4;
+  font: 500 clamp(15px, 1.3vw, 20px)/1.1 Georgia, serif;
+  letter-spacing: .14em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-shadow: 0 2px 2px #000;
+}
+
+.diablo-panel .panel-sigil {
+  width: 29px;
+  height: 29px;
+  border-color: #8f8067;
+  color: #d6b982;
+  background: radial-gradient(circle, #665440, #211d19 68%);
+}
+
+.diablo-panel .panel-close {
+  justify-self: end;
+  width: 32px;
+  height: 32px;
+  border: 2px ridge #857969;
+  color: #d2c6af;
+  background: linear-gradient(#413c35, #1a1815);
+  box-shadow: inset 0 0 0 2px #171511, 0 2px 4px #070605;
+}
+
+.diablo-panel .panel-close:hover,
+.diablo-panel .panel-close:focus-visible {
+  color: #fff0c8;
+  border-color: #ccb07c;
+}
+
+.diablo-panel .game-panel-body {
+  min-width: 0;
+  min-height: 0;
+  padding: 6px 8px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: radial-gradient(ellipse at center, rgba(65, 62, 57, .14), transparent 75%), #11100e;
+  scrollbar-color: #706a5d #171512;
+}
+
+.diablo-panel .d2-inventory-v0518,
+.diablo-panel .d2-trade-v0518,
+.diablo-panel .d2-stash-v0518,
+.diablo-panel .d2-dialogue-v0518,
+.diablo-panel .d2-cube-v0518 {
+  min-width: 0;
+  min-height: 100%;
+  color: #c7bca6;
+}
+
+.diablo-panel .game-panel-body.d2-inventory-v0518 {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.diablo-panel .d2-inventory-v0518 .equipment-toolbar,
+.diablo-panel .d2-inventory-v0518 .equipment-message,
+.diablo-panel .d2-inventory-v0518 .item-details { flex: 0 0 auto; }
+.diablo-panel .d2-inventory-v0518 .equipment-toolbar { min-height: 0; }
+.diablo-panel .d2-inventory-v0518 .equipment-toolbar p { color: #a69c8b; font-size: 10px; }
+.diablo-panel .d2-inventory-v0518 .equipment-message {
+  padding: 5px 9px;
+  border-left-color: #8f816a;
+  background: #27231d;
+  color: #d6c9b0;
+  font: 10px/1.3 Georgia, serif;
+}
+.diablo-panel .d2-inventory-v0518 .item-details {
+  min-height: 42px;
+  max-height: 105px;
+  padding: 6px 10px;
+  overflow: auto;
+  border: 2px ridge #766d5e;
+  background: #191714;
+}
+.diablo-panel .d2-inventory-v0518 .item-details h3 { margin-bottom: 3px; font-size: 13px; }
+.diablo-panel .d2-inventory-v0518 .item-details p { margin: 2px 0; font-size: 10px; }
+
+.diablo-panel .d2-panes,
+.diablo-panel .d2-trade-columns,
+.diablo-panel .d2-storage-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 6px;
+  min-width: 0;
+  min-height: 100%;
+}
+
+.diablo-panel .d2-inventory-v0518 .d2-panes { flex: 1 1 auto; min-height: 0; }
+.diablo-panel .d2-panes > .equipment-sheet,
+.diablo-panel .d2-panes > .backpack-sheet { grid-column: auto; grid-row: auto; }
+
+.diablo-panel .d2-character-wing,
+.diablo-panel .d2-backpack-wing,
+.diablo-panel .d2-trade-vendor,
+.diablo-panel .d2-trade-pack,
+.diablo-panel .d2-storage-columns > *,
+.diablo-panel .d2-dialogue-v0518 > * {
+  position: relative;
+  min-width: 0;
+  padding: clamp(8px, 1vw, 15px);
+  border: 2px ridge #81786a;
+  background:
+    linear-gradient(126deg, rgba(232, 222, 203, .055), transparent 27% 74%, rgba(232, 222, 203, .03)),
+    repeating-linear-gradient(130deg, transparent 0 9px, rgba(0, 0, 0, .07) 10px 12px),
+    linear-gradient(#302e2a, #1d1b18 55%, #2b2925);
+  box-shadow:
+    inset 0 0 0 2px #1d1b18,
+    inset 0 0 0 4px #5b5348,
+    inset 0 0 24px #080706,
+    0 2px 5px #060505;
+}
+
+.diablo-panel .d2-character-wing::before,
+.diablo-panel .d2-backpack-wing::before,
+.diablo-panel .d2-trade-vendor::before,
+.diablo-panel .d2-trade-pack::before,
+.diablo-panel .d2-storage-columns > *::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 5px;
+  right: 12px;
+  left: 12px;
+  height: 2px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #bcb3a3 17%, #5d5548 50%, #bcb3a3 83%, transparent);
+  opacity: .42;
+}
+
+.diablo-panel .d2-character-wing,
+.diablo-panel .d2-backpack-wing,
+.diablo-panel .d2-trade-vendor,
+.diablo-panel .d2-trade-pack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.diablo-panel .d2-character-wing h3,
+.diablo-panel .d2-backpack-wing h3,
+.diablo-panel .d2-trade-vendor h3,
+.diablo-panel .d2-trade-pack h3,
+.diablo-panel .d2-storage-columns h3,
+.diablo-panel .d2-dialogue-v0518 h3 {
+  margin: 0;
+  padding: 1px 6px 6px;
+  color: #dbccac;
+  border-bottom: 1px solid #777066;
+  font: 500 clamp(12px, 1vw, 16px)/1.2 Georgia, serif;
+  letter-spacing: .12em;
+  text-align: center;
+  text-shadow: 0 2px 2px #000;
+}
+
+/* The equipment slots are the game's real seven supported slots. */
+.diablo-panel .d2-paper-doll-stage {
+  position: relative;
+  flex: 0 0 auto;
+  min-width: 0;
+  height: clamp(215px, 34vh, 335px);
+  overflow: hidden;
+  border: 2px ridge #8a8275;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(149, 141, 123, .18), transparent 36%),
+    radial-gradient(ellipse at 50% 85%, rgba(103, 93, 76, .22), transparent 60%),
+    linear-gradient(136deg, #33322f, #1a1917 45%, #292824);
+  box-shadow: inset 0 0 0 3px #141310, inset 0 0 28px #090807;
+}
+
+.diablo-panel .d2-hero-silhouette {
+  position: absolute;
+  top: 7%;
+  left: 25%;
+  z-index: 0;
+  width: 50%;
+  height: 89%;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: .31;
+  filter: grayscale(.75) sepia(.22) contrast(.8);
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.diablo-panel .d2-hero-silhouette img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.diablo-panel .d2-paper-doll-stage #equipment-slots {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  gap: clamp(3px, .4vw, 7px);
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  padding: clamp(7px, .7vw, 11px);
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.diablo-panel .d2-gear-slot,
+.diablo-panel .d2-paper-doll-stage .equipment-slot {
+  min-width: 0;
+  min-height: 0;
+  padding: 3px;
+  overflow: hidden;
+  border: 2px ridge #908674;
+  background: linear-gradient(135deg, rgba(10, 10, 10, .84), rgba(27, 26, 23, .8));
+  box-shadow: inset 0 0 0 1px #14120f, inset 0 0 15px #000, 0 1px 3px #0a0908;
+  color: #b6a581;
+  font-size: clamp(7px, .65vw, 10px);
+  text-align: center;
+}
+
+.diablo-panel .d2-paper-doll-stage .d2-gear-slot:hover,
+.diablo-panel .d2-paper-doll-stage .d2-gear-slot:focus-visible {
+  border-color: #d2b987;
+  color: #ead4a8;
+  background: #2b241a;
+  box-shadow: inset 0 0 10px #000, 0 0 7px rgba(198, 154, 87, .3);
+}
+
+.diablo-panel .d2-paper-doll-stage [data-slot='weapon'] { grid-column: 1; grid-row: 1 / 4; }
+.diablo-panel .d2-paper-doll-stage [data-slot='head'] { grid-column: 3 / 5; grid-row: 1; }
+.diablo-panel .d2-paper-doll-stage [data-slot='offhand'] { grid-column: 6; grid-row: 1 / 4; }
+.diablo-panel .d2-paper-doll-stage [data-slot='chest'] { grid-column: 3 / 5; grid-row: 2 / 4; }
+.diablo-panel .d2-paper-doll-stage [data-slot='hands'] { grid-column: 1 / 3; grid-row: 4; }
+.diablo-panel .d2-paper-doll-stage [data-slot='belt'] { grid-column: 3 / 5; grid-row: 4; }
+.diablo-panel .d2-paper-doll-stage [data-slot='feet'] { grid-column: 5 / 7; grid-row: 4; }
+
+.diablo-panel .d2-character-stats {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 3px;
+  align-content: start;
+}
+
+.diablo-panel .d2-character-stats .stat-row,
+.diablo-panel .d2-character-stats .attribute-row,
+.diablo-panel .d2-vital-line,
+.diablo-panel .d2-experience-line {
+  min-width: 0;
+  min-height: clamp(23px, 3.1vh, 32px);
+  display: grid;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 7px;
+  border: 1px solid #6d675c;
+  background: linear-gradient(#292824, #131210);
+  box-shadow: inset 0 1px rgba(199, 187, 167, .14), inset 0 -2px 5px #090807;
+  color: #c2b7a1;
+  font: 10px/1.12 Georgia, serif;
+}
+
+.diablo-panel .d2-vital-line { grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto; }
+.diablo-panel .d2-experience-line { grid-template-columns: minmax(0, 1fr) auto minmax(0, .6fr) auto minmax(0, .8fr) auto; }
+.diablo-panel .d2-vital-line span,
+.diablo-panel .d2-experience-line span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.diablo-panel .d2-character-stats .equipment-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px 7px;
+  margin: 0;
+}
+.diablo-panel .d2-character-stats .equipment-summary span,
+.diablo-panel .d2-character-stats .equipment-summary span:first-child {
+  grid-column: auto;
+  min-width: 0;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 2px 7px;
+  border: 1px solid #6d675c;
+  background: linear-gradient(#292824, #131210);
+  box-shadow: inset 0 1px rgba(199, 187, 167, .14), inset 0 -2px 5px #090807;
+  color: #c2b7a1;
+  font: 9px/1.1 Georgia, serif;
+}
+.diablo-panel .d2-character-stats .equipment-summary b {
+  display: block;
+  max-width: 62%;
+  margin: 0;
+  overflow: hidden;
+  color: #b9bce5;
+  font: 600 10px/1.1 Georgia, serif;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.diablo-panel .d2-character-stats b,
+.diablo-panel .d2-character-stats strong,
+.diablo-panel .d2-character-stats dd {
+  margin: 0;
+  color: #b9bce5;
+  font: 600 11px/1 Georgia, serif;
+  text-align: right;
+}
+
+.diablo-panel .d2-character-stats dt { margin: 0; }
+.diablo-panel .d2-character-stats .d2-stat-wide { grid-column: 1 / -1; }
+
+/* A dark square grid carries items; labels live in hover/tooltips, not inside slots. */
+.diablo-panel .d2-grid,
+.diablo-panel .d2-backpack-grid,
+.diablo-panel .d2-vendor-grid,
+.diablo-panel .d2-stash-grid,
+.diablo-panel .d2-trade-pack #inventory-grid,
+.diablo-panel .d2-backpack-wing #inventory-grid,
+.diablo-panel .d2-storage-columns #inventory-grid {
+  --d2-columns: 10;
+  --d2-rows: 4;
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 520px;
+  min-width: 0;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--d2-columns), minmax(0, 1fr));
+  grid-template-rows: repeat(var(--d2-rows), minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  aspect-ratio: var(--d2-columns) / var(--d2-rows);
+  gap: 1px;
+  align-self: center;
+  margin: 0 auto;
+  padding: 3px;
+  border: 2px ridge #81776b;
+  background: #49443b;
+  box-shadow: inset 0 0 0 2px #0a0908, inset 0 0 18px #000, 0 2px 4px #080706;
+}
+
+.diablo-panel .d2-grid::after,
+.diablo-panel .d2-backpack-grid::after,
+.diablo-panel .d2-vendor-grid::after,
+.diablo-panel .d2-stash-grid::after,
+.diablo-panel .d2-trade-pack #inventory-grid::after,
+.diablo-panel .d2-backpack-wing #inventory-grid::after,
+.diablo-panel .d2-storage-columns #inventory-grid::after {
+  content: "";
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(to right, transparent 0 calc(10% - 1px), rgba(191, 174, 135, .72) calc(10% - 1px) 10%),
+    repeating-linear-gradient(to bottom, transparent 0 calc(25% - 1px), rgba(191, 174, 135, .72) calc(25% - 1px) 25%);
+  box-shadow: inset 0 0 0 1px rgba(191, 174, 135, .65);
+}
+.diablo-panel .d2-stash-grid::after {
+  /* The 80 actual cells already draw a 10 × 8 grid. Repeating the generic
+     four-row overlay at 12.5% produced 32 false horizontal subdivisions. */
+  background-image: none;
+}
+.diablo-panel .d2-vendor-grid::after { background-size: 20% 100%, 100% calc(100% / var(--d2-rows)); }
+
+.diablo-panel .d2-backpack-wing #inventory-grid,
+.diablo-panel .d2-trade-pack #inventory-grid,
+.diablo-panel .d2-storage-columns #inventory-grid,
+.diablo-panel .d2-backpack-grid { aspect-ratio: 10 / 4; grid-template-rows: repeat(4, minmax(0, 1fr)); }
+.diablo-panel .d2-stash-grid {
+  --d2-rows: 8;
+  max-width: 475px;
+  aspect-ratio: 10 / 8;
+  grid-template-rows: repeat(8, minmax(0, 1fr));
+}
+
+.diablo-panel .d2-vendor-grid {
+  --d2-columns: 5;
+  --d2-rows: 6;
+  max-width: 330px;
+  aspect-ratio: var(--d2-columns) / var(--d2-rows);
+  grid-template-rows: repeat(var(--d2-rows), minmax(0, 1fr));
+}
+
+.diablo-panel .d2-grid-cell {
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid #494640;
+  background: linear-gradient(134deg, #171614, #090908 75%);
+  box-shadow: inset 1px 1px #25231e, inset -1px -1px #050504;
+}
+
+.diablo-panel .d2-grid-item,
+.diablo-panel .d2-grid .grid-cell,
+.diablo-panel .d2-backpack-grid .inventory-cell,
+.diablo-panel .d2-backpack-wing .inventory-cell,
+.diablo-panel .d2-trade-pack .inventory-cell,
+.diablo-panel .d2-storage-columns .inventory-cell {
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid #494640;
+  background: linear-gradient(134deg, #171614, #090908 75%);
+  box-shadow: inset 1px 1px #25231e, inset -1px -1px #050504;
+  color: #d5c59d;
+}
+
+.diablo-panel .d2-grid-item:hover,
+.diablo-panel .d2-grid-item:focus-visible,
+.diablo-panel .d2-grid .grid-cell:hover,
+.diablo-panel .d2-backpack-wing .inventory-cell:hover,
+.diablo-panel .d2-trade-pack .inventory-cell:hover {
+  z-index: 2;
+  border-color: #c1a977;
+  background: #27231c;
+  box-shadow: inset 0 0 9px rgba(194, 159, 99, .23), 0 0 5px rgba(199, 160, 95, .3);
+}
+
+.diablo-panel .d2-grid-item img,
+.diablo-panel .d2-grid-item .item-icon,
+.diablo-panel .inventory-cell img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+.diablo-panel .d2-grid-item .item-name,
+.diablo-panel .inventory-cell .item-name {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: clamp(7px, .7vw, 10px);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.diablo-panel .d2-grid-item .item-meta,
+.diablo-panel .inventory-cell .item-meta { display: none; }
+
+.diablo-panel .loot-row.d2-grid-item {
+  position: relative;
+  z-index: 2;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+  min-height: 0;
+  padding: 2px;
+  border: 2px ridge #86785f;
+  background: radial-gradient(ellipse at 40% 30%, #413528, #17130e 80%);
+  box-shadow: inset 0 0 9px #080605, 0 1px 3px #000;
+  color: #d9caa7;
+  text-align: center;
+}
+
+.diablo-panel .loot-row.d2-grid-item:is(:hover, :focus-within) {
+  z-index: 4;
+  border-color: #c8aa75;
+  box-shadow: inset 0 0 8px #080605, 0 0 7px rgba(227, 185, 112, .42);
+}
+
+.diablo-panel .loot-row.d2-grid-item h3,
+.diablo-panel .loot-row.d2-grid-item strong,
+.diablo-panel .loot-row.d2-grid-item .item-name {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  color: #e4cca0;
+  font: 600 clamp(8px, .72vw, 10px)/1.15 Georgia, serif;
+  overflow-wrap: anywhere;
+}
+
+.diablo-panel .loot-row.d2-grid-item p,
+.diablo-panel .loot-row.d2-grid-item small {
+  margin: 0;
+  overflow: hidden;
+  color: #b4a58a;
+  font: 8px/1.1 Georgia, serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.diablo-panel .loot-row.d2-grid-item button {
+  width: 100%;
+  min-width: 0;
+  min-height: 22px;
+  padding: 2px;
+  overflow: hidden;
+  border: 1px solid #948163;
+  background: linear-gradient(#4b3826, #211810);
+  color: #f0d7a2;
+  font: 700 8px/1.1 Georgia, serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.diablo-panel .loot-row.d2-grid-item button:is(:hover, :focus-visible) {
+  border-color: #dfc48e;
+  background: linear-gradient(#6c4d2b, #342316);
+}
+
+/* Stash contents are spatial item sprites; keep labels and transfer controls
+   out of the occupied cells so narrow items cannot collapse into wrapped text. */
+.diablo-panel .d2-stash-v0518 .loot-row.d2-grid-item {
+  display: block;
+  padding: 2px;
+  z-index: 9;
+}
+
+.diablo-panel .d2-stash-v0518 .loot-row.d2-grid-item:is(:hover, :focus-within) {
+  z-index: 9;
+}
+
+.diablo-panel .d2-stash-v0518 .d2-stash-item-art {
+  position: absolute;
+  inset: 3px 3px 18px;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  min-height: 0;
+  pointer-events: none;
+}
+
+.diablo-panel .d2-stash-v0518 .d2-stash-item-art .d2-trade-item-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(1px 2px 2px #000);
+}
+
+.diablo-panel .d2-stash-v0518 .d2-stash-item-name {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.diablo-panel .d2-stash-v0518 .loot-row.d2-grid-item button.metal-button {
+  position: absolute;
+  z-index: 2;
+  right: 2px;
+  bottom: 2px;
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  width: 17px;
+  min-width: 17px;
+  min-height: 15px;
+  padding: 0;
+  font: 700 11px/1 Georgia, serif;
+  text-overflow: clip;
+}
+
+.diablo-panel .d2-gold {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  align-self: center;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  min-height: 28px;
+  margin-top: 2px;
+  padding: 3px 10px;
+  border: 2px ridge #8c7f68;
+  background: linear-gradient(#171511, #080706);
+  box-shadow: inset 0 0 10px #000;
+  color: #d9c18c;
+  font: 600 13px/1 Georgia, serif;
+  white-space: nowrap;
+}
+
+.diablo-panel .d2-gold strong { color: #f0d18b; }
+.diablo-panel .d2-gold button { min-width: 0; margin-left: auto; padding: 4px 7px; font-size: 9px; }
+.diablo-panel .d2-backpack-wing .belt-slots {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 0;
+}
+.diablo-panel .d2-backpack-wing .belt-slot {
+  min-height: 36px;
+  padding: 3px;
+}
+
+/* Trading and storage retain the same two-wing silhouette as inventory. */
+.diablo-panel .d2-trade-v0518,
+.diablo-panel .d2-stash-v0518 { display: flex; flex-direction: column; gap: 7px; }
+.diablo-panel .d2-trade-intro {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  min-height: 64px;
+  padding: 3px 12px;
+  border: 2px ridge #796f5f;
+  background: linear-gradient(90deg, #1c1915, #312a21 48%, #171410);
+  box-shadow: inset 0 0 14px #080706;
+}
+.diablo-panel .d2-trade-intro h3 { margin: 1px 0; color: #e4cda0; font: 18px Georgia, serif; }
+.diablo-panel .d2-trade-intro small { color: #9f9074; font: 9px Georgia, serif; letter-spacing: .15em; }
+.diablo-panel .d2-trade-intro p { margin: 0; color: #c1b197; font: 11px Georgia, serif; }
+.diablo-panel .d2-trade-gold { color: #c5aa74; font: 10px Georgia, serif; white-space: nowrap; }
+.diablo-panel .d2-trade-gold b { margin-left: 6px; color: #ead39c; font-size: 15px; }
+.diablo-panel .d2-npc-portrait { width: 46px; height: 56px; background-size: contain; background-position: center bottom; background-repeat: no-repeat; }
+.diablo-panel .d2-npc-akara { background-image: url('/app/assets/npc-akara-v0517.png'); }
+.diablo-panel .d2-npc-charsi { background-image: url('/app/assets/npc-charsi-v0517.png'); }
+.diablo-panel .d2-npc-gheed { background-image: url('/app/assets/npc-gheed-v0517.png'); }
+.diablo-panel .d2-trade-columns,
+.diablo-panel .d2-storage-columns { flex: 1 1 auto; }
+.diablo-panel .d2-trade-vendor,
+.diablo-panel .d2-trade-pack { overflow: hidden; }
+.diablo-panel .d2-trade-vendor .d2-grid { aspect-ratio: var(--d2-columns) / var(--d2-rows); grid-template-rows: repeat(var(--d2-rows), minmax(0, 1fr)); }
+.diablo-panel .d2-trade-pack .d2-grid { aspect-ratio: 10 / 4; grid-template-rows: repeat(4, minmax(0, 1fr)); }
+.diablo-panel .d2-trade-v0518 .panel-tabs,
+.diablo-panel .d2-stash-v0518 .panel-tabs { flex: 0 0 auto; margin-bottom: 0; padding: 2px 4px 5px; }
+.diablo-panel .d2-trade-v0518 .panel-button,
+.diablo-panel .d2-stash-v0518 .panel-button,
+.diablo-panel .d2-dialogue-v0518 .panel-button,
+.diablo-panel .d2-cube-v0518 .panel-button {
+  min-height: 29px;
+  border: 2px ridge #8b7c66;
+  background: linear-gradient(#3b3429, #16130f);
+  color: #dcc69c;
+  box-shadow: inset 0 0 0 1px #17120f, 0 2px 3px #070605;
+  font: 700 10px/1.15 Georgia, serif;
+  letter-spacing: .06em;
+}
+
+.diablo-panel .d2-trade-v0518 .panel-button:hover,
+.diablo-panel .d2-trade-v0518 .panel-button:focus-visible,
+.diablo-panel .d2-stash-v0518 .panel-button:hover,
+.diablo-panel .d2-stash-v0518 .panel-button:focus-visible,
+.diablo-panel .d2-dialogue-v0518 .panel-button:hover,
+.diablo-panel .d2-dialogue-v0518 .panel-button:focus-visible,
+.diablo-panel .d2-cube-v0518 .panel-button:hover,
+.diablo-panel .d2-cube-v0518 .panel-button:focus-visible {
+  border-color: #c9ad7a;
+  background: linear-gradient(#574630, #21170f);
+  color: #fff0c6;
+}
+
+.diablo-panel .d2-dialogue-v0518 {
+  display: grid;
+  grid-template-columns: minmax(180px, .65fr) minmax(0, 1.35fr);
+  gap: 7px;
+  align-items: stretch;
+}
+.diablo-panel .d2-dialogue-v0518 img { display: block; max-width: 100%; max-height: min(55vh, 500px); object-fit: contain; margin: auto; }
+.diablo-panel .d2-dialogue-v0518 p { color: #d2c1a2; font: 14px/1.55 Georgia, serif; text-shadow: 0 1px #000; }
+.diablo-panel .d2-dialogue-v0518 .panel-actions { justify-content: center; gap: 8px; margin-top: 12px; }
+
+/* The reference keeps life and mana anchored at the outer edges of the belt. */
+.diablo-panel .d2-footer,
+.diablo-panel .game-panel-footer.d2-footer {
+  box-sizing: border-box;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: clamp(64px, 7vw, 95px) minmax(0, 1fr) clamp(64px, 7vw, 95px);
+  align-items: end;
+  gap: clamp(4px, .7vw, 12px);
+  padding: 3px clamp(8px, 1.2vw, 18px) 1px;
+  overflow: visible;
+  border-top: 3px ridge #807668;
+  background:
+    linear-gradient(90deg, rgba(198, 189, 169, .09), transparent 20% 80%, rgba(198, 189, 169, .09)),
+    linear-gradient(#292723, #151310);
+  box-shadow: inset 0 3px 7px #080706;
+}
+
+.diablo-panel .d2-footer .d2-orb {
+  box-sizing: border-box;
+  width: clamp(58px, 8.4vh, 88px);
+  height: clamp(58px, 8.4vh, 88px);
+  display: grid;
+  place-items: center;
+  border: 5px ridge #847b6e;
+  border-radius: 50%;
+  color: #f6ddd0;
+  font: 700 10px/1 Georgia, serif;
+  text-shadow: 0 2px 4px #000;
+  box-shadow: inset 0 0 13px #070406, inset 0 2px 5px rgba(255, 255, 255, .35), 0 2px 6px #000;
+}
+
+.diablo-panel .d2-footer .d2-life {
+  justify-self: start;
+  background: radial-gradient(circle at 34% 30%, #af5142, #741c16 50%, #240906 86%);
+}
+
+.diablo-panel .d2-footer .d2-mana {
+  justify-self: end;
+  background: radial-gradient(circle at 34% 30%, #6077d2, #263579 51%, #080d2c 86%);
+}
+
+.diablo-panel .d2-footer .d2-belt {
+  min-width: 0;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2px, .45vw, 7px);
+  padding: 4px 8px;
+  border: 2px ridge #8d8170;
+  background: linear-gradient(#28251f, #100e0b);
+  box-shadow: inset 0 0 0 2px #110f0c, inset 0 0 14px #000;
+}
+
+.diablo-panel .d2-footer .d2-belt > * {
+  min-width: 0;
+  min-height: 29px;
+  padding: 2px 6px;
+  border: 1px solid #655947;
+  background: linear-gradient(#3b3429, #17120d);
+  color: #d6c097;
+}
+
+.diablo-panel :is(button, [role='button'], a):focus-visible {
+  outline: 2px solid #ecd09a;
+  outline-offset: 2px;
+}
+
+@media (max-width: 1320px) {
+  .game-panel.diablo-panel { --d2-frame: 28px; }
+  .diablo-panel .d2-paper-doll-stage { height: clamp(210px, 32vh, 285px); }
+  .diablo-panel .d2-character-wing,
+  .diablo-panel .d2-backpack-wing,
+  .diablo-panel .d2-trade-vendor,
+  .diablo-panel .d2-trade-pack,
+  .diablo-panel .d2-storage-columns > * { padding: 7px; }
+}
+
+@media (max-height: 760px) {
+  .game-panel.diablo-panel {
+    grid-template-rows: 42px minmax(0, 1fr) 72px;
+    --d2-frame: 26px;
+  }
+  .diablo-panel .game-panel-body { padding: 3px 5px; }
+  .diablo-panel .d2-paper-doll-stage { height: 168px; }
+  .diablo-panel .d2-backpack-wing #inventory-grid { max-width: 430px; }
+  .diablo-panel .d2-backpack-wing .belt-slot { min-height: 32px; }
+  .diablo-panel .d2-vendor-grid { max-width: 285px; }
+  .diablo-panel .d2-character-wing,
+  .diablo-panel .d2-backpack-wing,
+  .diablo-panel .d2-trade-vendor,
+  .diablo-panel .d2-trade-pack { gap: 4px; }
+  .diablo-panel .d2-character-stats .stat-row,
+  .diablo-panel .d2-character-stats .attribute-row,
+  .diablo-panel .d2-vital-line,
+  .diablo-panel .d2-experience-line { min-height: 22px; padding-block: 1px; }
+  .diablo-panel .d2-footer .d2-orb { width: 58px; height: 58px; }
+}
+
+@media (max-width: 900px) {
+  .diablo-panel .d2-panes,
+  .diablo-panel .d2-trade-columns,
+  .diablo-panel .d2-storage-columns,
+  .diablo-panel .d2-dialogue-v0518 { grid-template-columns: minmax(0, 1fr); }
+  .diablo-panel .d2-paper-doll-stage { height: 260px; }
+}
+
+/* Character panel (C): Diablo II-style stone ledger, not the former tiny three-column dashboard. */
+.diablo-panel .d2-character-sheet {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(100%, 960px);
+  min-height: 100%;
+  margin: 0 auto;
+  padding: 12px;
+  border: 2px ridge #777065;
+  background: radial-gradient(ellipse at 50% 12%, rgba(138, 126, 104, .11), transparent 52%), linear-gradient(130deg, #282723, #151411 54%, #22211e);
+  box-shadow: inset 0 0 0 3px #15130f, inset 0 0 35px #090807, 0 3px 12px #080706;
+}
+.diablo-panel .d2-sheet-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 65px;
+  padding: 10px 18px;
+  border: 1px solid #696154;
+  background: linear-gradient(#35332e, #211f1c 55%, #181714);
+  box-shadow: inset 0 1px rgba(226, 215, 189, .16), inset 0 -2px 6px #0b0a08;
+}
+.diablo-panel .d2-sheet-heading small {
+  color: #a79676;
+  font: 700 10px/1.2 Georgia, serif;
+  letter-spacing: .18em;
+}
+.diablo-panel .d2-sheet-heading h3 {
+  margin: 3px 0 2px;
+  color: #ebdbba;
+  font: 500 26px/1.1 Georgia, serif;
+  text-shadow: 0 2px 3px #000;
+}
+.diablo-panel .d2-sheet-heading p { margin: 0; color: #c9bda8; font: 13px/1.3 Georgia, serif; }
+.diablo-panel .d2-sheet-level {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 0 auto;
+  color: #b9aa8c;
+  font: 11px/1.2 Georgia, serif;
+  letter-spacing: .1em;
+}
+.diablo-panel .d2-sheet-level strong {
+  min-width: 48px;
+  padding: 5px 8px;
+  border: 2px ridge #77684f;
+  background: #15130f;
+  color: #efdbad;
+  font: 22px/1 Georgia, serif;
+  text-align: center;
+}
+.diablo-panel .d2-sheet-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); flex: 1 1 auto; gap: 10px; }
+.diablo-panel .d2-sheet-column { min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+.diablo-panel .d2-sheet-section {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  padding: 10px 12px 12px;
+  border: 2px ridge #655e52;
+  background: linear-gradient(#211f1b, #151411);
+  box-shadow: inset 0 0 0 2px #11100d, inset 0 0 18px #0a0908;
+}
+.diablo-panel .d2-sheet-column > .d2-sheet-section:first-child { flex-grow: 1.2; }
+.diablo-panel .d2-sheet-column > .d2-sheet-section:last-child { flex-grow: .8; }
+.diablo-panel .d2-sheet-section h4 {
+  margin: 0 0 8px;
+  padding: 0 2px 7px;
+  border-bottom: 1px solid #6b5b43;
+  color: #ddc393;
+  font: 500 17px/1.2 Georgia, serif;
+  letter-spacing: .05em;
+  text-shadow: 0 2px 2px #000;
+}
+.diablo-panel .d2-sheet-section dl { display: grid; grid-auto-rows: minmax(0, 1fr); flex: 1 1 auto; gap: 5px; margin: 0; }
+.diablo-panel .d2-sheet-row {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 41px;
+  padding: 6px 10px;
+  border: 1px solid #4d463b;
+  background: linear-gradient(90deg, #22201c, #12110f);
+  color: #d0c5af;
+  font: 14px/1.3 Georgia, serif;
+}
+.diablo-panel .d2-sheet-row dt,
+.diablo-panel .d2-sheet-row dd { margin: 0; }
+.diablo-panel .d2-sheet-row dd { display: flex; align-items: center; justify-content: flex-end; gap: 10px; min-width: 0; text-align: right; }
+.diablo-panel .d2-sheet-row strong { color: #f0dfbd; font: 17px/1.1 Georgia, serif; overflow-wrap: anywhere; }
+.diablo-panel .d2-sheet-row .d2-sheet-unavailable { color: #a99d8a; font: italic 13px/1.2 Georgia, serif; }
+.diablo-panel .d2-sheet-row button {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 2px ridge #947750;
+  background: linear-gradient(#493d2a, #21180f);
+  color: #efd8a7;
+  font: 700 20px/1 Georgia, serif;
+  cursor: pointer;
+}
+.diablo-panel .d2-sheet-row button:hover:not(:disabled) { border-color: #d3ac65; filter: brightness(1.2); }
+.diablo-panel .d2-sheet-row button:disabled { opacity: .4; cursor: not-allowed; }
+.diablo-panel .d2-sheet-points {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 9px 2px 0;
+  color: #c7b690;
+  font: 13px/1.3 Georgia, serif;
+}
+.diablo-panel .d2-sheet-points b { color: #f0d39a; font-size: 17px; }
+.diablo-panel .d2-sheet-progress p { display: flex; justify-content: space-between; gap: 12px; margin: 0 0 9px; color: #e4d0a9; font: 14px/1.3 Georgia, serif; }
+.diablo-panel .d2-sheet-progress p span { color: #b6a281; }
+.diablo-panel .d2-sheet-progress progress { display: block; width: 100%; height: 17px; margin-bottom: 10px; accent-color: #a78a52; }
+.diablo-panel .d2-sheet-progress progress::-webkit-progress-bar { border: 1px solid #695943; background: #0b0a08; }
+.diablo-panel .d2-sheet-progress progress::-webkit-progress-value { background: linear-gradient(#c7a86c, #6d4926); }
+.diablo-panel .d2-sheet-progress .d2-sheet-row { margin-top: 6px; }
+.diablo-panel .d2-sheet-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 14px; padding: 8px 12px; border-top: 1px solid #695d4b; color: #a99b82; font: 12px/1.4 Georgia, serif; }
+.diablo-panel .d2-sheet-meta b { color: #d8c6a5; font-weight: 500; }
+.diablo-panel .d2-sheet-note { margin: 0; padding: 4px 12px 0; color: #9d927f; font: 11px/1.4 Georgia, serif; }
+@media (max-width: 740px) {
+  .diablo-panel .d2-sheet-columns { grid-template-columns: minmax(0, 1fr); }
+  .diablo-panel .d2-sheet-heading h3 { font-size: 20px; }
+}
+@media (max-height: 760px) {
+  .diablo-panel .d2-character-sheet { gap: 6px; padding: 6px; }
+  .diablo-panel .d2-sheet-heading { min-height: 48px; padding: 5px 12px; }
+  .diablo-panel .d2-sheet-heading h3 { font-size: 21px; }
+  .diablo-panel .d2-sheet-column { gap: 6px; }
+  .diablo-panel .d2-sheet-section { padding: 6px 8px; }
+  .diablo-panel .d2-sheet-section h4 { margin-bottom: 4px; padding-bottom: 4px; font-size: 15px; }
+  .diablo-panel .d2-sheet-section dl { gap: 3px; }
+  .diablo-panel .d2-sheet-row { min-height: 35px; padding: 3px 8px; font-size: 13px; }
+  .diablo-panel .d2-sheet-row strong { font-size: 15px; }
+  .diablo-panel .d2-sheet-row button { width: 24px; height: 24px; font-size: 17px; }
+  .diablo-panel .d2-sheet-points { margin-top: 4px; }
+  .diablo-panel .d2-sheet-meta { padding-block: 4px; }
+}

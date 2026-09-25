@@ -1,0 +1,54 @@
+{
+  "profile": "d2r-rotw-3.3-private-offline-audit-2026-09-12-v1",
+  "status": "TYPE_NAMES_VERIFIED_MECHANICS_NOT_IMPORTED",
+  "sources": [
+    "https://news.blizzard.com/en-us/article/23788293/diablo-ii-resurrected-patch-2-4-ladder-now-live",
+    "https://classic.battle.net/diablo2exp/basics/hirelings.shtml"
+  ],
+  "records": [
+    {
+      "canonical_id": "d2r.hireling.act1.rogue_archer",
+      "source_name": "Rogue Archer",
+      "act": 1,
+      "acquired": true,
+      "verified": true,
+      "mechanicsImplemented": false,
+      "presentationReady": true,
+      "testsPassed": false,
+      "notes": "Patch 2.4 confirms Amazon Bow support; exact patch 3.3 stat tables and complete equipment restrictions are not imported. This is not the Amazon hero class."
+    },
+    {
+      "canonical_id": "d2r.hireling.act2.desert_mercenary",
+      "source_name": "Desert Mercenary",
+      "act": 2,
+      "acquired": true,
+      "verified": true,
+      "mechanicsImplemented": false,
+      "presentationReady": true,
+      "testsPassed": false,
+      "notes": "The type and six-aura availability change are verified from official patch 2.4 notes; exact patch 3.3 tables are not imported."
+    },
+    {
+      "canonical_id": "d2r.hireling.act3.iron_wolf",
+      "source_name": "Iron Wolf",
+      "act": 3,
+      "acquired": true,
+      "verified": true,
+      "mechanicsImplemented": false,
+      "presentationReady": true,
+      "testsPassed": false,
+      "notes": "Official patch 2.4 notes verify the type and elemental variants; exact patch 3.3 tables are not imported."
+    },
+    {
+      "canonical_id": "d2r.hireling.act5.barbarian_warrior",
+      "source_name": "Barbarian Warrior",
+      "act": 5,
+      "acquired": true,
+      "verified": true,
+      "mechanicsImplemented": false,
+      "presentationReady": true,
+      "testsPassed": false,
+      "notes": "Official patch 2.4 notes distinguish the classic and dual-wield variants; exact patch 3.3 equipment rules are not imported."
+    }
+  ]
+}
