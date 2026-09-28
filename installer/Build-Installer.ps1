@@ -1,5 +1,5 @@
 param(
-  [string]$Version = '0.2',
+  [string]$Version = '0.3',
   [string]$OutputDirectory = (Join-Path (Split-Path -Parent $PSScriptRoot) 'outputs\installer'),
   [switch]$LocalTest,
   [string]$NodeExecutable = '',

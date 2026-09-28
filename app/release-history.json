@@ -1,10 +1,19 @@
 {
-  "currentVersion": "0.2",
+  "currentVersion": "0.3",
   "releases": [
+    {
+      "version": "0.3",
+      "date": "2026-09-28",
+      "changes": [
+        "Naprawiono aktualizowanie gry uruchamianej dotychczasowym plikiem GRAJ: instalator może bezpiecznie zaktualizować ten sam folder gry.",
+        "Po kliknięciu aktualizacji gra sprawdza opublikowane wydanie, weryfikuje instalator i przekazuje instalatorowi dokładny folder tej kopii gry.",
+        "Zachowano dotychczasowy katalog zapisów; po aktualizacji zapis jest kopiowany do katalogu danych użytkownika bez usuwania oryginalnej kopii."
+      ]
+    },
     {
       "version": "0.2",
       "date": "2026-09-28",
-      "status": "prepared",
+      "status": "published",
       "changes": [
         "Dodano widoczne animacje chodu i ciosu bohaterów na planszy walki oraz zsynchronizowano je z ruchem między heksami.",
         "Poprawiono wybór i filtrowanie umiejętności LPM/PPM dla poszczególnych klas, z zachowaniem ich drzewek i przypisań.",
@@ -18,7 +27,7 @@
     {
       "version": "0.1",
       "date": "2026-09-25",
-      "status": "prepared",
+      "status": "published",
       "changes": [
         "Wybór trzech aktywnych bohaterów spośród ośmiu klas; każda postać zachowuje własny plecak, wyposażenie i postęp.",
         "Obozowisko Łotrzyc z rozmowami, handlem u Akary, Charsi i Gheeda, wspólną skrytką, waypointem oraz przejściem na Krwawe Wrzosowisko.",

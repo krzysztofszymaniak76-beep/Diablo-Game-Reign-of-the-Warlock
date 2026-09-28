@@ -4,7 +4,7 @@ import { mkdir, open, rename, rm, stat } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-export const RELEASE_VERSION = '0.2';
+export const RELEASE_VERSION = '0.3';
 export const RELEASE_REPOSITORY = 'krzysztofszymaniak76-beep/Diablo-Game-Reign-of-the-Warlock';
 export const RELEASE_API = `https://api.github.com/repos/${RELEASE_REPOSITORY}/releases/latest`;
 const INSTALLER_PREFIX = 'Diablo-Game-Reign-of-the-Warlock-Setup-';
@@ -142,9 +142,16 @@ export async function downloadVerifiedInstaller(release, {
   return target;
 }
 
-export async function launchInstaller(installerPath, { spawnImpl = spawn } = {}) {
+export async function launchInstaller(installerPath, { spawnImpl = spawn, installDirectory } = {}) {
   if (path.extname(installerPath).toLowerCase() !== '.exe') throw new Error('Wydanie nie zawiera instalatora EXE.');
-  const child = spawnImpl(installerPath, [], { detached: true, stdio: 'ignore', windowsHide: false });
+  const args = [];
+  if (installDirectory !== undefined) {
+    if (typeof installDirectory !== 'string' || !path.isAbsolute(installDirectory)) {
+      throw new Error('Nieprawidłowy folder instalacji aktualizacji.');
+    }
+    args.push(`/DIR=${path.resolve(installDirectory)}`);
+  }
+  const child = spawnImpl(installerPath, args, { detached: true, stdio: 'ignore', windowsHide: false });
   await new Promise((resolve, reject) => {
     child.once('spawn', resolve);
     child.once('error', reject);

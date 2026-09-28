@@ -125,18 +125,13 @@ createServer(async (request, response) => {
           response.end(JSON.stringify({ error: 'Niedozwolone źródło aktualizacji.' }));
           return;
         }
-        if (process.env.ROTW_INSTALLED_MODE !== '1') {
-          response.writeHead(409, jsonHeaders);
-          response.end(JSON.stringify({ error: 'Instalowanie aktualizacji jest dostępne tylko w zainstalowanej grze.' }));
-          return;
-        }
         try {
           const body = await requestJson(request);
           if (body?.action !== 'install') throw new Error('Nieznana operacja aktualizacji.');
           const release = await latestUpdate({ force: true });
           if (!release.updateAvailable) throw new Error(release.error || 'Nie ma nowszej wersji z instalatorem.');
           const installerPath = await downloadVerifiedInstaller(release, { signal: AbortSignal.timeout(15 * 60_000) });
-          await launchInstaller(installerPath);
+          await launchInstaller(installerPath, { installDirectory: root });
           response.writeHead(200, jsonHeaders);
           response.end(JSON.stringify({ started: true, version: release.latestVersion,
             message: 'Zweryfikowany instalator został uruchomiony. Dokończ instalację w jego oknie.' }));

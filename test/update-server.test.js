@@ -17,7 +17,7 @@ async function freePort() {
   return port;
 }
 
-test('update installation endpoint refuses foreign origin and source checkout', async t => {
+test('update installation endpoint refuses foreign origin and rejects unknown actions', async t => {
   const temp = await mkdtemp(path.join(os.tmpdir(), 'rotw-update-http-test-'));
   t.after(() => rm(temp, { recursive: true, force: true }));
   const port = await freePort();
@@ -44,8 +44,8 @@ test('update installation endpoint refuses foreign origin and source checkout', 
   assert.equal(foreign.status, 403);
   const source = await fetch(`${url}/__rotw_update`, {
     method: 'POST', headers: { origin: url, 'content-type': 'application/json' },
-    body: JSON.stringify({ action: 'install' }),
+    body: JSON.stringify({ action: 'invalid' }),
   });
   assert.equal(source.status, 409);
-  assert.match((await source.json()).error, /zainstalowanej grze/);
+  assert.match((await source.json()).error, /Nieznana operacja aktualizacji/);
 });

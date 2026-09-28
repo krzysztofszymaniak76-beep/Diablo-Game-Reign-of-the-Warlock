@@ -22,7 +22,7 @@ function release(version, bytes = Buffer.from('private local installer test')) {
 }
 
 test('public version sequence passes 0.9 to 1.0 and rejects 0.10', () => {
-  assert.equal(RELEASE_VERSION, '0.2');
+  assert.equal(RELEASE_VERSION, '0.3');
   assert.equal(compareReleaseVersions('1.0', '0.9'), 1);
   assert.equal(compareReleaseVersions('2.0', '1.9'), 1);
   assert.equal(compareReleaseVersions('0.2', '0.9'), -1);
@@ -32,18 +32,18 @@ test('public version sequence passes 0.9 to 1.0 and rejects 0.10', () => {
 });
 
 test('new release is offered only with exact installer, size and digest', () => {
-  const good = readLatestRelease(release('0.3'));
+  const good = readLatestRelease(release('0.4'));
   assert.equal(good.updateAvailable, true);
   assert.deepEqual(good.release.changes, ['Nowa mapa', 'Naprawiono zapisy']);
   assert.equal(good.release.date, '2026-09-25');
   assert.equal(readLatestRelease(release('0.1')).updateAvailable, false);
-  const noDigest = release('0.3');
+  const noDigest = release('0.4');
   delete noDigest.assets[0].digest;
   assert.equal(readLatestRelease(noDigest).updateAvailable, false);
-  const wrongHost = release('0.3');
+  const wrongHost = release('0.4');
   wrongHost.assets[0].browser_download_url = 'https://attacker.example/setup.exe';
   assert.equal(readLatestRelease(wrongHost).updateAvailable, false);
-  const noInstaller = release('0.3');
+  const noInstaller = release('0.4');
   noInstaller.assets = [];
   assert.equal(readLatestRelease(noInstaller).updateAvailable, false);
 });
@@ -57,14 +57,14 @@ test('GitHub 404 is a visible no-release state, not a phantom update', async () 
 test('download verifies exact bytes and SHA-256 before installer can launch', async t => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'rotw-update-test-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
-  const bytes = Buffer.from('EXE test bytes 0.3');
-  const latest = readLatestRelease(release('0.3', bytes));
+  const bytes = Buffer.from('EXE test bytes 0.4');
+  const latest = readLatestRelease(release('0.4', bytes));
   const fetchImpl = async url => {
     assert.equal(url, latest.installer.url);
     return new Response(bytes, { status: 200 });
   };
   const file = await downloadVerifiedInstaller(latest, { directory, fetchImpl });
-  assert.equal(path.basename(file), expectedInstallerName('0.3'));
+  assert.equal(path.basename(file), expectedInstallerName('0.4'));
   assert.deepEqual(await readFile(file), bytes);
   let downloadedAgain = false;
   assert.equal(await downloadVerifiedInstaller(latest, { directory, fetchImpl: async () => {
@@ -98,5 +98,12 @@ test('installer starts visibly only after validated EXE path', async () => {
   };
   assert.equal(await launchInstaller('C:\\updates\\Setup.exe', { spawnImpl }), true);
   assert.equal(called, true);
+  let installArgs;
+  const installDirectory = 'C:\\Users\\test\\Game Folder';
+  await launchInstaller('C:\\updates\\Setup.exe', {
+    spawnImpl: (file, args) => { installArgs = args; const child = new EventEmitter(); child.unref = () => {}; queueMicrotask(() => child.emit('spawn')); return child; },
+    installDirectory,
+  });
+  assert.deepEqual(installArgs, [`/DIR=${path.resolve(installDirectory)}`]);
   await assert.rejects(launchInstaller('C:\\updates\\package.zip', { spawnImpl }), /EXE/);
 });
