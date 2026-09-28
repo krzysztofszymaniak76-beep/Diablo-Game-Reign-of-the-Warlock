@@ -27,8 +27,19 @@
   <link rel="stylesheet" href="/app/battlefield-d2r-v0521-torches.css">
   <link rel="stylesheet" href="/app/main-menu.css">
   <link rel="stylesheet" href="/app/character-creation.css">
+  <link rel="stylesheet" href="/app/skill-palette-visual.css">
 </head>
 <body>
+  <svg width="0" height="0" aria-hidden="true" style="position:absolute;pointer-events:none">
+    <defs><filter id="skill-tile-red" color-interpolation-filters="sRGB">
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncR type="table" tableValues="0 .50 .72 .90 1"/>
+        <feFuncG type="table" tableValues="0 .015 .04 .13 .28"/>
+        <feFuncB type="table" tableValues="0 .007 .015 .06 .15"/>
+      </feComponentTransfer>
+    </filter></defs>
+  </svg>
   <div id="app" class="game-shell">
     <header class="top-frame">
       <div class="brand-block">
@@ -161,7 +172,6 @@
           <strong id="battle-guide-hero">PRZYGOTOWANIE</strong>
           <span id="battle-guide-copy">Wybierz postać i zielony heks.</span>
           <small id="battle-guide-skills">LPM / PPM: przypisane umiejętności</small>
-          <button type="button" id="battle-guide-end-turn" class="metal-button" hidden>ZAKOŃCZ TURĘ</button>
         </div>
         <div class="deployment-legend" data-deployment-zone><b>STREFA ROZSTAWIENIA</b><span>3 ZIELONE KOLUMNY · AI UŚPIONE</span></div>
         <div class="enemy-plate">
@@ -256,7 +266,7 @@
         <div class="mouse-skill-stage">
           <button id="mouse-skill-left" class="mouse-skill-slot left-slot" type="button" aria-haspopup="listbox" aria-expanded="false">
             <span class="mouse-button-label">LPM</span>
-            <span class="mouse-skill-art"><i id="mouse-skill-left-glyph">⚔</i></span>
+            <span class="mouse-skill-art"><img id="mouse-skill-left-icon" class="mouse-skill-icon" alt="" aria-hidden="true" loading="lazy"><i id="mouse-skill-left-glyph">⚔</i></span>
             <strong id="mouse-skill-left-name">—</strong>
             <small id="mouse-skill-left-copy">ziemia: ruch · wróg: użyj skilla</small>
           </button>
@@ -286,7 +296,6 @@
                 <button type="button" data-open-panel="hireling" title="Najemnik (O)"><b>♟</b><span>O</span></button>
                 <button type="button" data-open-panel="options" title="Opcje gry (ESC)"><b>⚙</b><span>ESC</span></button>
               </div>
-              <button id="end-turn" class="d2-end-turn" data-action="wait" type="button"><small>ZAKOŃCZ</small><b>KOLEJKĘ</b></button>
               <div class="d2-system-controls">
                 <button id="save" type="button">ZAPISZ</button>
                 <button id="load" type="button" title="Wczytaj zapis lub zaimportuj zgodną starszą wersję">WCZYTAJ</button>
@@ -298,7 +307,7 @@
 
           <button id="mouse-skill-right" class="mouse-skill-slot right-slot" type="button" aria-haspopup="listbox" aria-expanded="false">
             <span class="mouse-button-label">PPM</span>
-            <span class="mouse-skill-art"><i id="mouse-skill-right-glyph">◆</i></span>
+            <span class="mouse-skill-art"><img id="mouse-skill-right-icon" class="mouse-skill-icon" alt="" aria-hidden="true" loading="lazy"><i id="mouse-skill-right-glyph">◆</i></span>
             <strong id="mouse-skill-right-name">—</strong>
             <small id="mouse-skill-right-copy">prawy przycisk myszy</small>
           </button>
@@ -312,6 +321,8 @@
 <button type="button" id="skill-card-right-3" class="card skill-card" data-action="skill" data-slot-role="right" data-right-index="2" data-skill-id=""><span class="card-cost">PPM 3</span><span class="card-kind">PRAWY SLOT</span><span class="card-art"><i class="card-glyph">◆</i><em></em></span><span class="card-name">—</span><small class="card-copy">—</small></button>
         </section>
       </section>
+
+      <button id="end-turn" class="d2-end-turn" data-action="wait" type="button" aria-label="Następna tura"><span>NASTĘPNA<br>TURA</span></button>
 
       <section class="turn-controls utility-deck d2-resource-side d2-mana-panel" aria-label="Mana i polecenia użytkowe">
         <div class="d2-guardian d2-guardian-right" aria-hidden="true"><i></i><b></b><em></em></div>
@@ -422,7 +433,7 @@
     <div class="main-menu-release-corner">
       <button id="menu-release-open" class="main-menu-release-tile" type="button" aria-haspopup="dialog" aria-controls="menu-release-dialog">
         <span>Aktualizacja</span>
-        <small>Aktualna wersja <output id="menu-current-version">0.1</output></small>
+        <small>Aktualna wersja <output id="menu-current-version">0.2</output></small>
       </button>
       <p class="main-menu-release-credit">Kris Labs PL · 2026</p>
     </div>

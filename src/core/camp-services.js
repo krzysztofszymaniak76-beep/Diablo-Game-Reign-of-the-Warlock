@@ -48,7 +48,7 @@ export const CAMP_VENDOR_POOLS = freeze({
   akara: ['scroll_identify', 'scroll_town_portal', 'tome_identify', 'tome_town_portal',
     'potion_health_lesser', 'potion_mana_lesser', 'wand', 'scepter', 'dagger'],
   charsi: ['hand_axe', 'great_axe', 'short_sword', 'two_handed_sword', 'great_sword', 'dagger', 'war_hammer', 'flail', 'spear', 'war_staff', 'hunters_bow', 'light_crossbow', 'throwing_axe', 'club', 'katar',
-    'quilted_armor', 'cap', 'buckler', 'leather_gloves', 'boots', 'sash'],
+    'quilted_armor', 'cap', 'buckler', 'leather_gloves', 'boots', 'sash', 'light_belt', 'belt', 'heavy_belt', 'plated_belt'],
   gheed: ['cap', 'quilted_armor', 'buckler', 'leather_gloves', 'boots', 'sash',
     'dagger', 'throwing_axe', 'hunters_bow', 'light_crossbow', 'short_sword', 'club'],
 });

@@ -1281,6 +1281,210 @@
         "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
       },
       "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "light_belt",
+      "code": "vbl",
+      "name": "Light Belt",
+      "displayName": "Lekki pas",
+      "kind": "armor",
+      "slot": "belt",
+      "type": "belt",
+      "classOnly": null,
+      "width": 2,
+      "height": 1,
+      "requiredLevel": 0,
+      "requiredStrength": 0,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 0,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        3,
+        3
+      ],
+      "durability": 14,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 0,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "vbl",
+        "line": 41,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "belt",
+      "code": "mbl",
+      "name": "Belt",
+      "displayName": "Pas",
+      "kind": "armor",
+      "slot": "belt",
+      "type": "belt",
+      "classOnly": null,
+      "width": 2,
+      "height": 1,
+      "requiredLevel": 0,
+      "requiredStrength": 25,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 0,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        5,
+        5
+      ],
+      "durability": 16,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 0,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "mbl",
+        "line": 42,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "heavy_belt",
+      "code": "tbl",
+      "name": "Heavy Belt",
+      "displayName": "Ciężki pas",
+      "kind": "armor",
+      "slot": "belt",
+      "type": "belt",
+      "classOnly": null,
+      "width": 2,
+      "height": 1,
+      "requiredLevel": 0,
+      "requiredStrength": 45,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 0,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        6,
+        6
+      ],
+      "durability": 18,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 0,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "tbl",
+        "line": 43,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
+    },
+    {
+      "id": "plated_belt",
+      "code": "hbl",
+      "name": "Plated Belt",
+      "displayName": "Pas płytowy",
+      "kind": "armor",
+      "slot": "belt",
+      "type": "belt",
+      "classOnly": null,
+      "width": 2,
+      "height": 1,
+      "requiredLevel": 0,
+      "requiredStrength": 60,
+      "requiredDexterity": 0,
+      "oneHandDamage": [
+        0,
+        0
+      ],
+      "twoHandDamage": [
+        0,
+        0
+      ],
+      "throwDamage": null,
+      "twoHanded": false,
+      "barbarianOneHand": false,
+      "strengthBonus": 0,
+      "dexterityBonus": 0,
+      "defenseRange": [
+        8,
+        11
+      ],
+      "durability": 24,
+      "sourceBaseSpeed": 0,
+      "sourceRangeAdder": 0,
+      "sourceMaxSockets": 0,
+      "sourceBlock": 0,
+      "sourceAutoPrefix": null,
+      "stackable": false,
+      "minStack": 0,
+      "maxStack": 0,
+      "spawnStack": 0,
+      "sourceStaffMods": null,
+      "source": {
+        "snapshotId": "pinkufairy-D2R-Excel-1f16064e09b97e3e65abd6943662207cff00b07f-partial-candidate",
+        "table": "armor.txt",
+        "code": "hbl",
+        "line": 44,
+        "sha256": "734872b6dde85073c6ebaf4199ec4bd2b30efcbf9f0e60e381af2e22662a1b4f"
+      },
+      "status": "SOURCE_NUMERIC_SUBSET_PATCH_UNVERIFIED"
     }
   ],
   "classes": [

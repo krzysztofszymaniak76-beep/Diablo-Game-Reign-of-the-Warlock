@@ -1,6 +1,20 @@
 {
-  "currentVersion": "0.1",
+  "currentVersion": "0.2",
   "releases": [
+    {
+      "version": "0.2",
+      "date": "2026-09-28",
+      "status": "prepared",
+      "changes": [
+        "Dodano widoczne animacje chodu i ciosu bohaterów na planszy walki oraz zsynchronizowano je z ruchem między heksami.",
+        "Poprawiono wybór i filtrowanie umiejętności LPM/PPM dla poszczególnych klas, z zachowaniem ich drzewek i przypisań.",
+        "Przeniesiono przycisk Następna tura pod ramkę pola walki, poza heksy i kulę many; otrzymał okrągły motyw demona.",
+        "Podczas decyzji gracza można wybrać dowolnego żywego bohatera drużyny bez czekania na stałą kolejność portretów.",
+        "Nowe postacie automatycznie zakładają dozwoloną broń i pancerz ze swojego wyposażenia startowego.",
+        "Każda nowa postać otrzymuje cztery rzeczywiste słabe mikstury zdrowia, po jednej w każdym slocie pasa; działają klawisze 1–4 i prawy przycisk myszy.",
+        "Zachowano dotychczasowe zapisy, wyposażenie i postęp przy aktualizacji istniejącej gry."
+      ]
+    },
     {
       "version": "0.1",
       "date": "2026-09-25",

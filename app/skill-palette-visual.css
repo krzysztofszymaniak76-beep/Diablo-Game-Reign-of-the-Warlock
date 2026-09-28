@@ -1,0 +1,52 @@
+/* Sorceress visual approval stage. Other classes keep their existing renderer. */
+#mouse-skill-chooser[data-visual-class='sorceress'] .skill-choice-tiles {
+  display:flex; flex-direction:column; gap:0; width:max-content;
+}
+#mouse-skill-chooser[data-visual-class='sorceress'] .skill-choice-row { display:flex; gap:0; }
+#mouse-skill-chooser[data-visual-class='sorceress'] .mouse-skill-choice,
+#mouse-skill-chooser[data-visual-class='sorceress'] .mouse-skill-choice .choice-glyph {
+  border:0 !important; outline:0; box-shadow:none !important; border-radius:0;
+}
+#mouse-skill-chooser[data-visual-class='sorceress'] .skill-icon-image { filter:none; object-fit:fill; }
+#mouse-skill-chooser[data-visual-class='sorceress'] .mouse-skill-choice[aria-disabled='true'] .choice-glyph {
+  filter:brightness(.65); /* Preserve existing use-state; do not pretend an unsupported skill works. */
+}
+#mouse-skill-chooser[data-visual-class='sorceress'] .mouse-skill-choice:is(:hover,:focus-visible)::after {
+  content:''; position:absolute; inset:0; pointer-events:none;
+  border:2px solid #c9b57d; box-shadow:inset 0 0 0 1px #514535;
+}
+#mouse-skill-chooser[data-visual-class='sorceress'] .skill-hotkey-label {
+  top:6%; right:6%; font:small-caps calc(var(--skill-tile-size)*.235)/1 'Palatino Linotype',Georgia,serif;
+  color:#f5f3df; text-shadow:1px 1px #000,-1px -1px #000;
+}
+#mouse-skill-chooser[data-visual-class='sorceress'] .skill-rank-label { display:none; }
+#mouse-skill-chooser[data-visual-class='sorceress'] .skill-choice-instruction {
+  position:absolute; top:calc(100% + var(--skill-tile-size)*.27); left:50%; transform:translateX(-50%);
+  margin:0; padding:5px 9px;
+  max-width:calc(100vw - 32px); background:#000a; color:#f4f3e8;
+  font:small-caps clamp(12px,1.5vw,22px)/1.15 'Palatino Linotype',Georgia,serif;
+  font-weight:normal; letter-spacing:.11em;
+}
+#app:not(.camp-mode) .d2r-command-hud .mouse-skill-slot[data-visual-class='sorceress'] .mouse-skill-art {
+  background:#410000; overflow:hidden;
+}
+/* Keep the actual source symbol and embossed frame. Map luminance to deep red,
+   rather than the previous pink/yellow sepia tint with a white glowing glyph. */
+#app:not(.camp-mode) .d2r-command-hud .mouse-skill-slot[data-visual-class='sorceress'] .mouse-skill-art img,
+#app:not(.camp-mode) .d2r-command-hud .mouse-skill-slot[data-visual-class='sorceress'] .common-attack-icon {
+  filter:url('#skill-tile-red');
+}
+#app:not(.camp-mode) .d2r-command-hud .mouse-skill-slot[data-visual-class='sorceress'] > .skill-hotkey-label {
+  top:12%; right:12%; font:small-caps clamp(13px,1.2vw,21px)/1 'Palatino Linotype',Georgia,serif;
+  color:#f5f3df;
+}
+body:has(#mouse-skill-chooser[data-visual-class='sorceress']:not(.hidden)) .action-skill-tooltip {
+  border:0; background:#000c; color:#f3f0e5; padding:8px 12px;
+  font:small-caps 18px/1.25 'Palatino Linotype',Georgia,serif; letter-spacing:.035em;
+}
+body:has(#mouse-skill-chooser[data-visual-class='sorceress']:not(.hidden)) .action-skill-tooltip strong {
+  color:#fff6df; font-size:25px; font-weight:normal; letter-spacing:.08em;
+}
+.visual-asset-warning { position:absolute; inset:0; display:grid; place-items:center; text-align:center;
+  color:#f1dede; background:#210909; font:10px/1.2 Arial,sans-serif; z-index:5; }
+.visual-asset-missing img { visibility:hidden; }

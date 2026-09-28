@@ -1,5 +1,5 @@
 import { createCharacter } from "./characters.js";
-import { createEquipmentItem } from "./equipment.js";
+import { createEquipmentItem, planEquipmentChange, commitEquipmentChange, requirementsFor } from "./equipment.js";
 import { InventoryGrid } from "./inventory-grid.js";
 import { canonicalHeroSpritePath } from "./hero-visuals.js";
 
@@ -224,6 +224,23 @@ export function createStarterInventoryItems(catalog) {
       { position },
     )),
   ]));
+}
+
+/** Equip only the eligible gear already in a fresh hero's starter backpack.
+ * A level-three Targe stays in Hadriel's pack; his usable Buckler is equipped. */
+export function equipFreshStarterGear(roster, inventories, catalog) {
+  for (const definition of STARTER_ROSTER_DEFINITIONS) {
+    const character = roster.get(definition.id);
+    const inventory = inventories.get(definition.id);
+    for (const slot of ['weapon', 'chest', 'head', 'offhand']) {
+      const starter = definition.starterItems.find(({ id, canonicalId }) =>
+        inventory.items.has(id) && catalog.get(canonicalId)?.slot === slot
+          && requirementsFor(character, catalog.get(canonicalId)).length === 0);
+      if (!starter) continue;
+      const plan = planEquipmentChange({ character, inventory, catalog, itemId: starter.id });
+      commitEquipmentChange(character, inventory, catalog, plan);
+    }
+  }
 }
 
 function jsonEntryMap(entries, label) {

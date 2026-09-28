@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { InventoryGrid } from '../src/core/inventory-grid.js';
 import {
-  emptyPotionBelt, beltSlotCount, potionKind, isPotionItem, validPotionBelt,
+  emptyPotionBelt, starterHealthPotionBelt, beltSlotCount, potionKind, isPotionItem, validPotionBelt,
   putPotionInBelt, takePotionFromBelt, consumePotionFromBelt,
 } from '../src/core/potion-belt.js';
 
@@ -28,6 +28,17 @@ test('a new belt is empty until a real backpack potion is placed in a chosen slo
   assert.equal(beltSlotCount(belt[2]), 1);
   assert.equal(validPotionBelt(belt), true);
   assert.throws(() => putPotionInBelt(inventory, belt, 'potion-1', 2), /zajęte/);
+});
+
+test('fresh-game belt contains four real single-use lesser health potions', () => {
+  const belt = starterHealthPotionBelt('hero');
+  assert.equal(validPotionBelt(belt), true);
+  assert.equal(new Set(belt.map(({ id }) => id)).size, 4);
+  assert.deepEqual(belt.map(potionKind), ['health', 'health', 'health', 'health']);
+  assert.ok(belt.every((slot) => beltSlotCount(slot) === 1));
+  consumePotionFromBelt(belt, 0);
+  assert.equal(belt[0], null);
+  assert.ok(belt.slice(1).every((slot) => beltSlotCount(slot) === 1));
 });
 
 test('taking a potion from the belt restores the same item to the backpack', () => {

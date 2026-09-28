@@ -37,3 +37,24 @@ test("belt item use is a distinct command with one scheduler cost", () => {
   combat.nextReady(["hero"]);
   assert.equal(combat.scheduler.time, ACTION_TIME.itemUse);
 });
+
+test('a player decision can be assigned to any living field hero without advancing enemy time', () => {
+  const roster = new Roster([
+    createCharacter({ id: 'hero-a', name: 'A', classId: 'amazon' }),
+    createCharacter({ id: 'hero-b', name: 'B', classId: 'paladin' }),
+  ]);
+  const combat = new CombatState({ party: new Party(roster, ['hero-a', 'hero-b']), playersSetting: new PlayersSetting(1) });
+  combat.spawnMonster({ id: 'fallen', name: 'Upadły', baseHp: 5, baseExperience: 1 });
+  combat.units.get('fallen').readyAt = 100;
+  assert.equal(combat.nextReady(['hero-a', 'hero-b', 'fallen']).id, 'hero-a');
+  assert.equal(combat.chooseHeroForPlayerTurn('hero-b', ['hero-a', 'hero-b', 'fallen']).id, 'hero-b');
+  assert.equal(combat.scheduler.time, 0);
+  const restored = CombatState.restore(JSON.parse(JSON.stringify(combat.snapshot())), {
+    party: combat.party, playersSetting: combat.playersSetting,
+  });
+  assert.equal(restored.currentActorId, 'hero-b');
+  assert.equal(combat.submitAction('hero-b', 'wait').event.actorId, 'hero-b');
+  assert.equal(combat.nextReady(['hero-a', 'hero-b', 'fallen']).id, 'hero-a');
+  assert.equal(combat.chooseHeroForPlayerTurn('hero-b', ['hero-a', 'hero-b', 'fallen']).id, 'hero-b');
+  assert.equal(combat.submitAction('hero-b', 'wait').readyAt, combat.scheduler.time + ACTION_TIME.wait);
+});

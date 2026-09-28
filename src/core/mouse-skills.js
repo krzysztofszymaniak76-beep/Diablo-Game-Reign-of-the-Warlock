@@ -255,6 +255,24 @@ export class MouseSkillBindings {
     return this.#catalog.list(known, side);
   }
 
+  refreshKnown(heroId, skillIds) {
+    const id = nonEmptyString(heroId, 'Hero id');
+    const previous = this.#bindings.get(id);
+    if (!previous) throw new Error(`Unknown hero mouse binding: ${id}`);
+    const known = knownSkillsFor({[id]:skillIds}, id);
+    const next = {...previous};
+    for (const side of ['left','right']) {
+      const legal = this.#catalog.list(known, side);
+      if (!legal.includes(next[side])) {
+        if (!legal.includes('basic.attack')) throw new Error('Brak bezpiecznej akcji Attack');
+        next[side] = 'basic.attack';
+      }
+    }
+    this.#known.set(id, known);
+    this.#bindings.set(id, Object.freeze(next));
+    return previous.left !== next.left || previous.right !== next.right;
+  }
+
   snapshot() {
     return frozenClone({
       schemaVersion: MOUSE_SKILL_SCHEMA_VERSION,

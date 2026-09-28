@@ -2,6 +2,26 @@ import { CAMP_SUPPLY_DEFINITIONS } from './camp-services.js';
 import { InventoryGrid } from './inventory-grid.js';
 
 export const BELT_SLOT_COUNT = 4;
+export const MAX_BELT_SLOT_COUNT = 16;
+// Arreat Summit, Normal / Exceptional / Elite Belts: number of boxes.
+const beltRowsByCode = Object.freeze({ lbl:2, vbl:2, mbl:3, tbl:3, hbl:4,
+  zlb:4, zvb:4, zmb:4, ztb:4, zhb:4, ulc:4, uvc:4, umc:4, utc:4, uhc:4 });
+export function potionBeltCapacity(character, catalog) {
+  const item = character.equipment?.belt;
+  if (!item) return BELT_SLOT_COUNT;
+  const definition = catalog.get(item.canonicalId);
+  const rows = beltRowsByCode[definition?.code];
+  if (!rows) throw new Error('Nieznana pojemność założonego pasa');
+  return rows * BELT_SLOT_COUNT;
+}
+
+export function resizePotionBelt(belt, capacity) {
+  if (![4, 8, 12, 16].includes(capacity) || !validPotionBelt(belt)) throw new Error('Nieprawidłowa pojemność pasa');
+  if (belt.slice(capacity).some(slot => beltSlotCount(slot) > 0)) {
+    throw new Error('Przenieś mikstury z dodatkowych rzędów do plecaka przed zdjęciem lub zmianą na mniejszy pas');
+  }
+  return Array.from({ length: capacity }, (_, index) => structuredClone(belt[index] ?? null));
+}
 
 const potionDefinitions = new Map(CAMP_SUPPLY_DEFINITIONS
   .filter(({ id }) => id.startsWith('potion_health') || id.startsWith('potion_mana'))
@@ -13,8 +33,8 @@ const legacyPotionIds = Object.freeze({
 });
 
 function requireSlot(belt, index) {
-  if (!Array.isArray(belt) || belt.length !== BELT_SLOT_COUNT
-    || !Number.isInteger(index) || index < 0 || index >= BELT_SLOT_COUNT) {
+  if (!Array.isArray(belt) || ![4, 8, 12, 16].includes(belt.length)
+    || !Number.isInteger(index) || index < 0 || index >= belt.length) {
     throw new RangeError('Nieprawidłowe miejsce pasa');
   }
 }
@@ -32,8 +52,26 @@ function firstFreePosition(inventory, item) {
   return null;
 }
 
-export function emptyPotionBelt() {
-  return Array(BELT_SLOT_COUNT).fill(null);
+export function emptyPotionBelt(capacity = BELT_SLOT_COUNT) {
+  if (![4, 8, 12, 16].includes(capacity)) throw new RangeError('Nieprawidłowa pojemność pasa');
+  return Array(capacity).fill(null);
+}
+
+/** Fresh-game supplies only; saved belts are restored unchanged. */
+export function starterHealthPotionBelt(ownerId) {
+  if (typeof ownerId !== 'string' || !ownerId) throw new TypeError('Brak właściciela pasa');
+  const definition = potionDefinitions.get('potion_health_lesser');
+  return Array.from({ length: BELT_SLOT_COUNT }, (_, index) => ({
+    id: `starter-belt:${ownerId}:${index + 1}`,
+    canonicalId: definition.id,
+    name: definition.displayName,
+    width: definition.width,
+    height: definition.height,
+    quality: 'normal',
+    quantity: 1,
+    maxQuantity: 1,
+    supplyVersion: 1,
+  }));
 }
 
 export function potionKind(slot) {
@@ -63,7 +101,7 @@ export function isPotionItem(item) {
 }
 
 export function validPotionBelt(belt) {
-  return Array.isArray(belt) && belt.length === BELT_SLOT_COUNT
+  return Array.isArray(belt) && [4, 8, 12, 16].includes(belt.length)
     && belt.every((slot) => slot === null || (isPotionItem(slot)
       && !Object.hasOwn(slot, 'position')) || (
       slot && !Object.hasOwn(slot, 'canonicalId')
@@ -125,5 +163,12 @@ export function consumePotionFromBelt(belt, index) {
     belt[index] = null;
   } else if (slot.count === 1) belt[index] = null;
   else slot.count -= 1;
+  // Potions above the consumed cell fall down within the SAME column.
+  if (belt[index] === null) {
+    for (let next = index + BELT_SLOT_COUNT; next < belt.length; next += BELT_SLOT_COUNT) {
+      belt[next - BELT_SLOT_COUNT] = belt[next];
+      belt[next] = null;
+    }
+  }
   return { name: slot.name, kind: potionKind(slot) };
 }

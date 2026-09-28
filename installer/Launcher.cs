@@ -7,8 +7,8 @@ using System.Windows.Forms;
 [assembly: AssemblyTitle("Reign of the Warlock")]
 [assembly: AssemblyProduct("Reign of the Warlock")]
 [assembly: AssemblyCompany("Kris Labs PL")]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
+[assembly: AssemblyVersion("0.2.0.0")]
+[assembly: AssemblyFileVersion("0.2.0.0")]
 
 internal static class Launcher
 {

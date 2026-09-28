@@ -14,6 +14,11 @@ import { isTravelFork, travelDecisions } from "/app/exploration-decisions.js";
 import { hasTradeItemArtwork, tradeItemArtworkMarkup } from "/app/trade-item-art-v0518.js";
 import { attachItemTooltip, hideItemTooltip } from "/app/item-tooltip-v0518.js";
 import { GameMusic } from "/app/game-music.js";
+import { BARBARIAN_ATLASES, BARBARIAN_UNARMED_ATLASES, BattleAnimationPlayer, barbarianWalkVariant, supportsBarbarianAnimation,
+  measureAtlas, drawBarbarianFrame, walkStepDuration, WINDUP_MS, RECOVERY_MS } from '/app/barbarian-animation.js';
+import { PALADIN_ATLASES, paladinAnimationVariant, drawPaladinFrame } from '/app/paladin-animation.js';
+import { SORCERESS_ATLASES, sorceressAnimationVariant, drawSorceressFrame } from '/app/sorceress-animation.js';
+import { HERO_BODY_ATLASES, heroAnimationLoadout, drawHeroAnimationFrame } from '/app/hero-animation.js';
 import { createMainMenu } from "/app/main-menu.js";
 import { createSaveBridge } from "/app/save-bridge.js";
 import { createCharacterCreation, normalizeCreationProfile } from "/app/character-creation.js";
@@ -26,6 +31,11 @@ import {
   MouseSkillCatalog,
   defaultMouseBindingsFromLoadouts,
 } from "/src/core/mouse-skills.js";
+import { SkillTreeCatalog } from "/src/core/skill-trees.js";
+import { SkillHotkeys, SKILL_HOTKEYS } from '/src/core/skill-hotkeys.js';
+import { PALETTE_PILOT_CLASS, stylePilotPalette, watchPaletteAsset } from '/app/skill-palette-visual.js';
+import { sourceSkillLevel, learnedSourceSkill, nativeSkillSources, fireBoltValues, bashValues, runtimeSkillStatus } from '/src/core/audited-skill-rules.js';
+import {barbarianSwordProfile, resolveBarbarianStrike, knockbackHex} from '/src/core/barbarian-melee.js';
 import { canPaySkillMana, formatMana, skillManaProfile, spendSkillMana } from "/src/core/skill-mana.js";
 import {
   ACTIVE_AURA_SAVE_SCHEMA_VERSION, buildActiveAuraSnapshot, validateActiveAuraSnapshot,
@@ -68,6 +78,45 @@ const mouseSkillCatalog = await (async () => {
   }
 })();
 
+const skillTreeCatalog = await (async () => {
+  try {
+    const response = await fetch("/data/skill-tree-audit.d2r-3.3.93847.json");
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return new SkillTreeCatalog(await response.json());
+  } catch (error) {
+    const warning = document.createElement("p");
+    warning.setAttribute("role", "alert");
+    warning.textContent = `Nie udało się wczytać zweryfikowanych drzewek umiejętności D2R: ${error.message}.`;
+    document.body.prepend(warning);
+    throw error;
+  }
+})();
+const SKILL_TREE_SAVE_SCHEMA_VERSION = 1;
+const SKILL_TREE_CATALOG_ID = `d2r-skill-tree-audit-${skillTreeCatalog.installedBuild}`;
+const SKILL_ICON_SLUG_OVERRIDES = new Map([
+  ['barbarian:Blade Mastery', 'sword_mastery'],
+]);
+const skillIconSlug = (classId, skill) => SKILL_ICON_SLUG_OVERRIDES.get(`${classId}:${skill.internalName}`)
+  || String(skill.localizedName?.enUS || skill.internalName).toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+const skillIconUrl = (classId, skill) => `/app/assets/skill-icons/${classId}/${skillIconSlug(classId, skill)}.webp`;
+
+// Runtime combat definitions are intentionally smaller than the full
+// source-backed tree. Resolve their exact D2R/D2DB node when one exists so
+// the action bar and chooser use the same real tile art as the skill panel.
+function skillTreeSkillForDefinition(classId, definition) {
+  if (!classId || !definition || classId === 'basic' || definition.id === 'basic.attack') return null;
+  try { return skillTreeCatalog.skill(classId, definition.id); } catch { /* name fallback below */ }
+  const normalizedName = String(definition.name ?? '').trim().toLowerCase();
+  if (!normalizedName) return null;
+  return skillTreeCatalog.skillsForClass(classId).find((skill) => [skill.internalName, skill.localizedName?.enUS, skill.localizedName?.plPL]
+    .some((name) => String(name ?? '').trim().toLowerCase() === normalizedName)) ?? null;
+}
+
+function combatSkillIconUrl(character, skill) {
+  const sourceSkill = skillTreeSkillForDefinition(character?.classId, skill);
+  return sourceSkill ? skillIconUrl(character.classId, sourceSkill) : '';
+}
+
 import { createCharacter, Roster } from "/src/core/characters.js";
 import {
   STARTER_ROSTER_DEFINITIONS,
@@ -75,12 +124,14 @@ import {
   defaultActiveIds,
   createStarterRosterCharacters,
   createStarterInventoryItems,
+  equipFreshStarterGear,
   migrateMissingStarterRoster,
 } from "/src/core/starter-roster.js";
 import { CampServicesState, CAMP_AKARA_CORE_STOCK, CAMP_SERVICES_SCHEMA_VERSION, CAMP_SUPPLY_DEFINITIONS } from "/src/core/camp-services.js";
 import {
-  BELT_SLOT_COUNT, emptyPotionBelt, potionKind, potionIconId, beltSlotCount,
+  BELT_SLOT_COUNT, emptyPotionBelt, starterHealthPotionBelt, potionKind, potionIconId, beltSlotCount,
   isPotionItem, validPotionBelt, putPotionInBelt, takePotionFromBelt, consumePotionFromBelt,
+  potionBeltCapacity, resizePotionBelt,
 } from "/src/core/potion-belt.js";
 import { HoradricCubeState, HORADRIC_CUBE_SCHEMA_VERSION } from "/src/core/cube.js";
 import { renderCubePanel } from "/app/cube-panel-v0518.js";
@@ -490,6 +541,11 @@ const defaultLoadouts = Object.freeze(Object.fromEntries(STARTER_ROSTER_DEFINITI
   Object.freeze({ left: loadout.left, right: Object.freeze([...loadout.right]) }),
 ])));
 
+for (const definition of Object.values(skillDefinitions)) {
+  const source = skillTreeSkillForDefinition(definition.id.split('.')[0], definition);
+  if (source) definition.name = source.localizedName.plPL || source.localizedName.enUS;
+}
+
 const reserveLoadouts = defaultLoadouts;
 
 const alternateSkills = Object.freeze({
@@ -507,10 +563,14 @@ function runtimeLoadoutForHero(heroId, { partyRef = party, preparationRef = batt
 
 function knownMouseSkillsForHero(heroId, { rosterRef = roster, partyRef = party, preparationRef = battlePreparation } = {}) {
   const character = rosterRef.get(heroId);
-  const loadout = runtimeLoadoutForHero(heroId, { partyRef, preparationRef });
-  const alternate = alternateSkills[character.classId];
-  return ["basic.attack", loadout.left, ...loadout.right, ...(alternate ? [alternate] : [])]
-    .filter((skillId, index, all) => all.indexOf(skillId) === index);
+  return ['basic.attack', ...nativeSkillSources(character, skillTreeCatalog)
+    .map(entry => entry.skillId).filter(id => skillDefinitions[id] && mouseSkillCatalog.has(id))];
+}
+
+function refreshHeroSkillAvailability(heroId) {
+  const changed = mouseSkills.refreshKnown(heroId, knownMouseSkillsForHero(heroId));
+  skillHotkeys.retainAvailable(heroId, (id,side) => mouseSkills.available(heroId,side).includes(id));
+  if (changed) { primaryHoverPlan = null; hoveredHex = null; }
 }
 
 function createMouseSkillState({ rosterRef = roster, partyRef = party, preparationRef = battlePreparation, snapshot = null } = {}) {
@@ -520,7 +580,15 @@ function createMouseSkillState({ rosterRef = roster, partyRef = party, preparati
     knownMouseSkillsForHero(heroId, { rosterRef, partyRef, preparationRef }),
   ]));
   if (snapshot) {
-    return MouseSkillBindings.restore(snapshot, { heroIds, knownSkillsByHero, catalog: mouseSkillCatalog });
+    const migrated = structuredClone(snapshot);
+    // Previous builds bound class loadout skills without checking learned ranks.
+    // Preserve all progress; replace only those now-illegal mouse assignments.
+    for (const entry of migrated.bindings ?? []) {
+      for (const side of ['left', 'right']) {
+        if (skillDefinitions[entry[side]] && !knownSkillsByHero[entry.heroId]?.includes(entry[side])) entry[side] = 'basic.attack';
+      }
+    }
+    return MouseSkillBindings.restore(migrated, { heroIds, knownSkillsByHero, catalog: mouseSkillCatalog });
   }
   const loadoutDefaults = defaultMouseBindingsFromLoadouts(
     heroIds,
@@ -531,7 +599,7 @@ function createMouseSkillState({ rosterRef = roster, partyRef = party, preparati
   // classic Diablo control baseline. Existing saves keep their persisted LPM.
   const initialBindings = Object.freeze(Object.fromEntries(heroIds.map((heroId) => [
     heroId,
-    Object.freeze({ left: "basic.attack", right: loadoutDefaults[heroId].right }),
+    Object.freeze({ left: "basic.attack", right: knownSkillsByHero[heroId].includes(loadoutDefaults[heroId].right) ? loadoutDefaults[heroId].right : 'basic.attack' }),
   ])));
   return new MouseSkillBindings({ heroIds, knownSkillsByHero, initialBindings, catalog: mouseSkillCatalog });
 }
@@ -550,6 +618,8 @@ function newPreparationState(heroIds = party.slots) {
 
 let battlePreparation = newPreparationState();
 let mouseSkills = createMouseSkillState();
+let skillHotkeys = new SkillHotkeys(roster.toJSON().map(({id}) => id));
+let hoveredSkillChoice = null;
 
 function createHexGrid(units = null, {
   rosterRef = roster,
@@ -603,18 +673,20 @@ function makeInventory(items) {
 
 const starterInventoryItems = createStarterInventoryItems(equipmentCatalog);
 let inventories = new Map([...starterInventoryItems].map(([id, items]) => [id, makeInventory(items)]));
+equipFreshStarterGear(roster, inventories, equipmentCatalog);
 for (const hero of heroes) hero.inventoryItemIds = inventories.get(hero.id).toJSON().items.map(({ id }) => id);
 validateEquipmentWorld(roster, inventories, equipmentCatalog);
 let campServices = new CampServicesState({ catalog: equipmentCatalog });
 let horadricCube = new HoradricCubeState();
 
-let belts = new Map(heroes.map(({ id }) => [id, emptyPotionBelt()]));
+let belts = new Map(heroes.map(({ id }) => [id, starterHealthPotionBelt(id)]));
 let weaponSets = new Map(heroes.map(({ id }) => [id, 1]));
 const hirelingsByOwner = new Map();
 
 let actingUnitId = party.slots[0];
 let inspectedCharacterId = party.slots[0];
 let activePanel = null;
+let selectedSkillTreePage = 1;
 const gameMusic = new GameMusic();
 let mainMenuOpen = true;
 let pendingTarget = null;
@@ -650,6 +722,125 @@ let explorationSuppressClick = false;
 
 const canvas = document.querySelector("#scene");
 const context = canvas.getContext("2d", { alpha: true });
+let battleAnimationBusy = false;
+let battleAnimationEpoch = 0;
+let battleImpactVisual = null;
+let prioritizedBarbarianWalk = null;
+const deferredWalkReadiness = new Map();
+const barbarianAtlases = {};
+const paladinAtlases = {};
+const sorceressAtlases = {};
+const heroAnimationAtlases = {};
+const heroAnimationItems = {};
+const battleAnimation = new BattleAnimationPlayer({
+  paused: () => isPaused() || mainMenuOpen || document.hidden,
+  draw: () => drawScene(),
+});
+for (const [clip, url] of [...Object.entries(BARBARIAN_ATLASES), ...Object.entries(BARBARIAN_UNARMED_ATLASES)]) {
+  const image = new Image();
+  image.addEventListener('load', () => {
+    barbarianAtlases[clip] = {image, frames: measureAtlas(image, document, clip.includes('diagonal') ? 8 : 4)};
+    drawScene();
+  });
+  image.addEventListener('error', () => console.error(`Brak atlasu animacji: ${url}`));
+  image.src = url;
+}
+for (const [variant, url] of Object.entries(PALADIN_ATLASES)) {
+  const image = new Image();
+  image.addEventListener('load', () => {
+    paladinAtlases[variant] = {image, frames: measureAtlas(image, document, 8)};
+    drawScene();
+  });
+  image.addEventListener('error', () => console.error(`Brak atlasu animacji: ${url}`));
+  image.src = url;
+}
+for (const [variant, url] of Object.entries(SORCERESS_ATLASES)) {
+  const image = new Image();
+  image.addEventListener('load', () => {
+    sorceressAtlases[variant] = {image, frames: measureAtlas(image, document, 8)};
+    drawScene();
+  });
+  image.addEventListener('error', () => console.error(`Brak atlasu animacji: ${url}`));
+  image.src = url;
+}
+for (const [classId, url] of Object.entries(HERO_BODY_ATLASES)) {
+  const image = new Image();
+  image.addEventListener('load', () => {
+    heroAnimationAtlases[classId] = {image, frames: measureAtlas(image, document, 8)};
+    drawScene();
+  });
+  image.addEventListener('error', () => console.error(`Brak atlasu animacji: ${url}`));
+  image.src = url;
+}
+for (const item of equipmentCatalog.all()) {
+  if (!['weapon', 'offhand'].includes(item.slot) || !hasTradeItemArtwork(item.id)) continue;
+  const image = new Image();
+  image.addEventListener('load', () => { heroAnimationItems[item.id] = image; drawScene(); });
+  image.addEventListener('error', () => console.error(`Brak grafiki broni: ${item.id}`));
+  image.src = `/app/assets/items/${item.id}.png`;
+}
+function animatedBarbarian(id) {
+  return roster.has(id) && supportsBarbarianAnimation(roster.get(id))
+    && barbarianAtlases.walk?.frames && barbarianAtlases.attack?.frames && barbarianAtlases.diagonal?.frames;
+}
+function barbarianWalkAnimationAvailable(id) {
+  if (!roster.has(id)) return false;
+  const variant = barbarianWalkVariant(roster.get(id));
+  if (!variant) return false;
+  const atlasKeys = variant === 'unarmed' ? ['walkUnarmed', 'diagonalUnarmed']
+    : variant === 'hand_axe' ? ['diagonalHandAxe'] : ['walk', 'diagonal'];
+  return atlasKeys.every(key => barbarianAtlases[key]?.frames);
+}
+function barbarianAttackAnimationAvailable(id) {
+  if (!roster.has(id)) return false;
+  const variant = barbarianWalkVariant(roster.get(id));
+  return variant === 'unarmed' || variant === 'hand_axe' ? barbarianWalkAnimationAvailable(id)
+    : variant === 'short_sword' && Boolean(animatedBarbarian(id));
+}
+function paladinAnimationAvailable(id) {
+  if (!roster.has(id)) return false;
+  const variant = paladinAnimationVariant(roster.get(id));
+  return Boolean(variant && paladinAtlases[variant]?.frames);
+}
+function sorceressAnimationAvailable(id) {
+  if (!roster.has(id)) return false;
+  const variant = sorceressAnimationVariant(roster.get(id));
+  return Boolean(variant && sorceressAtlases[variant]?.frames);
+}
+function genericHeroAnimationAvailable(id) {
+  if (!roster.has(id)) return false;
+  const loadout = heroAnimationLoadout(roster.get(id), equipmentCatalog);
+  return Boolean(loadout && heroAnimationAtlases[loadout.classId]?.frames
+    && (!loadout.weaponId || heroAnimationItems[loadout.weaponId]?.naturalWidth > 0)
+    && (!loadout.offhandId || heroAnimationItems[loadout.offhandId]?.naturalWidth > 0));
+}
+function heroWalkAnimationAvailable(id) {
+  return barbarianWalkAnimationAvailable(id) || paladinAnimationAvailable(id)
+    || sorceressAnimationAvailable(id) || genericHeroAnimationAvailable(id);
+}
+function heroAttackAnimationAvailable(id) {
+  return barbarianAttackAnimationAvailable(id) || paladinAnimationAvailable(id)
+    || sorceressAnimationAvailable(id) || genericHeroAnimationAvailable(id);
+}
+function presentedPoint(id) {
+  return battleAnimation.point(id, hexToScreen(hexGrid.positionOf(id)));
+}
+// Prevent a second order during playback. Escape/pause remains usable.
+for (const type of ['click', 'dblclick', 'contextmenu', 'keydown', 'drop']) {
+  window.addEventListener(type, event => {
+    if (!battleAnimationBusy || isPaused() || mainMenuOpen || event.key === 'Escape') return;
+    event.preventDefault(); event.stopImmediatePropagation();
+  }, true);
+}
+let idleAnimationFrame = 0;
+function scheduleBarbarianIdle() {
+  if (idleAnimationFrame) return;
+  idleAnimationFrame = requestAnimationFrame(() => {
+    idleAnimationFrame = 0;
+    if (!battleAnimationBusy && !isPaused() && !mainMenuOpen && !document.hidden
+      && campaignBattleAvailable() && party.slots.some(animatedBarbarian)) drawScene();
+  });
+}
 const partyRoot = document.querySelector("#party");
 const logRoot = document.querySelector("#combat-log");
 const emptyLog = document.querySelector("#empty-log");
@@ -1119,9 +1310,10 @@ function drawHexOverlay({ diagnostic = GRID_DIAGNOSTIC } = {}) {
     ? new Set()
     : new Set(battleMonsters().filter(unit => unit.hp > 0 && optionalGridPosition(hexGrid, unit.id))
       .flatMap(unit => hexGrid.occupiedHexes(unit.id).map(hexKey)));
-  const hoveredEnemyFootprint = diagnostic || !primaryHoverPlan?.targetId || !unitIsAliveOnGrid(primaryHoverPlan.targetId)
+  const hoverEnemy = livingMonsterAt(hoveredHex);
+  const hoveredEnemyFootprint = diagnostic || !hoverEnemy
     ? new Set()
-    : new Set(hexGrid.occupiedHexes(primaryHoverPlan.targetId).map(hexKey));
+    : new Set(hexGrid.occupiedHexes(hoverEnemy.id).map(hexKey));
 
   const visualStyle = (tile) => {
     const key = hexKey(tile);
@@ -1546,7 +1738,7 @@ function drawWithFootFade(drawVisual, {
 function drawHero(characterId) {
   if (!characterOnBattlefield(characterId)) return;
   const character = roster.get(characterId);
-  const point = hexToScreen(hexGrid.positionOf(characterId));
+  const point = presentedPoint(characterId);
   const acting = characterId === actingUnitId;
   const inspected = characterId === inspectedCharacterId;
   const color = classAccents[character.classId];
@@ -1578,7 +1770,17 @@ function drawHero(characterId) {
   const spriteKey = spriteKeyForCharacter(character);
   const sprite = spriteAssets[spriteKey];
   const height = clamp(viewport.height * (acting ? 0.275 : 0.245), 104, acting ? 176 : 160);
-  if (sprite?.complete && sprite.naturalWidth > 0 && spriteUsable.get(spriteKey)) {
+  if ((barbarianWalkAnimationAvailable(characterId)
+      && drawBarbarianFrame(context, barbarianAtlases, battleAnimation, characterId, point, height, character))
+    || (paladinAnimationAvailable(characterId)
+      && drawPaladinFrame(context, paladinAtlases, battleAnimation, characterId, point, height, character))
+    || (sorceressAnimationAvailable(characterId)
+      && drawSorceressFrame(context, sorceressAtlases, battleAnimation, characterId, point, height, character))
+    || (genericHeroAnimationAvailable(characterId)
+      && drawHeroAnimationFrame(context, heroAnimationAtlases, heroAnimationItems,
+        battleAnimation, characterId, point, height, character, equipmentCatalog))) {
+    // Atlas poses keep feet readable; do not fade or warp the animated legs.
+  } else if (sprite?.complete && sprite.naturalWidth > 0 && spriteUsable.get(spriteKey)) {
     const width = height * sprite.naturalWidth / sprite.naturalHeight;
     const left = point.x - width / 2;
     const top = point.y - height + 8;
@@ -1665,6 +1867,10 @@ function drawMonster(enemyId = enemy.id) {
   const zombie = monster.sourceMonsterCode === "zombie1" || monster.name?.toLocaleLowerCase("pl-PL") === "zombie";
   const scaleAdjustment = fallen ? 1.1 : zombie ? 0.7 : 1;
   const point = hexToScreen(hexGrid.positionOf(enemyId));
+  if (battleImpactVisual?.targetId === enemyId) {
+    const progress = battleAnimation.current?.progress ?? 0;
+    point.x += battleImpactVisual.direction * Math.sin(progress * Math.PI) * 5;
+  }
   for (const occupied of hexGrid.occupiedHexes(enemyId)) {
     traceHex(occupied);
     context.fillStyle = fallen ? "rgba(73,50,39,.10)" : zombie ? "rgba(75,73,65,.10)" : "rgba(99,18,12,.12)";
@@ -1687,8 +1893,9 @@ function drawMonster(enemyId = enemy.id) {
     const width = height * sprite.naturalWidth / sprite.naturalHeight;
     const left = point.x - width / 2;
     const top = point.y - height + 12;
-    context.shadowColor = "#000";
-    context.shadowBlur = 15;
+    const hovered = livingMonsterAt(hoveredHex)?.id === enemyId;
+    context.shadowColor = hovered ? "#ffce70" : "#000";
+    context.shadowBlur = hovered ? 7 : 15;
     drawWithFootFade(
       () => context.drawImage(sprite, left, top, width, height),
       { left, top, width, height, fadeStart: 0.72, endAlpha: 0.58 },
@@ -1886,7 +2093,7 @@ function drawScene() {
   for (const portal of portalSystem.listActivePortals()) drawPortal(portal);
   const entities = party.slots
     .filter(characterOnBattlefield)
-    .map((id) => ({ id, depth: hexToScreen(hexGrid.positionOf(id)).y, type: "hero" }));
+    .map((id) => ({ id, depth: presentedPoint(id).y, type: "hero" }));
   for (const summon of battlePreparation.listSummons()) {
     const position = optionalGridPosition(hexGrid, summon.id);
     if (position) entities.push({ id: summon.id, depth: hexToScreen(position).y, type: "summon" });
@@ -1896,13 +2103,23 @@ function drawScene() {
     if (position) entities.push({ id: monster.id, depth: hexToScreen(position).y, type: "enemy" });
   }
   entities.sort((a, b) => a.depth - b.depth);
-  entities.forEach((entry) => entry.type === "hero" ? drawHero(entry.id) : entry.type === "summon" ? drawSummon(entry.id) : drawMonster(entry.id));
+  const hoverEnemy = livingMonsterAt(hoveredHex);
+  const hoverPoint = hoverEnemy ? hexToScreen(hexGrid.positionOf(hoverEnemy.id)) : null;
+  entities.forEach((entry) => {
+    context.save();
+    const point = hexToScreen(hexGrid.positionOf(entry.id));
+    // Selection stays hex-based; only foreground silhouettes are faded.
+    if (!battleAnimationBusy && hoverPoint && entry.id !== hoverEnemy.id && point.y > hoverPoint.y
+      && point.y - hoverPoint.y < 210 && Math.abs(point.x - hoverPoint.x) < 90) context.globalAlpha = .5;
+    entry.type === "hero" ? drawHero(entry.id) : entry.type === "summon" ? drawSummon(entry.id) : drawMonster(entry.id);
+    context.restore();
+  });
   drawOccupiedHexContours(entities);
   drawProjectiles();
   entities.forEach((entry) => {
     if (entry.type === "hero") {
       const character = roster.get(entry.id);
-      drawNameplate(character.name, hexToScreen(hexGrid.positionOf(entry.id)), classAccents[character.classId], {
+      drawNameplate(character.name, presentedPoint(entry.id), classAccents[character.classId], {
         acting: entry.id === actingUnitId,
         inspected: entry.id === inspectedCharacterId,
         dead: character.resources.hp <= 0 || character.lifeState !== "alive",
@@ -1913,7 +2130,9 @@ function drawScene() {
     } else {
       const monster = combat.units.get(entry.id);
       const fallen = monster?.name?.toLocaleLowerCase("pl-PL") === "upadły";
-      drawNameplate(monster?.name ?? entry.id, hexToScreen(hexGrid.positionOf(entry.id)), fallen ? "#806457" : "#b53a27", { compact: fallen });
+      const hovered = hoverEnemy?.id === entry.id;
+      drawNameplate(hovered ? `${monster.name} · ${monster.hp}/${monster.maxHp ?? monster.hp} HP` : monster?.name ?? entry.id,
+        hexToScreen(hexGrid.positionOf(entry.id)), hovered ? "#ffe2a0" : fallen ? "#806457" : "#b53a27", { compact: !hovered && fallen });
     }
   });
   const groundByHex = new Map();
@@ -1925,6 +2144,7 @@ function drawScene() {
   }
   for (const { drop, count } of groundByHex.values()) drawLoot(drop, count);
   context.restore();
+  scheduleBarbarianIdle();
 }
 
 function make(tag, className, text) {
@@ -1973,6 +2193,13 @@ function buildHeroButton(character) {
     clearTargeting(false);
     closeMouseSkillChooser();
     inspectedCharacterId = button.dataset.characterId;
+    if (battlePreparation.phase === BATTLE_PHASE.ACTIVE && !battleAnimationBusy
+      && combat.currentActorId && combat.units.get(combat.currentActorId)?.kind === 'hero') {
+      try {
+        combat.chooseHeroForPlayerTurn(inspectedCharacterId, timelineLegalIds());
+        actingUnitId = inspectedCharacterId;
+      } catch (error) { showToast(error.message, 'warning'); }
+    }
     if (battlePreparation.phase === BATTLE_PHASE.PREPARATION
       && roster.get(inspectedCharacterId).lifeState === 'alive'
       && roster.get(inspectedCharacterId).resources.hp > 0
@@ -2304,7 +2531,7 @@ function reconcileDeaths() {
       queueMicrotask(() => autosaveGame('zakończeniu walki'));
       if(!explorationReturnQueued){
         explorationReturnQueued=true;
-        queueMicrotask(()=>{explorationReturnQueued=false;if(campaign&&!isPaused()&&!activePanel)openPanel('map');});
+        queueMicrotask(()=>{if(battleAnimationBusy)return;explorationReturnQueued=false;if(campaign&&!isPaused()&&!activePanel)openPanel('map');});
       }
     }
   } else if (enemy.hp <= 0 && !enemy.rewardsGranted) {
@@ -2439,15 +2666,32 @@ function resolveTimelineEvent(event, resolveCore) {
     }
     const execution = roster.has(actorId) ? validateHeroAttackExecution(actorId, event.payload) : null;
     let damage = event.payload.damage;
-    if (damageProfile?.kind === "basic-weapon") {
+    let strike = null, displaced = null, stagedGrid = null;
+    if (execution?.profile.attackRating !== undefined) {
+      strike = resolveBarbarianStrike(execution.profile, combat.units.get(targetId).sourceMonsterCode, combatRng);
+      damage = strike.damage;
+      if (strike.hit && execution.profile.knockback && combat.units.get(targetId).hp > damage) {
+        stagedGrid = HexGrid.restore(hexGrid.snapshot());
+        displaced = stagedGrid.moveUnitStep(targetId, knockbackHex(from, to));
+      }
+    } else if (damageProfile?.kind === "basic-weapon") {
       damage = damageEngine.resolveBasicAttack(execution?.profile ?? damageProfile.profile).rolled;
     } else if (damageProfile?.kind === "integer-range") {
       damage = combatRng.integer(damageProfile.min, damageProfile.max);
     }
     if (execution) payExecutedAttack(actorId, event.payload.skillId);
     const result = resolveCore({ damage });
+    if (strike) combat.log.push(`${skillDefinitions[event.payload.skillId].name}: ${strike.hit ? 'trafienie' : strike.blocked ? 'blok' : 'pudło'} (szansa ${strike.chance}%).`);
+    if (displaced && unitIsAliveOnGrid(targetId)) {
+      // Interrupt the displaced unit's old route, never another party member.
+      const interrupted = combat.interruptActorCommands(targetId, 'Odrzucenie');
+      for (const entry of interrupted) if (entry?.command) stagedGrid.releaseReservationsByCommand(entry.command.commandId);
+      combat.units.get(targetId).position = {...displaced.to};
+      hexGrid = stagedGrid;
+      combat.log.push(`Odrzucenie: ${targetId} przesunięty o jeden heks.`);
+    }
     reconcileDeaths();
-    return result;
+    return {...result, strike};
   }
 
   return resolveCore();
@@ -2608,6 +2852,17 @@ function settleCompletedBattle() {
 }
 
 function driveTimeline() {
+  if (battleAnimationBusy) return null;
+  if (battlePreparation.phase === BATTLE_PHASE.ACTIVE && !combat.currentActorId
+    && (party.slots.some(id => heroWalkAnimationAvailable(id) || heroAttackAnimationAvailable(id))
+      || prioritizedBarbarianWalk)) {
+    void driveAnimatedTimeline();
+    return null;
+  }
+  return driveTimelineImmediately();
+}
+
+function driveTimelineImmediately() {
   if (battlePreparation.phase === BATTLE_PHASE.COMPLETED) {
     settleCompletedBattle();
     return actingUnitId ? combat.units.get(actingUnitId) : null;
@@ -2633,6 +2888,111 @@ function driveTimeline() {
     return head;
   }
   throw new Error("Timeline driver exceeded its deterministic safety limit");
+}
+
+async function driveAnimatedTimeline() {
+  if (battleAnimationBusy) return;
+  const epoch = ++battleAnimationEpoch;
+  const sessionCombat = combat;
+  battleAnimationBusy = true;
+  const stillCurrent = () => epoch === battleAnimationEpoch && sessionCombat === combat;
+  try {
+    for (let step = 0; step < 10000 && stillCurrent(); step++) {
+      const completed = battlePreparation.phase === BATTLE_PHASE.COMPLETED;
+      const legal = completed ? [] : timelineLegalIds();
+      const next = combat.previewNextTimelineEvent(legal);
+      const walkPilot = next && heroWalkAnimationAvailable(next.actorId);
+      const attackPilot = next && heroAttackAnimationAvailable(next.actorId);
+      const animatedStrike = attackPilot && next.kind === 'attack:impact'
+        && unitIsAliveOnGrid(next.actorId) && unitIsAliveOnGrid(next.payload.targetId);
+      const animatedCast = attackPilot && ['projectile:step', 'projectile:impact'].includes(next.kind)
+        && next.payload.pathIndex === 1 && unitIsAliveOnGrid(next.actorId);
+      if (walkPilot && next.kind === 'move:step') {
+        await battleAnimation.play({actorId: next.actorId, clip: 'walk',
+          from: hexToScreen(next.payload.from), to: hexToScreen(next.payload.to)},
+        walkStepDuration(next.payload.stepCount));
+      } else if (animatedStrike || animatedCast) {
+        await battleAnimation.play({actorId: next.actorId, clip: 'windup',
+          from: hexToScreen(hexGrid.positionOf(next.actorId)),
+          to: hexToScreen(unitIsAliveOnGrid(next.payload.targetId)
+            ? hexGrid.positionOf(next.payload.targetId) : next.payload.to)}, WINDUP_MS);
+      }
+      if (!stillCurrent()) return;
+      // Only the unchanged deterministic resolver commits a hit or a hex step.
+      const boundary = combat.advanceTimeline(legal, {
+        resolve: resolveTimelineEvent, onInterrupt: releaseInterruptedReservations,
+      });
+      render();
+      if (!boundary) {
+        if (completed) settleCompletedBattle();
+        else actingUnitId = null;
+        return;
+      }
+      if (prioritizedBarbarianWalk
+        && !combat.activeCommands.has(prioritizedBarbarianWalk.commandId)) {
+        for (const [id, readyAt] of deferredWalkReadiness) {
+          const unit = combat.units.get(id);
+          if (unit) unit.readyAt = readyAt;
+        }
+        deferredWalkReadiness.clear();
+        prioritizedBarbarianWalk = null;
+      }
+      if ((animatedStrike || animatedCast) && boundary.type === 'event' && boundary.event.id === next.id) {
+        if (animatedStrike) battleImpactVisual = boundary.resolution?.strike?.hit === false ? null
+          : {targetId: next.payload.targetId,
+            direction: battleAnimation.facing.get(next.actorId)?.includes('west') ? -1 : 1};
+        await battleAnimation.play({actorId: next.actorId, clip: 'recovery'}, RECOVERY_MS);
+        battleImpactVisual = null;
+      }
+      if (!stillCurrent()) return;
+      if (boundary.type !== 'ready') continue;
+      if (prioritizedBarbarianWalk && combat.activeCommands.has(prioritizedBarbarianWalk.commandId)) {
+        const unit = combat.units.get(boundary.entry.id);
+        if (unit && !deferredWalkReadiness.has(unit.id)) {
+          deferredWalkReadiness.set(unit.id, unit.readyAt);
+          unit.readyAt = prioritizedBarbarianWalk.recoveryEnd;
+        }
+        combat.currentActorId = null;
+        combat.readinessPhase = READINESS_PHASE.RESOLVING;
+        actingUnitId = prioritizedBarbarianWalk.actorId;
+        inspectedCharacterId = prioritizedBarbarianWalk.actorId;
+        render();
+        continue;
+      }
+      if (boundary.entry.kind === 'monster') { actingUnitId = null; submitEnemyDecision(); continue; }
+      if (boundary.entry.kind === 'summon') { actingUnitId = null; submitSummonDecision(); continue; }
+      if (pendingReturns.has(boundary.entry.id)) { actingUnitId = null; resolvePendingReturn(boundary.entry.id); continue; }
+      actingUnitId = boundary.entry.id;
+      inspectedCharacterId = boundary.entry.id;
+      return;
+    }
+    if (stillCurrent()) throw new Error('Przekroczono limit odtwarzania akcji');
+  } catch (error) {
+    if (stillCurrent()) {
+      // Playback failure must not strand a paid command. The same resolver
+      // finishes pending events once; no animation callback reapplies damage.
+      driveTimelineImmediately();
+      if (prioritizedBarbarianWalk
+        && !combat.activeCommands.has(prioritizedBarbarianWalk.commandId)) {
+        for (const [id, readyAt] of deferredWalkReadiness) {
+          const unit = combat.units.get(id);
+          if (unit) unit.readyAt = readyAt;
+        }
+        deferredWalkReadiness.clear();
+        prioritizedBarbarianWalk = null;
+      }
+      showToast(`Animacja przerwana: ${error.message}. Komenda rozliczona bez animacji.`, 'warning');
+    }
+  } finally {
+    if (stillCurrent()) {
+      battleAnimationBusy = false; battleImpactVisual = null;
+      battleAnimation.playbacks.clear();
+      render();
+      if (explorationReturnQueued && campaign && !isPaused() && !activePanel) {
+        explorationReturnQueued = false; openPanel('map');
+      }
+    }
+  }
 }
 
 function renderQueue() {
@@ -2696,22 +3056,34 @@ function isOffensiveSkill(skill) {
 }
 
 function runtimeSkillLevel(character, skillId) {
-  const entry = character?.skills?.[skillId];
-  const level = entry?.effectiveLevel ?? entry?.hardPoints ?? 1;
-  return Number.isSafeInteger(level) && level > 0 ? level : 1;
+  if (skillId === 'basic.attack') return 1;
+  const source = skillTreeSkillForDefinition(character.classId, skillDefinitions[skillId]);
+  return source ? Math.max(1, sourceSkillLevel(character, source)) : 1;
 }
 
 function skillManaState(character, skillId) {
-  const source = mouseSkillCatalog.get(skillId);
+  const source = currentManaSource(character, skillId);
   return canPaySkillMana(character.resources.mana, source, runtimeSkillLevel(character, skillId));
 }
 
 function paySkillMana(character, skillId) {
-  const source = mouseSkillCatalog.get(skillId);
+  const source = currentManaSource(character, skillId);
   return spendSkillMana(character, source, runtimeSkillLevel(character, skillId));
 }
 
+function currentManaSource(character, skillId) {
+  const source = skillTreeSkillForDefinition(character.classId, skillDefinitions[skillId]);
+  return source ? { mana: source.mana.raw } : mouseSkillCatalog.get(skillId);
+}
+
 function currentAttackProfile(character, skill) {
+  const status = runtimeSkillStatus(skill.id);
+  if (!status.supported) throw new Error(status.label);
+  if (skill.id === 'sorceress.fire_bolt') {
+    const values = fireBoltValues(character, skillTreeCatalog);
+    return { label: 'Ognisty Piorun', weaponMin: values.damage[0], weaponMax: values.damage[1],
+      offWeaponFlat: 0, damageOrigin: 'source-skill', damageType: 'fire', status: 'SOURCE_NUMERIC_HEX_ADAPTATION', range: skill.range };
+  }
   const profile = equipmentSkillProfile(character, skill, equipmentCatalog);
   if (['equipment', 'shield'].includes(profile?.damageOrigin)) {
     for (const item of [character.equipment.weapon, character.equipment.offhand].filter(Boolean)) {
@@ -2720,6 +3092,9 @@ function currentAttackProfile(character, skill) {
       const errors = requirementsFor(character, definition);
       if (errors.length) throw new Error(errors.join(' · '));
     }
+  }
+  if (skill.id === 'barbarian.bash' || (skill.id === 'basic.attack' && supportsBarbarianAnimation(character))) {
+    return barbarianSwordProfile(character, skill, equipmentCatalog, skillTreeCatalog);
   }
   return profile;
 }
@@ -2777,6 +3152,8 @@ function renderPreparationStatus() {
 
 function closeMouseSkillChooser({ renderNow = false } = {}) {
   mouseSkillChooserSide = null;
+  hoveredSkillChoice = null;
+  hideSkillTooltip();
   const chooser = document.querySelector("#mouse-skill-chooser");
   chooser?.classList.add("hidden");
   document.querySelector("#mouse-skill-left")?.setAttribute("aria-expanded", "false");
@@ -2784,43 +3161,122 @@ function closeMouseSkillChooser({ renderNow = false } = {}) {
   if (renderNow) render();
 }
 
-function renderMouseSkillChooser(character) {
-  const chooser = document.querySelector("#mouse-skill-chooser");
-  if (!chooser) return;
-  if (!mouseSkillChooserSide) {
-    chooser.classList.add("hidden");
-    chooser.replaceChildren();
-    return;
+function skillChoiceDescription(character, skillId, source, runtime) {
+  const name = source?.localizedName?.plPL || runtime?.name || 'Atak';
+  const level = source ? sourceSkillLevel(character, source) : 1;
+  const status = runtimeSkillStatus(runtime?.id || skillId);
+  const lines = [name, source ? `Poziom umiejętności: ${level}` : 'Zwykły atak założoną bronią'];
+  if (source) {
+    const mana = skillManaProfile({ mana: source.mana.raw }, level);
+    lines.push(`Mana: ${formatMana(mana.cost)} · wymagany poziom postaci: ${source.requirements.characterLevel}`);
+    const description = source.localizedLongDescription?.plPL || source.localizedShortDescription?.plPL;
+    if (description) lines.push(description);
+    if (source.requirements.prerequisiteSkills.length) lines.push('Wymaga: ' + source.requirements.prerequisiteSkills.map(name => {
+      const prerequisite = skillTreeCatalog.skill(character.classId, name);
+      return prerequisite.localizedName.plPL || name;
+    }).join(', '));
+    if (source.id === 'sorceress.fire_bolt') {
+      const values = fireBoltValues(character, skillTreeCatalog);
+      lines.push(`Ogień: ${values.damage.join('–')} · synergie: +${values.synergyPercent}% · mistrzostwo: +${values.masteryPercent}%`);
+    }
+    if (source.id === 'barbarian.bash') {
+      const v = bashValues(character, skillTreeCatalog);
+      lines.push(`Obrażenia: +${v.damagePercent}% oraz +${v.flatDamage}; skuteczność ataku: +${v.ratingPercent}%`,
+        'Synergie: Ogłuszenie +5% obrażeń/punkt; Koncentracja +5% skuteczności/punkt (tylko wydane punkty).',
+        'Trafiony żywy przeciwnik: odrzut o 1 wolny heks. Ściana lub zajęte pole blokuje odrzut.');
+    }
   }
+  if (runtime) {
+    const mana = skillManaState(character, runtime.id);
+    if (!mana.affordable) lines.push(`Za mało many: potrzeba ${formatMana(mana.requiredToCast)}, masz ${formatMana(mana.currentMana)}`);
+    if (isOffensiveSkill(runtime) && status.supported) {
+      try { const error = currentAttackProfile(character, runtime)?.error; if (error) lines.push(error); }
+      catch (error) { lines.push(error.message); }
+    }
+  }
+  if (!status.supported) lines.push(status.label);
+  return lines.join('\n');
+}
+
+function hideSkillTooltip() {
+  document.querySelector('#action-skill-tooltip')?.remove();
+}
+
+function showSkillTooltip(button) {
+  hideSkillTooltip();
+  if (!button?.dataset.tooltip) return;
+  const tooltip = make('div', 'action-skill-tooltip');
+  tooltip.id = 'action-skill-tooltip'; tooltip.setAttribute('role', 'tooltip');
+  for (const [i, line] of button.dataset.tooltip.split('\n').entries()) tooltip.append(make(i ? 'div' : 'strong', '', line));
+  document.body.append(tooltip);
+  const r = button.getBoundingClientRect(), t = tooltip.getBoundingClientRect();
+  tooltip.style.left = `${Math.max(8, Math.min(innerWidth - t.width - 8, r.x + r.width / 2 - t.width / 2))}px`;
+  tooltip.style.top = `${Math.max(8, r.y - t.height - 12)}px`;
+}
+
+function renderMouseSkillChooser(character) {
+  const chooser = document.querySelector('#mouse-skill-chooser');
+  if (!chooser) return;
+  hideSkillTooltip();
+  if (!mouseSkillChooserSide) { chooser.classList.add('hidden'); chooser.replaceChildren(); return; }
   const side = mouseSkillChooserSide;
+  chooser.dataset.visualClass = character.classId === PALETTE_PILOT_CLASS ? character.classId : '';
   const binding = mouseSkills.get(character.id);
-  const available = mouseSkills.available(character.id, side);
-  chooser.replaceChildren(...available.map((skillId) => {
-    const skill = skillDefinitions[skillId];
-    const source = mouseSkillCatalog.get(skillId);
-    const button = make("button", `mouse-skill-choice ${binding[side] === skillId ? "active" : ""}`);
-    button.type = "button";
-    button.dataset.mouseSide = side;
-    button.dataset.skillId = skillId;
-    button.setAttribute("role", "option");
-    button.setAttribute("aria-selected", String(binding[side] === skillId));
-    const glyph = make("span", "choice-glyph", skill?.glyph ?? "◆");
-    const mana = skillManaState(character, skillId);
-    const manaCopy = mana.cost > 0 ? ` · mana ${formatMana(mana.cost)}` : " · bez many";
-    const copy = make("span", "choice-copy");
-    copy.append(make("strong", "", skill?.name ?? source.sourceName), make("small", "", `${side === "left" ? "LPM" : "PPM"} · poz. ${source.requiredLevel}${manaCopy}`));
-    button.classList.toggle("mana-unavailable", !mana.affordable);
-    button.title = `${skill?.name ?? source.sourceName} · ${side === "left" ? "LPM" : "PPM"} · wymagany poziom ${source.requiredLevel}${manaCopy}${!mana.affordable ? ` · Za mało many: potrzeba ${formatMana(mana.requiredToCast)}, masz ${formatMana(mana.currentMana)}` : ""}${source.aura ? " · aura" : source.targeting.corpse ? " · wymaga zwłok; cel-ciało jeszcze niedostępny" : ""}`;
-    button.append(glyph, copy);
-    return button;
-  }));
-  chooser.dataset.side = side;
-  chooser.classList.remove("hidden");
+  const entries = nativeSkillSources(character, skillTreeCatalog)
+    .filter(({source}) => source.mechanicFlags[side === 'left' ? 'leftMouseAssignable' : 'rightMouseAssignable'])
+    .map(entry => ({...entry, runtime:skillDefinitions[entry.skillId] ?? null}));
+  entries.push({skillId:'basic.attack',runtime:skillDefinitions['basic.attack'],source:null,sourceType:'BASIC_ACTION'});
+  // Source tree-page/row ordering; common Attack occupies the last row.
+  entries.sort((a, b) => a.source && b.source
+    ? a.source.treePage - b.source.treePage || a.source.requirements.characterLevel - b.source.requirements.characterLevel
+    : a.source ? -1 : b.source ? 1 : 0);
+  chooser.replaceChildren();
+  const tiles = make('div', 'skill-choice-tiles');
+  for (const {skillId, runtime, source, sourceType} of entries) {
+    const status = runtimeSkillStatus(runtime?.id || skillId);
+    if (skillId === 'barbarian.bash') {
+      try { if (currentAttackProfile(character, runtime)?.error) status.supported = false; }
+      catch { status.supported = false; }
+    }
+    const button = make('button', 'mouse-skill-choice');
+    button.type = 'button'; button.dataset.mouseSide = side; button.dataset.skillId = skillId;
+    button.dataset.skillSource = sourceType;
+    button.dataset.usable = String(Boolean(runtime && status.supported));
+    button.setAttribute('role', 'option');
+    button.setAttribute('aria-selected', String(binding[side] === skillId));
+    button.setAttribute('aria-disabled', String(!runtime || !status.supported));
+    button.setAttribute('aria-label', source?.localizedName?.plPL || runtime?.name || 'Atak');
+    button.classList.toggle('active', binding[side] === skillId);
+    button.dataset.tooltip = skillChoiceDescription(character, skillId, source, runtime);
+    const glyph = make('span', 'choice-glyph');
+    if (source) {
+      const icon = document.createElement('img'); icon.className = 'skill-icon-image';
+      icon.src = skillIconUrl(character.classId, source); icon.alt = ''; glyph.append(icon);
+      if (character.classId === PALETTE_PILOT_CLASS) watchPaletteAsset(icon, button, source.localizedName?.plPL || source.internalName);
+    } else glyph.classList.add('common-attack-icon');
+    button.append(glyph);
+    const key = skillHotkeys.label(character.id, side, skillId);
+    if (key) button.append(make('kbd', 'skill-hotkey-label', key));
+    if (source) button.append(make('small', 'skill-rank-label', String(sourceSkillLevel(character, source))));
+    tiles.append(button);
+  }
+  chooser.append(tiles, make('div', 'skill-choice-instruction', 'Naciśnij F1–F8, aby przypisać umiejętność do klawisza'));
+  chooser.dataset.side = side; chooser.classList.remove('hidden');
+  // Fixed viewport coordinates anchor to the actual scaled hand, never a guessed HUD percentage.
+  const anchor = document.querySelector(`#mouse-skill-${side}`).getBoundingClientRect();
+  const size = Math.max(48, Math.min(80, anchor.width));
+  chooser.style.setProperty('--skill-tile-size', `${size}px`);
+  tiles.style.gridTemplateColumns = `repeat(${Math.min(7, entries.length)}, var(--skill-tile-size))`;
+  const width = chooser.getBoundingClientRect().width;
+  chooser.style.left = `${Math.max(8, Math.min(innerWidth - width - 8, anchor.x))}px`;
+  chooser.style.bottom = `${innerHeight - anchor.y + 8}px`;
+  if (character.classId === PALETTE_PILOT_CLASS) stylePilotPalette(chooser, tiles, side, anchor);
 }
 
 function renderMouseSkillHud() {
   const character = inspectedCharacter();
   if (!character || !mouseSkills) return;
+  refreshHeroSkillAvailability(character.id);
   const binding = mouseSkills.get(character.id);
   const leftSkill = skillDefinitions[binding.left];
   const rightSkill = skillDefinitions[binding.right];
@@ -2861,10 +3317,9 @@ function renderMouseSkillHud() {
       try { equipmentReason = currentAttackProfile(character, skill)?.error ?? ''; }
       catch (error) { equipmentReason = error.message; }
     }
-    const unavailableReason = !mana.affordable ? 'Za mało many'
-      : targetMode === SkillTarget.CORPSE ? 'Wymaga zwłok; cel-ciało jeszcze niedostępny'
-        : equipmentReason;
+    const unavailableReason = !runtimeSkillStatus(skillId).supported ? runtimeSkillStatus(skillId).label : !mana.affordable ? 'Za mało many' : equipmentReason;
     button.dataset.skillId = skillId;
+    button.dataset.visualClass = character.classId === PALETTE_PILOT_CLASS ? character.classId : '';
     button.dataset.targetMode = targetMode;
     button.dataset.manaCost = String(mana.cost);
     button.dataset.available = String(!unavailableReason);
@@ -2873,14 +3328,31 @@ function renderMouseSkillHud() {
     button.classList.toggle("mana-unavailable", !mana.affordable);
     button.classList.toggle('skill-unavailable', Boolean(unavailableReason));
     button.classList.toggle('active-aura', activeAuraSkillId === skillId);
-    button.querySelector(`#mouse-skill-${side}-glyph`).textContent = skill?.glyph ?? "◆";
+    const glyph = button.querySelector(`#mouse-skill-${side}-glyph`);
+    const icon = button.querySelector(`#mouse-skill-${side}-icon`);
+    const iconUrl = combatSkillIconUrl(character, skill);
+    if (icon) {
+      icon.hidden = !iconUrl;
+      if (iconUrl) icon.src = iconUrl;
+      else icon.removeAttribute('src');
+      icon.alt = skill?.name ?? source.sourceName;
+      if (iconUrl && character.classId === PALETTE_PILOT_CLASS) watchPaletteAsset(icon, button, icon.alt);
+    }
+    if (glyph) {
+      glyph.hidden = Boolean(iconUrl);
+      glyph.textContent = '';
+      glyph.classList.toggle('common-attack-icon', skillId === 'basic.attack');
+    }
+    let hotkeyLabel = button.querySelector('.skill-hotkey-label');
+    if (!hotkeyLabel) { hotkeyLabel = make('kbd', 'skill-hotkey-label'); button.append(hotkeyLabel); }
+    hotkeyLabel.textContent = skillHotkeys.label(character.id, side, skillId);
     button.querySelector(`#mouse-skill-${side}-name`).textContent = skill?.name ?? source.sourceName;
     const costCopy = ` · mana ${formatMana(mana.cost)}`;
     button.querySelector(`#mouse-skill-${side}-copy`).textContent = !mana.affordable
       ? `Za mało many · ${formatMana(mana.cost)}`
       : `Mana ${formatMana(mana.cost)}${activeAuraSkillId === skillId ? ' · aktywna' : source.targeting.corpse ? ' · zwłoki' : ''}`;
     const controlCopy = side === 'left' ? 'LPM: ziemia = ruch, wróg = skill'
-      : targetMode === SkillTarget.GROUND ? 'PPM: wskaż pusty heks' : source.aura ? 'PPM: aktywuj aurę' : 'PPM: użyj umiejętności';
+      : targetMode === SkillTarget.CORPSE ? 'PPM: wskaż zwłoki' : targetMode === SkillTarget.GROUND ? 'PPM: wskaż pusty heks' : source.aura ? 'PPM: aktywuj aurę' : 'PPM: użyj umiejętności';
     button.title = `${skill?.name ?? source.sourceName}${costCopy} · ${controlCopy}${unavailableReason ? ` · ${unavailableReason}` : ''}${!mana.affordable ? `: potrzeba ${formatMana(mana.requiredToCast)}, masz ${formatMana(mana.currentMana)}` : ''}${activeAuraSkillId === skillId ? ' · Aktywna aura' : ''}`;
     button.setAttribute("aria-label", `${side === "left" ? "LPM" : "PPM"}: ${skill?.name ?? source.sourceName}`);
     button.setAttribute("aria-expanded", String(mouseSkillChooserSide === side));
@@ -2977,7 +3449,27 @@ function renderD2HudResources() {
     && (battlePreparation.phase === BATTLE_PHASE.PREPARATION
       ? inspected.id === actingUnitId
       : actor?.id === inspected.id && combat.canAct(inspected.id));
-  for (let index = 0; index < BELT_SLOT_COUNT; index += 1) {
+  const beltHost = document.querySelector('#hud-belt');
+  let extraRows = beltHost.querySelector('.belt-extra-rows');
+  if (!extraRows) {
+    extraRows = make('div', 'belt-extra-rows');
+    extraRows.setAttribute('aria-label', 'Dodatkowe rzędy pasa');
+    beltHost.append(extraRows);
+  }
+  if (beltHost.dataset.rows !== String(belt.length / 4)) {
+    extraRows.replaceChildren();
+    for (let index = BELT_SLOT_COUNT; index < belt.length; index += 1) {
+    const button = make('button', 'd2-belt-slot');
+    button.type = 'button'; button.dataset.beltIndex = String(index);
+    button.id = `hud-belt-slot-${index + 1}`;
+    button.style.gridRow = String(Math.floor(belt.length / 4) - Math.floor(index / 4));
+    button.style.gridColumn = String(index % 4 + 1);
+    button.innerHTML = `<i></i><b id="hud-belt-count-${index + 1}"></b><small id="hud-belt-name-${index + 1}"></small>`;
+      extraRows.append(button);
+    }
+  }
+  beltHost.dataset.rows = String(belt.length / 4);
+  for (let index = 0; index < belt.length; index += 1) {
     const slot = belt[index] ?? null;
     const button = document.querySelector(`#hud-belt-slot-${index + 1}`);
     const count = document.querySelector(`#hud-belt-count-${index + 1}`);
@@ -2998,9 +3490,9 @@ function renderD2HudResources() {
     }
     button.dataset.filled = String(filled);
     button.querySelector("i").textContent = beltGlyph(slot);
-    count.textContent = filled ? `×${amount}` : "";
+    count.textContent = filled && amount > 1 ? `×${amount}` : "";
     name.textContent = filled ? slot.name : "Puste";
-    button.title = filled ? `${slot.name} · ${amount} szt. · klawisz ${index + 1}` : `Puste miejsce pasa ${index + 1}`;
+    button.title = filled ? `${slot.name} · ${potionKind(slot) === 'health' ? 'Przywraca 8 punktów zdrowia' : 'Przywraca 8 punktów many'} · kolumna ${index % 4 + 1}, rząd ${Math.floor(index / 4) + 1}` : `Puste miejsce pasa ${index + 1}`;
     button.setAttribute("aria-label", button.title);
     button.disabled = !filled || !canUseSelectedBelt;
   }
@@ -3061,6 +3553,7 @@ function render() {
   document.querySelector("#phase-detail").textContent = preparing
     ? "Wrogowie nie wykonują tur i nie widzą drużyny"
     : completed ? "Przeciwnik pokonany — starcie zakończone"
+      : battleAnimationBusy ? 'Odtwarzanie zatwierdzonej akcji'
       : actor ? `${actor.name} wybiera umiejętność` : "Oczekiwanie na następne legalne okno gotowości";
   const turnGuide = document.querySelector('#battle-turn-guide');
   const showTurnGuide = campaignBattleAvailable() && !completed;
@@ -3071,13 +3564,11 @@ function render() {
     const right = binding ? skillDefinitions[binding.right]?.name ?? 'Brak' : 'Brak';
     document.querySelector('#battle-guide-hero').textContent = preparing
       ? `PRZYGOTOWANIE · ${actor?.name ?? 'DRUŻYNA'}` : `TURA · ${actor?.name ?? 'OCZEKIWANIE'}`;
-    document.querySelector('#battle-guide-copy').textContent = preparing
+    document.querySelector('#battle-guide-copy').textContent = battleAnimationBusy
+      ? 'Trwa ruch lub cios. Następne polecenie po zakończeniu animacji.' : preparing
       ? 'Kliknij bohatera i zielony heks. Potem rozpocznij starcie u góry po prawej.'
-      : 'Niebieskie heksy: legalny ruch LPM. Gra czeka na Twoje polecenie.';
+      : 'Wybierz portret dowolnego żywego bohatera, potem kliknij niebieski heks lub cel.';
     document.querySelector('#battle-guide-skills').textContent = `LPM: ${left} · PPM: ${right}`;
-    const endTurn = document.querySelector('#battle-guide-end-turn');
-    endTurn.hidden = preparing;
-    endTurn.disabled = preparing || !actor || !combat.canAct(actor.id);
   }
   const activePortrait = document.querySelector("#active-portrait");
   const activePortraitFallback = document.querySelector("#active-portrait-fallback");
@@ -3401,6 +3892,7 @@ function confirmTeamSelection() {
 }
 
 function completePlayerAction(kind, payload = {}, options = {}) {
+  if (battleAnimationBusy) return false;
   if (!campaignBattleAvailable()) throw new Error('W tej lokacji nie trwa starcie. Otwórz mapę.');
   if (isPaused() || (activePanel && options.allowPanel !== activePanel)) {
     throw new Error("Polecenie bojowe jest zablokowane przez pauzę lub otwarty panel");
@@ -3416,10 +3908,12 @@ function completePlayerAction(kind, payload = {}, options = {}) {
     render();
     return false;
   }
+  let walkCommand = null;
   commitActiveTurn(() => {
     if (kind === "move") {
       const movement = submitMovement(actorId, payload.path, { groupPortal: payload.groupPortal === true });
       if (movement.interrupted) showToast(`Ruch przerwany: ${movement.error.message}`, "warning");
+      else if (heroWalkAnimationAvailable(actorId)) walkCommand = movement;
     } else if (kind === "attack") {
       submitDelayedAttack(actorId, payload);
     } else if (kind === "approachAttack") {
@@ -3430,6 +3924,10 @@ function completePlayerAction(kind, payload = {}, options = {}) {
       combat.submitAction(actorId, kind, payload, resolver ? { resolve: resolver } : {});
     }
   });
+  if (walkCommand?.commandId) {
+    prioritizedBarbarianWalk = {commandId:walkCommand.commandId,actorId,recoveryEnd:walkCommand.recoveryEnd};
+    deferredWalkReadiness.clear();
+  }
   clearTargeting(false);
   if (options.drive !== false) driveTimeline(actorId);
   render();
@@ -3455,7 +3953,11 @@ function clearTargeting(shouldRender = true) {
 }
 
 function beginTargeting(kind, skillId = null, { skillUseCommitted = false, side = null } = {}) {
+  if (battleAnimationBusy) return false;
   if (!campaignBattleAvailable()) return false;
+  if (kind === 'skill' && !runtimeSkillStatus(skillId).supported) {
+    showToast(runtimeSkillStatus(skillId).label, 'warning'); return false;
+  }
   if (kind === "portal" && battlePreparation.phase !== BATTLE_PHASE.ACTIVE) {
     showToast("Miejski Portal jest dostępny po rozpoczęciu walki.", "warning");
     return false;
@@ -3724,6 +4226,9 @@ function applySupportSkill(actor, skill, { targetHex = null } = {}) {
 
 function useSupportSkill(skill, { targetHex = null } = {}) {
   if (!campaignBattleAvailable()) return false;
+  if (!runtimeSkillStatus(skill.id).supported) {
+    showToast(runtimeSkillStatus(skill.id).label, 'warning'); return false;
+  }
   const actor = actingCharacter();
   if (!actor) return false;
   const manaState = skillManaState(actor, skill.id);
@@ -3835,13 +4340,19 @@ function activateBoundMouseSkillAtHex(side, selectedHex) {
     if (!mouseSkillCatalog.allows(skillId, side) || !knownMouseSkillsForHero(actor.id).includes(skillId)) {
       throw new Error('Umiejętność nie jest legalna na tym przycisku');
     }
+    if (!runtimeSkillStatus(skillId).supported) throw new Error(runtimeSkillStatus(skillId).label);
     if (!skillManaState(actor, skillId).affordable) throw new Error('Za mało many');
-    validateSkillTarget(mode, {
-      hasHex: Boolean(selectedHex && hexGrid.has(selectedHex)),
-      enemy: Boolean(livingMonsterAt(selectedHex)),
-      freeGround: Boolean(selectedHex && hexGrid.has(selectedHex) && !hexGrid.isBlocked(selectedHex)),
-      corpse: selectedHex ? corpseAtHex(selectedHex) : null,
-    });
+    // An offensive mouse tile may be clicked first to arm targeting. Only
+    // validate the target once a battlefield hex was actually supplied;
+    // support/summon skills still validate their target immediately.
+    if (selectedHex || !isOffensiveSkill(skill)) {
+      validateSkillTarget(mode, {
+        hasHex: Boolean(selectedHex && hexGrid.has(selectedHex)),
+        enemy: Boolean(livingMonsterAt(selectedHex)),
+        freeGround: Boolean(selectedHex && hexGrid.has(selectedHex) && !hexGrid.isBlocked(selectedHex)),
+        corpse: selectedHex ? corpseAtHex(selectedHex) : null,
+      });
+    }
   } catch (error) {
     showToast(`${skill.name}: ${error.message}`, 'warning');
     return false;
@@ -3860,7 +4371,7 @@ function activateBoundMouseSkillAtHex(side, selectedHex) {
     }
     return useSupportSkill(skill);
   }
-  if (!selectedHex) return beginTargeting("skill", skill.id);
+  if (!selectedHex) return beginTargeting("skill", skill.id, { side });
   if (!livingMonsterAt(selectedHex)) {
     showToast(`${skill.name}: wskaż przeciwnika.`, "warning");
     return false;
@@ -3883,6 +4394,13 @@ function selectHeroFromBattlefield(heroId) {
   clearTargeting(false);
   closeMouseSkillChooser();
   inspectedCharacterId = heroId;
+  if (battlePreparation.phase === BATTLE_PHASE.ACTIVE && !battleAnimationBusy
+    && combat.currentActorId && combat.units.get(combat.currentActorId)?.kind === 'hero') {
+    try {
+      combat.chooseHeroForPlayerTurn(heroId, timelineLegalIds());
+      actingUnitId = heroId;
+    } catch (error) { showToast(error.message, 'warning'); }
+  }
   if (battlePreparation.phase === BATTLE_PHASE.PREPARATION
     && roster.get(heroId).lifeState === "alive"
     && roster.get(heroId).resources.hp > 0
@@ -4467,6 +4985,7 @@ function performEquipmentChange({itemId,slot}) {
     const reason = equipmentPermission(owner);
     if (reason) throw new Error(reason);
     const plan = planEquipmentChange({character:owner,inventory:grid,catalog:equipmentCatalog,itemId,slot});
+    const nextBelt = resizePotionBelt(belts.get(owner.id), potionBeltCapacity({ equipment: plan.equipment }, equipmentCatalog));
     if (battlePreparation.phase === BATTLE_PHASE.ACTIVE) {
       const previousEquipment = structuredClone(owner.equipment);
       const previousInventory = grid.toJSON();
@@ -4492,6 +5011,8 @@ function performEquipmentChange({itemId,slot}) {
     } else {
       commitEquipmentChange(owner,grid,equipmentCatalog,plan);
     }
+    belts.set(owner.id, nextBelt);
+    refreshHeroSkillAvailability(owner.id);
     const currentOwner = roster.get(owner.id);
     const equippedSlot = Object.entries(currentOwner.equipment).find(([,item])=>item.id===plan.changedItem.id)?.[0] ?? null;
     selectedInventoryItem = {ownerId:owner.id,id:plan.changedItem.id,slot:equippedSlot};
@@ -4522,22 +5043,32 @@ function renderItemDetails() {
   host.append(make('p', 'item-detail-note', selectedPotion
     ? 'Wybierz puste miejsce, aby włożyć tę miksturę do pasa.'
     : 'Wybierz miksturę w plecaku, aby włożyć ją do pasa. Zajęte miejsca można opróżnić.'));
-  for (let index = 0; index < BELT_SLOT_COUNT; index += 1) {
+  const beltGrid = make('div', 'inventory-belt-grid');
+  host.append(beltGrid);
+  for (let index = 0; index < belt.length; index += 1) {
     const slot = belt[index];
     const filled = beltSlotCount(slot) > 0;
-    const button = make('button', 'metal-button equipment-primary', filled
-      ? `${index + 1} · ${slot.name} ×${beltSlotCount(slot)} — WYJMIJ`
-      : `${index + 1} · PUSTE${selectedPotion ? ' — WŁÓŻ' : ''}`);
+    const button = make('button', 'inventory-belt-cell');
+    button.append(make('small', '', String(index + 1)));
+    const iconId = filled ? potionIconId(slot) : null;
+    if (iconId) {
+      const image = document.createElement('img');
+      image.src = `/app/assets/items/${iconId}.png`; image.alt = slot.name;
+      button.append(image);
+    }
     button.type = 'button';
     button.dataset.inventoryBeltIndex = String(index);
     button.disabled = Boolean(transferReason) || (!filled && !selectedPotion);
     button.title = transferReason ?? (filled
       ? `Wyjmij miksturę z pasa ${index + 1} do plecaka`
       : selectedPotion ? `Włóż ${selectedPotion.name} do pasa ${index + 1}` : 'Wybierz miksturę w plecaku');
+    button.setAttribute('aria-label', `${index + 1}: ${filled ? slot.name : 'Puste miejsce'}. ${button.title}`);
     button.addEventListener('click', () => transferPotionBeltItem(owner, {
       itemId: selectedPotion?.id ?? null, index, toBelt: !filled,
     }));
-    host.append(button);
+    button.style.gridRow = String(belt.length / 4 - Math.floor(index / 4));
+    button.style.gridColumn = String(index % 4 + 1);
+    beltGrid.append(button);
   }
   if (transferReason) host.append(make('p', 'equipment-error', transferReason));
   if (!item) return;
@@ -4909,15 +5440,116 @@ function announceLevelUps(awards) {
 
 function renderSkillsPanel() {
   const owner = inspectedCharacter();
-  const loadout = party.isActive(owner.id) ? battlePreparation.getLoadout(owner.id) : reserveLoadouts[owner.id];
-  const skills = [loadout.left, ...loadout.right].map((id, index) => ({ ...skillDefinitions[id], slot: index === 0 ? "LPM" : `PPM ${index}` }));
+  const treeView = skillTreeCatalog.view(owner, selectedSkillTreePage);
+  const treeLabel = treeView.tree.name?.plPLSourceForm || treeView.tree.name?.enUS || treeView.tree.sourceKey;
+  const sourceWarning = skillTreeCatalog.sourceStatus === 'no_gameplay_implementation_before_source_audit'
+    ? 'Dane nazw, wymagań, poziomów, kosztów i synergii pochodzą z lokalnych tabel D2R. Wykonanie efektów bojowych pozostaje zablokowane, dopóki nie zostanie potwierdzone i zaimplementowane.'
+    : 'Dane drzewka pochodzą ze zweryfikowanego katalogu źródłowego.';
+  const skillByName = new Map(treeView.skills.map((skill) => [skill.internalName, skill]));
+  const treeLinks = treeView.skills.flatMap((target) => target.requirements.prerequisiteSkills.flatMap((name) => {
+    const source = skillByName.get(name);
+    return source ? [{ source, target }] : [];
+  }));
+  const renderSynergyNames = (edges, direction) => {
+    const names = [...new Set((edges ?? []).map((edge) => direction === 'in' ? edge.sourceSkill : edge.targetSkill))];
+    return names.length ? names.map((name) => `<span>${safeHtml(owner.classId === 'barbarian' ? skillTreeCatalog.skill(owner.classId, name).localizedName.plPL : name)}</span>`).join('') : '<span class="skill-tree-none">brak zadeklarowanych</span>';
+  };
+  const renderNode = (skill) => {
+    const name = skill.localizedName?.plPL || skill.localizedName?.enUS || skill.internalName;
+    const short = skill.localizedShortDescription?.plPL || skill.localizedShortDescription?.enUS || 'BRAK POTWIERDZONYCH DANYCH';
+    const reqNames = skill.requirements.prerequisiteSkills.length
+      ? skill.requirements.prerequisiteSkills.map((value) => safeHtml(owner.classId === 'barbarian' ? skillTreeCatalog.skill(owner.classId, value).localizedName.plPL : value)).join(', ')
+      : 'brak';
+    const mana = skillManaProfile({mana:skill.mana.raw}, Math.max(1, skill.state.effectiveLevel)).cost;
+    const weaponTypes = skill.requirements.weaponTypes;
+    const weaponCopy = weaponTypes ? [...weaponTypes.includeA, ...weaponTypes.includeB].join(', ') || 'brak ograniczenia typu w źródle' : 'BRAK DANYCH';
+    const cooldown = skill.cooldown?.convertedSeconds ?? 'BRAK POTWIERDZONYCH DANYCH';
+    const reasons = skill.lockReasons.length ? skill.lockReasons.join(' · ') : 'Gotowe do przydzielenia';
+    const classes = ['skill-tree-node', skill.allocatable ? 'allocatable' : '', skill.unlocked ? '' : 'locked'].filter(Boolean).join(' ');
+    const glyph = 'BRAK IKONY';
+    let effectCopy = '';
+    if (skill.id === 'sorceress.fire_bolt' && learnedSourceSkill(owner, skill)) {
+      const values = fireBoltValues(owner, skillTreeCatalog);
+      effectCopy = `<p class="skill-tree-description skill-source-damage">Ogień: ${values.damage.join('–')} · synergie: +${values.synergyPercent}% · mistrzostwo: +${values.masteryPercent}%</p>`;
+    }
+    if (skill.id === 'barbarian.bash') {
+      effectCopy = '<p class="skill-tree-description skill-source-damage">Synergie: Ogłuszenie — +5% obrażeń/punkt; Koncentracja — +5% skuteczności ataku/punkt. Liczą się tylko wydane punkty.</p>';
+      if (learnedSourceSkill(owner, skill)) {
+        const v = bashValues(owner, skillTreeCatalog);
+        effectCopy += `<p class="skill-tree-description">Teraz: obrażenia +${v.damagePercent}% i +${v.flatDamage}; skuteczność +${v.ratingPercent}%.</p>`;
+      }
+    }
+    if (owner.classId === 'barbarian' && skill.crossSkillDependenciesIncoming.length) {
+      effectCopy += `<p class="skill-tree-description">Zależności potwierdzone w tabelach: ${skill.crossSkillDependenciesIncoming.map(edge =>
+        safeHtml(skillTreeCatalog.skill(owner.classId, edge.sourceSkill).localizedName.plPL) + ' — ' + safeHtml(edge.formula)).join('; ')}.</p>`;
+    }
+    return `<article class="${classes} skill-node-class-${safeHtml(owner.classId)}" data-skill-id="${safeHtml(skill.id)}" style="--tree-row:${skill.position.row};--tree-column:${skill.position.column}">
+      <div class="skill-tree-node-head"><span class="skill-tree-icon" aria-hidden="true"><img src="${skillIconUrl(owner.classId, skill)}" alt="" loading="lazy" data-skill-icon="${safeHtml(skill.id)}"><span class="skill-tree-icon-fallback">${glyph}</span></span><div><h4>${safeHtml(name)}</h4><small>${safeHtml(skill.internalName)}</small></div><strong>${skill.state.hardPoints}/${skill.maximumBaseLevel}</strong></div>
+      <p class="skill-tree-description">${safeHtml(short)}</p>
+      <p class="skill-tree-description">${safeHtml(runtimeSkillStatus(skill.id).label)}</p>
+      ${effectCopy}
+      <dl class="skill-tree-meta"><div><dt>Poziom</dt><dd>${skill.requirements.characterLevel}</dd></div><div><dt>Mana (ranga ${Math.max(1,skill.state.effectiveLevel)})</dt><dd>${safeHtml(String(mana))}</dd></div><div><dt>Cooldown</dt><dd>${safeHtml(String(cooldown))}</dd></div><div><dt>Typ</dt><dd>${safeHtml(skill.mechanicType || 'BRAK POTWIERDZONYCH DANYCH')}</dd></div></dl>
+      <p class="skill-tree-requirement"><b>Broń (kody źródłowe):</b> ${safeHtml(weaponCopy)}${weaponTypes?.excludeA?.length ? ` · wyklucza: ${safeHtml(weaponTypes.excludeA.join(', '))}` : ''}</p>
+      <p class="skill-tree-requirement"><b>Wymaga:</b> ${reqNames}</p>
+      <div class="skill-tree-synergy"><b>Zależności od wydanych punktów:</b><div>${renderSynergyNames(owner.classId === 'barbarian' ? skill.crossSkillDependenciesIncoming.filter(e=>e.hardPointsOnly) : skill.synergiesIncoming, 'in')}</div><b>Wpływa na:</b><div>${renderSynergyNames(owner.classId === 'barbarian' ? skill.crossSkillDependenciesOutgoing.filter(e=>e.hardPointsOnly) : skill.synergiesOutgoing, 'out')}</div></div>
+      <p class="skill-tree-lock" aria-live="polite">${safeHtml(reasons)}</p>
+      <button type="button" class="metal-button skill-tree-spend" data-spend-skill="${safeHtml(skill.id)}" aria-label="${skill.allocatable ? `Przydziel punkt: ${safeHtml(name)}` : `Zablokowane: ${safeHtml(name)}`}" ${skill.allocatable ? '' : 'disabled'}>${skill.allocatable ? '＋' : '·'}</button>
+    </article>`;
+  };
   panelBody.className = "game-panel-body skills-view";
   panelBody.innerHTML = `
-    <div class="tree-header"><span class="large-rune">T</span><div><small>${classNames[owner.classId]}</small><h3>Drzewka umiejętności</h3><p>Punkty niewydane: ${owner.unspentSkillPoints}</p></div></div>
-    <div class="skill-branches">
-      ${skills.map((skill) => `<section data-skill-id="${skill.id}" data-category="${skill.category}"><h3>${skill.slot} · ${skill.name}</h3><p>${skill.copy}</p><small>${skill.status}</small></section>`).join("")}
+    <div class="skill-tree-audit-bar"><span>${safeHtml(classNames[owner.classId])} · D2R ${safeHtml(skillTreeCatalog.installedBuild)}</span><b>MASZ ${owner.unspentSkillPoints} PKT. UMIEJĘTNOŚCI</b></div>
+    <div class="skill-tree-tabs" role="tablist" aria-label="Drzewka klasy">
+      ${skillTreeCatalog.treesForClass(owner.classId).map((tree) => `<button type="button" class="skill-tree-tab ${tree.page === selectedSkillTreePage ? 'active' : ''}" data-skill-tree-page="${tree.page}" role="tab" aria-selected="${tree.page === selectedSkillTreePage}">${safeHtml(tree.name?.plPLSourceForm || tree.name?.enUS || tree.sourceKey)}</button>`).join('')}
     </div>
-    <p class="data-warning">Każda z ośmiu klas może wejść do aktywnej trójki. Źródłowe nazwy, przypisania LPM/PPM i koszty many są zachowane; uproszczone liczby walki pozostają jawnie opisanymi adapterami runtime.</p>`;
+    <div class="skill-tree-board skill-tree-class-${safeHtml(owner.classId)} skill-tree-page-${treeView.tree.page}" role="tabpanel" aria-label="${safeHtml(treeLabel)}">
+      <svg class="skill-tree-links" viewBox="0 0 300 600" preserveAspectRatio="none" aria-hidden="true"><defs><marker id="skill-tree-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0,0 L8,4 L0,8 z" /></marker></defs>${treeLinks.map(({ source, target }) => `<path d="M ${(source.position.column - .5) * 100} ${(source.position.row) * 100 - 9} L ${(target.position.column - .5) * 100} ${(target.position.row - 1) * 100 + 9}" marker-end="url(#skill-tree-arrow)" />`).join('')}</svg>
+      ${treeView.skills.map(renderNode).join('')}
+    </div>
+    <div class="skill-tree-footer"><span>${safeHtml(treeLabel)} · KARTA ${treeView.tree.page}/3</span><small>ŹRÓDŁO: D2R ${safeHtml(skillTreeCatalog.installedBuild)} · ${safeHtml(sourceWarning)}</small></div>
+    <p class="data-warning">Każdy bohater ma niezależne punkty i poziomy. Przydział sprawdza poziom postaci oraz wyłącznie potwierdzone wymagania hard-point; punkty z przedmiotów nie otwierają prerekwizytów. Surowe zależności formuł są zachowane w audycie, ale nie są interpretowane jako dodatkowe mechaniki.</p>`;
+  panelBody.querySelectorAll('[data-skill-tree-page]').forEach((button) => button.addEventListener('click', () => {
+    selectedSkillTreePage = Number(button.dataset.skillTreePage);
+    renderSkillsPanel();
+  }));
+  panelBody.querySelectorAll('[data-spend-skill]').forEach((button) => button.addEventListener('click', () => {
+    spendSkillTreePoint(button.dataset.spendSkill);
+  }));
+  panelBody.querySelectorAll('[data-skill-icon]').forEach((image) => image.addEventListener('error', () => {
+    image.hidden = true;
+    image.parentElement?.classList.add('missing-icon');
+  }));
+  panelBody.querySelectorAll('.skill-tree-node').forEach((node) => node.addEventListener('click', (event) => {
+    if (event.target.closest('button')) return;
+    panelBody.querySelectorAll('.skill-tree-node.expanded').forEach((other) => {
+      if (other !== node) other.classList.remove('expanded');
+    });
+    node.classList.toggle('expanded');
+  }));
+}
+
+function spendSkillTreePoint(skillId) {
+  const previous = captureLiveSession();
+  try {
+    const candidate = buildSaveSnapshot();
+    const stagedRoster = new Roster(candidate.roster);
+    const stagedOwner = stagedRoster.get(inspectedCharacterId);
+    const result = skillTreeCatalog.spendPoint(stagedOwner, skillId);
+    candidate.roster = stagedRoster.toJSON();
+    installLiveSession(stageGameState(validateSaveEnvelope(candidate)));
+    // Restaging deliberately clears the presentation actor. Restore the same
+    // decision window; learning is not a turn and must not strand the battle.
+    driveTimeline();
+    autosaveGame('przydzieleniu punktu umiejętności');
+    render();
+    if (activePanel === 'skills') renderSkillsPanel();
+    showToast(`${skillTreeCatalog.skill(stagedOwner.classId, skillId).localizedName?.plPL || skillId}: poziom ${result.hardPoints}.`, 'success');
+  } catch (error) {
+    installLiveSession(previous);
+    render();
+    if (activePanel === 'skills') renderSkillsPanel();
+    showToast(`Nie przydzielono punktu: ${error.message}`, 'warning');
+  }
 }
 
 function renderQuestPanel() {
@@ -4930,7 +5562,7 @@ function renderQuestPanel() {
       <div class="options-actions"><button type="button" id="akara-accept" class="metal-button" ${!atCamp||quest.status!=='available'?'disabled':''}>PRZYJMIJ ZADANIE</button><button type="button" id="akara-claim" class="metal-button" ${!atCamp||quest.status!=='objective-complete'||!quest.eligibleHeroIds.length?'disabled':''}>ODBIERZ NAGRODĘ</button></div>
       <p>Nagroda: +1 punkt umiejętności oraz zapisane prawo do jednej darmowej zmiany specjalizacji dla każdego uprawnionego bohatera.</p>
       <p id="den-reward-recipients">Uprawnieni: ${quest.eligibleHeroIds.length?quest.eligibleHeroIds.map(id=>safeHtml(roster.has(id)?roster.get(id).name:id)).join(', '):'ustalani po oczyszczeniu Siedliska Zła'}.</p>
-      <p class="data-warning">Drzewka i wykonywanie zmiany specjalizacji nie są jeszcze wdrożone. Prawo do nagrody jest zachowane w zapisie; nowi bohaterowie go nie dziedziczą. Leczenie nie wskrzesza poległych. Stamina nie ma jeszcze własnego runtime.</p>
+      <p class="data-warning">Drzewka źródłowe są dostępne w panelu UMIEJĘTNOŚCI; wykonywanie zmiany specjalizacji nie jest jeszcze wdrożone. Prawo do nagrody jest zachowane w zapisie; nowi bohaterowie go nie dziedziczą. Leczenie nie wskrzesza poległych. Stamina nie ma jeszcze własnego runtime.</p>
       ${quest.completionEvidence==='legacy-party-unavailable'?'<p class="data-warning">Starszy zapis ma oczyszczone Siedlisko Zła, lecz nie zawiera listy uprawnionych bohaterów. Nie przyznano nagrody nowym postaciom przez domysł.</p>':''}</section>`;
     panelBody.querySelector('#akara-accept').onclick=()=>akaraAction('accept');
     panelBody.querySelector('#akara-claim').onclick=()=>akaraAction('claim');
@@ -6339,6 +6971,7 @@ function renderPanel(kind) {
   const themed = ['inventory', 'character', 'camp-charsi', 'camp-gheed', 'camp-cain', 'camp-stash', 'horadric-cube']
     .includes(kind) || kind.startsWith('camp-trade-');
   gamePanel.classList.toggle('diablo-panel', themed);
+  gamePanel.classList.toggle('skills-panel', kind === 'skills');
   renderDiabloPanelFooter(owner, themed);
   const titles = {
     loot: ["ŁUP Z POLA WALKI", campaign ? act1Area(campaign.act1.currentAreaId).label : `Trening · starcie ${encounterProgress.encounterNumber}`],
@@ -6587,6 +7220,8 @@ function restoreSavedSettings(settings) {
 function buildSaveSnapshot() {
   return {
     schemaVersion: 3,
+    skillTreeSchemaVersion: SKILL_TREE_SAVE_SCHEMA_VERSION,
+    skillTreeCatalogId: SKILL_TREE_CATALOG_ID,
     campaignSchemaVersion: 2,
     campaign: campaign?.toJSON() ?? null,
     encounterSchemaVersion: ENCOUNTER_SCHEMA_VERSION,
@@ -6596,6 +7231,7 @@ function buildSaveSnapshot() {
     mouseSkillSchemaVersion: MOUSE_SKILL_SCHEMA_VERSION,
     mouseSkillCatalogId: mouseSkillCatalog.id,
     mouseSkills: mouseSkills.snapshot(),
+    skillHotkeys: skillHotkeys.snapshot(),
     activeAuraSchemaVersion: ACTIVE_AURA_SAVE_SCHEMA_VERSION,
     activeAuras: buildActiveAuraSnapshot({
       heroIds: roster.toJSON().map(({ id }) => id),
@@ -6971,6 +7607,11 @@ function validateSaveEnvelope(parsed) {
   if (parsed?.campaignSchemaVersion !== undefined && ![1, 2].includes(parsed.campaignSchemaVersion)) throw new Error('Nieobsługiwana wersja kampanii');
   if (!parsed || typeof parsed !== "object") throw new TypeError("Zapis nie jest obiektem");
   if (parsed.schemaVersion !== 3) throw new Error("Nieobsługiwany schemat zapisu; wymagany jest natywny zapis v3");
+  const hasSkillTreeSchema = parsed.skillTreeSchemaVersion !== undefined || parsed.skillTreeCatalogId !== undefined;
+  if (hasSkillTreeSchema && (parsed.skillTreeSchemaVersion !== SKILL_TREE_SAVE_SCHEMA_VERSION
+    || parsed.skillTreeCatalogId !== SKILL_TREE_CATALOG_ID)) {
+    throw new Error("Nieobsługiwany katalog lub schemat drzewek umiejętności");
+  }
   if (parsed.game_ruleset_version !== GAME_RULESET_VERSION) throw new Error("Nieobsługiwana wersja reguł walki");
   if (parsed.source_snapshot_id !== SOURCE_SNAPSHOT_ID) throw new Error("Nieobsługiwany snapshot źródeł");
   if (parsed.settings !== undefined && (parsed.settings?.schemaVersion !== 1
@@ -6999,6 +7640,13 @@ function validateSaveEnvelope(parsed) {
   }
   const migrated = completeV0517SaveEnvelope(parsed);
   if (migrated.campaignSchemaVersion === 1) migrated.campaignSchemaVersion = 2;
+  // Saves produced before the source-audited trees were added remain readable;
+  // their per-hero `skills` objects are preserved and interpreted by this
+  // catalog from this point forward.
+  if (!hasSkillTreeSchema) {
+    migrated.skillTreeSchemaVersion = SKILL_TREE_SAVE_SCHEMA_VERSION;
+    migrated.skillTreeCatalogId = SKILL_TREE_CATALOG_ID;
+  }
   return migrated;
 }
 
@@ -7234,6 +7882,9 @@ function stageGameState(data) {
   }
   const equipmentMigrated = data.equipmentSchemaVersion === undefined;
   if (equipmentMigrated) migrateLegacyEquipment(restoredRoster, restoredInventories, equipmentCatalog);
+  for (const [id, belt] of restoredBelts) {
+    restoredBelts.set(id, resizePotionBelt(belt, potionBeltCapacity(restoredRoster.get(id), equipmentCatalog)));
+  }
   const allEquipmentIds = validateEquipmentWorld(restoredRoster, restoredInventories, equipmentCatalog);
   restoredHoradricCube.validateUniqueOwnership(restoredInventories);
   restoredCampServices.validateUniqueOwnership(new Map([...restoredInventories, ['horadric-cube', restoredHoradricCube.grid]]));
@@ -7264,6 +7915,9 @@ function stageGameState(data) {
     snapshot: mouseMigration.snapshot,
   });
   const restoredHeroIds = restoredRoster.toJSON().map(({ id }) => id);
+  const restoredSkillHotkeys = new SkillHotkeys(restoredHeroIds, data.skillHotkeys);
+  for (const id of restoredHeroIds) restoredSkillHotkeys.retainAvailable(id,
+    (skillId,side) => restoredMouseSkills.available(id,side).includes(skillId));
   const auraMigration = validateActiveAuraSnapshot(data, {
     heroIds: restoredHeroIds, buffs: restoredPreparation.listBuffs(), catalog: mouseSkillCatalog,
   });
@@ -7360,6 +8014,7 @@ function stageGameState(data) {
     enemyAi: restoredEnemyAi,
     battlePreparation: restoredPreparation,
     mouseSkills: restoredMouseSkills,
+    skillHotkeys: restoredSkillHotkeys,
     portalSystem: restoredPortals,
     portalScrolls: restoredScrolls,
     inventories: restoredInventories,
@@ -7404,6 +8059,7 @@ function captureLiveSession() {
     enemyAi,
     battlePreparation,
     mouseSkills,
+    skillHotkeys,
     portalSystem,
     portalScrolls,
     inventories,
@@ -7431,6 +8087,10 @@ function captureLiveSession() {
 }
 
 function installLiveSession(state) {
+  battleAnimationEpoch++;
+  battleAnimation.cancel();
+  battleAnimationBusy = false;
+  battleImpactVisual = null;
   campaign = state.campaign ?? null;
   creationProfile = normalizeCreationProfile(state.creationProfile);
   enemyAiById = state.enemyAiById ?? {[state.enemy.id]:state.enemyAi};
@@ -7445,6 +8105,7 @@ function installLiveSession(state) {
   enemyAi = state.enemyAi;
   battlePreparation = state.battlePreparation;
   mouseSkills = state.mouseSkills;
+  skillHotkeys = state.skillHotkeys ?? new SkillHotkeys(roster.toJSON().map(({id}) => id));
   portalSystem = state.portalSystem;
   portalScrolls = state.portalScrolls;
   inventories = state.inventories;
@@ -7766,6 +8427,7 @@ for (const side of ["left", "right"]) {
   document.querySelector(`#mouse-skill-${side}`)?.addEventListener("click", (event) => {
     if (isPaused()) return;
     event.stopPropagation();
+    // The whole hand tile opens assignment; battlefield LPM/PPM uses it.
     mouseSkillChooserSide = mouseSkillChooserSide === side ? null : side;
     renderMouseSkillHud();
   });
@@ -7775,8 +8437,10 @@ document.querySelector("#mouse-skill-chooser")?.addEventListener("click", (event
   if (isPaused()) return;
   const choice = event.target.closest("[data-skill-id][data-mouse-side]");
   if (!choice) return;
+  if (choice.dataset.usable !== 'true') { showSkillTooltip(choice); return; }
   const character = inspectedCharacter();
   try {
+    refreshHeroSkillAvailability(character.id);
     const result = mouseSkills.assign(character.id, choice.dataset.mouseSide, choice.dataset.skillId);
     const skill = skillDefinitions[choice.dataset.skillId];
     combat.log.push(`${character.name} przypisuje ${skill?.name ?? choice.dataset.skillId} do ${choice.dataset.mouseSide === "left" ? "LPM" : "PPM"}; zmiana nie zużywa czasu.`);
@@ -7795,11 +8459,53 @@ document.querySelector("#mouse-skill-chooser")?.addEventListener("click", (event
   }
 });
 
+const skillChooser = document.querySelector('#mouse-skill-chooser');
+for (const type of ['pointerover', 'focusin']) skillChooser.addEventListener(type, event => {
+  const choice = event.target.closest('.mouse-skill-choice');
+  if (!choice) return;
+  hoveredSkillChoice = { skillId: choice.dataset.skillId, side: choice.dataset.mouseSide, usable: choice.dataset.usable === 'true' };
+  showSkillTooltip(choice);
+});
+skillChooser.addEventListener('pointerleave', () => { hoveredSkillChoice = null; hideSkillTooltip(); });
+window.addEventListener('resize', () => { if (mouseSkillChooserSide) renderMouseSkillChooser(inspectedCharacter()); });
+window.addEventListener('keydown', event => {
+  if (mainMenuOpen || activePanel || isPaused() || event.altKey || event.ctrlKey || event.metaKey
+    || event.target.closest?.('input, textarea, select, [contenteditable="true"]')) return;
+  if (mouseSkillChooserSide && ['Space', 'KeyS'].includes(event.code)) {
+    event.preventDefault(); event.stopImmediatePropagation(); closeMouseSkillChooser(); return;
+  }
+  if (!SKILL_HOTKEYS.includes(event.code)) return;
+  event.preventDefault(); event.stopImmediatePropagation();
+  if (event.repeat) return;
+  const character = inspectedCharacter();
+  try {
+    refreshHeroSkillAvailability(character.id);
+    if (mouseSkillChooserSide) {
+      if (!hoveredSkillChoice?.usable || hoveredSkillChoice.side !== mouseSkillChooserSide) return;
+      if (!mouseSkills.available(character.id, hoveredSkillChoice.side).includes(hoveredSkillChoice.skillId)) return;
+      skillHotkeys.assign(character.id, event.code, hoveredSkillChoice.side, hoveredSkillChoice.skillId);
+      renderMouseSkillHud();
+      return;
+    }
+    const binding = skillHotkeys.get(character.id, event.code);
+    if (!binding) return;
+    mouseSkills.assign(character.id, binding.side, binding.skillId);
+    primaryHoverPlan = null; hoveredHex = null;
+    renderMouseSkillHud(); drawScene();
+  } catch (error) { showToast(error.message, 'warning'); }
+}, true);
+
 document.querySelector("#hud-belt")?.addEventListener("click", (event) => {
   if (isPaused()) return;
   const button = event.target.closest("[data-belt-index]");
   if (!button || button.disabled) return;
   useHudBeltSlot(Number(button.dataset.beltIndex));
+});
+document.querySelector('#hud-belt')?.addEventListener('contextmenu', (event) => {
+  const button = event.target.closest('[data-belt-index]');
+  if (!button) return;
+  event.preventDefault();
+  if (!isPaused() && !button.disabled) useHudBeltSlot(Number(button.dataset.beltIndex));
 });
 
 document.querySelector("#cards").addEventListener("click", (event) => {
@@ -7864,7 +8570,12 @@ canvas.addEventListener("mousemove", (event) => {
   }
   const nextPreview = buildPrimaryHoverPlan(selected);
   primaryHoverPlan = nextPreview;
-  hoveredHex = nextPreview ? selected : null;
+  hoveredHex = activePanel || isPaused() ? null : selected;
+  if (!pendingTarget) {
+    const actor = actingCharacter();
+    movementChoices = actor && characterOnBattlefield(actor.id)
+      ? new Map(hexGrid.reachable(actor.id, 3).map(choice => [hexKey(choice.position), choice])) : new Map();
+  }
   render();
 });
 
@@ -7936,7 +8647,25 @@ canvas.addEventListener("keydown", (event) => {
   selectTargetHex(hoveredHex);
 });
 
-function selectTargetHex(selected) {
+async function presentPreparationMove(selected, choice, actorId) {
+  const epoch = ++battleAnimationEpoch;
+  battleAnimationBusy = true;
+  try {
+    const stepDuration = walkStepDuration(choice.path.length - 1);
+    for (let i = 1; i < choice.path.length; i++) {
+      const played = await battleAnimation.play({actorId, clip: 'walk',
+        from: hexToScreen(choice.path[i - 1]), to: hexToScreen(choice.path[i])}, stepDuration);
+      if (!played || epoch !== battleAnimationEpoch) return;
+    }
+    battleAnimationBusy = false;
+    selectTargetHex(selected, {presented: true});
+  } finally {
+    if (epoch === battleAnimationEpoch) { battleAnimationBusy = false; render(); }
+  }
+}
+
+function selectTargetHex(selected, {presented = false} = {}) {
+  if (battleAnimationBusy) return;
   if (!pendingTarget || activePanel) return;
   if (!pendingTargetActorId || pendingTargetActorId !== actingUnitId) {
     clearTargeting(false);
@@ -7953,6 +8682,10 @@ function selectTargetHex(selected) {
     }
     if (battlePreparation.phase === BATTLE_PHASE.PREPARATION) {
       const actor = actingCharacter();
+      if (!presented && heroWalkAnimationAvailable(actor.id)) {
+        void presentPreparationMove(selected, choice, actor.id);
+        return;
+      }
       try {
         // Validate both authoritative spatial models before publishing either
         // mutation. Assigning the validated clones makes this commit atomic.
@@ -8040,7 +8773,10 @@ canvas.addEventListener("click", (event) => {
   // Diablo-style primary click: empty ground means movement; no separate MOVE button.
   // Never move a hidden/current actor while the HUD is showing another hero.
   if (!inspectedHeroCanIssueWorldCommand()) return;
-  if (beginTargeting("move")) selectTargetHex(selected);
+  if (beginTargeting("move")) {
+    try { selectTargetHex(selected); }
+    finally { if (!battleAnimationBusy && pendingTarget === 'move') clearTargeting(false); render(); }
+  }
 });
 
 canvas.addEventListener("contextmenu", (event) => {
@@ -8058,10 +8794,6 @@ document.querySelector("#cancel-targeting").addEventListener("click", () => clea
 document.querySelector("#start-battle").addEventListener("click", startBattleExplicitly);
 document.querySelector("#end-turn").addEventListener("click", () => {
   if (campaignBattleAvailable() && !isPaused() && !activePanel && !pendingTarget) completePlayerAction("wait");
-});
-document.querySelector('#battle-guide-end-turn').addEventListener('click', () => {
-  if (campaignBattleAvailable() && battlePreparation.phase === BATTLE_PHASE.ACTIVE
-    && !isPaused() && !activePanel && !pendingTarget) completePlayerAction('wait');
 });
 const playersSelect = document.querySelector("#players");
 for (let value = 1; value <= 8; value += 1) playersSelect.add(new Option(`P${value}`, String(value)));
@@ -8244,12 +8976,17 @@ const observer = new ResizeObserver(resizeCanvas);
 observer.observe(canvas.parentElement);
 canvas.dataset.deploymentCells = battlefieldGeometryMode === "approved-v3" ? "26" : "30";
 resizeCanvas();
-globalThis.__rotwDebug = Object.freeze({
+const rotwDebugApi = Object.freeze({
   storageKeys: Object.freeze({current:SAVE_KEY,backup:SAVE_BACKUP_KEY,legacyEquipment:LEGACY_EQUIPMENT_SAVE_KEY}),
   explorationCommandLocked: () => explorationCommandLocked,
   inputState: () => ({ activePanel, pendingTarget, pendingTargetActorId,
-    paused:isPaused(), movementChoiceCount:movementChoices.size }),
+    battleAnimationBusy,
+    paused:isPaused(), movementChoiceCount:movementChoices.size,
+    hoveredHex: hoveredHex ? {...hoveredHex} : null, hoveredEnemyId: livingMonsterAt(hoveredHex)?.id ?? null }),
   snapshot: () => ({
+    animation: {busy: battleAnimationBusy, current: battleAnimation.current ? structuredClone(battleAnimation.current) : null,
+      facing: [...battleAnimation.facing], loaded: Object.keys(BARBARIAN_ATLASES).filter(key => barbarianAtlases[key]?.frames),
+      unarmedLoaded: Object.keys(BARBARIAN_UNARMED_ATLASES).filter(key => barbarianAtlases[key]?.frames)},
     phase: battlePreparation.phase,
     enemyTurnsEnabled: battlePreparation.enemyTurnsEnabled,
     enemyAwarenessEnabled: battlePreparation.enemyAwarenessEnabled,
@@ -8275,6 +9012,11 @@ globalThis.__rotwDebug = Object.freeze({
   saveGameState,
   loadGameState,
 });
+// Keep the existing diagnostics available in both the module global and the
+// page global. Browser smoke tests run in an isolated evaluation realm where
+// `globalThis` and `window` are not always the same object.
+globalThis.__rotwDebug = rotwDebugApi;
+if (typeof window !== "undefined") window.__rotwDebug = rotwDebugApi;
 beginCampTradingSession({ campServices, inventories, horadricCube });
 if (battlePreparation.phase === BATTLE_PHASE.ACTIVE) driveTimeline();
 render();

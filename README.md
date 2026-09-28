@@ -4,7 +4,7 @@ Prywatny projekt fanowski Kris Labs PL, udostępniany publicznie bez opłat. Pie
 
 ## Instalacja w Windows
 
-Pobierz instalator z sekcji Releases: `Diablo-Game-Reign-of-the-Warlock-Setup-0.1.exe`. Uruchom go, wybierz miejsce instalacji i zaznacz utworzenie skrótu na pulpicie, jeśli chcesz. Instalator jest niepodpisany cyfrowo. Wydawca „Kris Labs PL” w jego metadanych jest nazwą autora, a nie potwierdzeniem podpisu certyfikatem.
+Pobierz najnowszy instalator z sekcji Releases: `Diablo-Game-Reign-of-the-Warlock-Setup-0.2.exe`. Uruchom go, wybierz miejsce instalacji i zaznacz utworzenie skrótu na pulpicie, jeśli chcesz. Instalator jest niepodpisany cyfrowo. Wydawca „Kris Labs PL” w jego metadanych jest nazwą autora, a nie potwierdzeniem podpisu certyfikatem.
 
 Gra zapisuje dane w `%LOCALAPPDATA%\Kris Labs PL\Reign of the Warlock\work`. Odinstalowanie nie usuwa zapisów. Podczas instalacji można wskazać poprzedni folder, z którego zapis ma zostać skopiowany.
 
@@ -26,4 +26,4 @@ Autor projektu potwierdził prawo do publicznej redystrybucji dołączonych graf
 
 ## Wydania
 
-Wersja gry jest numerowana według ciągu `0.1 … 0.9 → 1.0 → 1.1 …`; pełna historia zmian jest widoczna w menu gry. Instrukcję ręcznego opublikowania pierwszego repozytorium i wydania przygotowano w `PUBLICATION_GUIDE.md`, a treść notatek wydania 0.1 — w `GITHUB_RELEASE_0.1.md`.
+Wersja gry jest numerowana według ciągu `0.1 … 0.9 → 1.0 → 1.1 …`; pełna historia zmian jest widoczna w menu gry. Wydanie 0.2 dodaje swobodny wybór bohatera podczas decyzji w walce, zakładanie startowego wyposażenia, cztery rzeczywiste mikstury zdrowia w pasie oraz przeniesiony przycisk tury. Pełna lista zmian znajduje się w `app/release-history.json`.

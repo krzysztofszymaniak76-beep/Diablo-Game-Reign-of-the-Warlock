@@ -1,0 +1,1928 @@
+{
+  "schemaVersion": 1,
+  "provider": "d2db.net",
+  "sourceBase": "https://d2db.net/images/skills",
+  "sourceChecked": "2026-09-25",
+  "icons": {
+    "amazon.magic_arrow": {
+      "classId": "amazon",
+      "sourceName": "Magic Arrow",
+      "displayName": "Magic Arrow",
+      "slug": "magic_arrow",
+      "asset": "/app/assets/skill-icons/amazon/magic_arrow.webp",
+      "sourceUrl": "https://d2db.net/images/skills/magic_arrow.webp"
+    },
+    "amazon.fire_arrow": {
+      "classId": "amazon",
+      "sourceName": "Fire Arrow",
+      "displayName": "Fire Arrow",
+      "slug": "fire_arrow",
+      "asset": "/app/assets/skill-icons/amazon/fire_arrow.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fire_arrow.webp"
+    },
+    "amazon.cold_arrow": {
+      "classId": "amazon",
+      "sourceName": "Cold Arrow",
+      "displayName": "Cold Arrow",
+      "slug": "cold_arrow",
+      "asset": "/app/assets/skill-icons/amazon/cold_arrow.webp",
+      "sourceUrl": "https://d2db.net/images/skills/cold_arrow.webp"
+    },
+    "amazon.multiple_shot": {
+      "classId": "amazon",
+      "sourceName": "Multiple Shot",
+      "displayName": "Multiple Shot",
+      "slug": "multiple_shot",
+      "asset": "/app/assets/skill-icons/amazon/multiple_shot.webp",
+      "sourceUrl": "https://d2db.net/images/skills/multiple_shot.webp"
+    },
+    "amazon.exploding_arrow": {
+      "classId": "amazon",
+      "sourceName": "Exploding Arrow",
+      "displayName": "Exploding Arrow",
+      "slug": "exploding_arrow",
+      "asset": "/app/assets/skill-icons/amazon/exploding_arrow.webp",
+      "sourceUrl": "https://d2db.net/images/skills/exploding_arrow.webp"
+    },
+    "amazon.ice_arrow": {
+      "classId": "amazon",
+      "sourceName": "Ice Arrow",
+      "displayName": "Ice Arrow",
+      "slug": "ice_arrow",
+      "asset": "/app/assets/skill-icons/amazon/ice_arrow.webp",
+      "sourceUrl": "https://d2db.net/images/skills/ice_arrow.webp"
+    },
+    "amazon.guided_arrow": {
+      "classId": "amazon",
+      "sourceName": "Guided Arrow",
+      "displayName": "Guided Arrow",
+      "slug": "guided_arrow",
+      "asset": "/app/assets/skill-icons/amazon/guided_arrow.webp",
+      "sourceUrl": "https://d2db.net/images/skills/guided_arrow.webp"
+    },
+    "amazon.strafe": {
+      "classId": "amazon",
+      "sourceName": "Strafe",
+      "displayName": "Strafe",
+      "slug": "strafe",
+      "asset": "/app/assets/skill-icons/amazon/strafe.webp",
+      "sourceUrl": "https://d2db.net/images/skills/strafe.webp"
+    },
+    "amazon.immolation_arrow": {
+      "classId": "amazon",
+      "sourceName": "Immolation Arrow",
+      "displayName": "Immolation Arrow",
+      "slug": "immolation_arrow",
+      "asset": "/app/assets/skill-icons/amazon/immolation_arrow.webp",
+      "sourceUrl": "https://d2db.net/images/skills/immolation_arrow.webp"
+    },
+    "amazon.freezing_arrow": {
+      "classId": "amazon",
+      "sourceName": "Freezing Arrow",
+      "displayName": "Freezing Arrow",
+      "slug": "freezing_arrow",
+      "asset": "/app/assets/skill-icons/amazon/freezing_arrow.webp",
+      "sourceUrl": "https://d2db.net/images/skills/freezing_arrow.webp"
+    },
+    "amazon.inner_sight": {
+      "classId": "amazon",
+      "sourceName": "Inner Sight",
+      "displayName": "Inner Sight",
+      "slug": "inner_sight",
+      "asset": "/app/assets/skill-icons/amazon/inner_sight.webp",
+      "sourceUrl": "https://d2db.net/images/skills/inner_sight.webp"
+    },
+    "amazon.critical_strike": {
+      "classId": "amazon",
+      "sourceName": "Critical Strike",
+      "displayName": "Critical Strike",
+      "slug": "critical_strike",
+      "asset": "/app/assets/skill-icons/amazon/critical_strike.webp",
+      "sourceUrl": "https://d2db.net/images/skills/critical_strike.webp"
+    },
+    "amazon.dodge": {
+      "classId": "amazon",
+      "sourceName": "Dodge",
+      "displayName": "Dodge",
+      "slug": "dodge",
+      "asset": "/app/assets/skill-icons/amazon/dodge.webp",
+      "sourceUrl": "https://d2db.net/images/skills/dodge.webp"
+    },
+    "amazon.slow_missiles": {
+      "classId": "amazon",
+      "sourceName": "Slow Missiles",
+      "displayName": "Slow Missiles",
+      "slug": "slow_missiles",
+      "asset": "/app/assets/skill-icons/amazon/slow_missiles.webp",
+      "sourceUrl": "https://d2db.net/images/skills/slow_missiles.webp"
+    },
+    "amazon.avoid": {
+      "classId": "amazon",
+      "sourceName": "Avoid",
+      "displayName": "Avoid",
+      "slug": "avoid",
+      "asset": "/app/assets/skill-icons/amazon/avoid.webp",
+      "sourceUrl": "https://d2db.net/images/skills/avoid.webp"
+    },
+    "amazon.penetrate": {
+      "classId": "amazon",
+      "sourceName": "Penetrate",
+      "displayName": "Penetrate",
+      "slug": "penetrate",
+      "asset": "/app/assets/skill-icons/amazon/penetrate.webp",
+      "sourceUrl": "https://d2db.net/images/skills/penetrate.webp"
+    },
+    "amazon.dopplezon": {
+      "classId": "amazon",
+      "sourceName": "Dopplezon",
+      "displayName": "Decoy",
+      "slug": "decoy",
+      "asset": "/app/assets/skill-icons/amazon/decoy.webp",
+      "sourceUrl": "https://d2db.net/images/skills/decoy.webp"
+    },
+    "amazon.evade": {
+      "classId": "amazon",
+      "sourceName": "Evade",
+      "displayName": "Evade",
+      "slug": "evade",
+      "asset": "/app/assets/skill-icons/amazon/evade.webp",
+      "sourceUrl": "https://d2db.net/images/skills/evade.webp"
+    },
+    "amazon.valkyrie": {
+      "classId": "amazon",
+      "sourceName": "Valkyrie",
+      "displayName": "Valkyrie",
+      "slug": "valkyrie",
+      "asset": "/app/assets/skill-icons/amazon/valkyrie.webp",
+      "sourceUrl": "https://d2db.net/images/skills/valkyrie.webp"
+    },
+    "amazon.pierce": {
+      "classId": "amazon",
+      "sourceName": "Pierce",
+      "displayName": "Pierce",
+      "slug": "pierce",
+      "asset": "/app/assets/skill-icons/amazon/pierce.webp",
+      "sourceUrl": "https://d2db.net/images/skills/pierce.webp"
+    },
+    "amazon.jab": {
+      "classId": "amazon",
+      "sourceName": "Jab",
+      "displayName": "Jab",
+      "slug": "jab",
+      "asset": "/app/assets/skill-icons/amazon/jab.webp",
+      "sourceUrl": "https://d2db.net/images/skills/jab.webp"
+    },
+    "amazon.power_strike": {
+      "classId": "amazon",
+      "sourceName": "Power Strike",
+      "displayName": "Power Strike",
+      "slug": "power_strike",
+      "asset": "/app/assets/skill-icons/amazon/power_strike.webp",
+      "sourceUrl": "https://d2db.net/images/skills/power_strike.webp"
+    },
+    "amazon.poison_javelin": {
+      "classId": "amazon",
+      "sourceName": "Poison Javelin",
+      "displayName": "Poison Javelin",
+      "slug": "poison_javelin",
+      "asset": "/app/assets/skill-icons/amazon/poison_javelin.webp",
+      "sourceUrl": "https://d2db.net/images/skills/poison_javelin.webp"
+    },
+    "amazon.impale": {
+      "classId": "amazon",
+      "sourceName": "Impale",
+      "displayName": "Impale",
+      "slug": "impale",
+      "asset": "/app/assets/skill-icons/amazon/impale.webp",
+      "sourceUrl": "https://d2db.net/images/skills/impale.webp"
+    },
+    "amazon.lightning_bolt": {
+      "classId": "amazon",
+      "sourceName": "Lightning Bolt",
+      "displayName": "Lightning Bolt",
+      "slug": "lightning_bolt",
+      "asset": "/app/assets/skill-icons/amazon/lightning_bolt.webp",
+      "sourceUrl": "https://d2db.net/images/skills/lightning_bolt.webp"
+    },
+    "amazon.charged_strike": {
+      "classId": "amazon",
+      "sourceName": "Charged Strike",
+      "displayName": "Charged Strike",
+      "slug": "charged_strike",
+      "asset": "/app/assets/skill-icons/amazon/charged_strike.webp",
+      "sourceUrl": "https://d2db.net/images/skills/charged_strike.webp"
+    },
+    "amazon.plague_javelin": {
+      "classId": "amazon",
+      "sourceName": "Plague Javelin",
+      "displayName": "Plague Javelin",
+      "slug": "plague_javelin",
+      "asset": "/app/assets/skill-icons/amazon/plague_javelin.webp",
+      "sourceUrl": "https://d2db.net/images/skills/plague_javelin.webp"
+    },
+    "amazon.fend": {
+      "classId": "amazon",
+      "sourceName": "Fend",
+      "displayName": "Fend",
+      "slug": "fend",
+      "asset": "/app/assets/skill-icons/amazon/fend.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fend.webp"
+    },
+    "amazon.lightning_strike": {
+      "classId": "amazon",
+      "sourceName": "Lightning Strike",
+      "displayName": "Lightning Strike",
+      "slug": "lightning_strike",
+      "asset": "/app/assets/skill-icons/amazon/lightning_strike.webp",
+      "sourceUrl": "https://d2db.net/images/skills/lightning_strike.webp"
+    },
+    "amazon.lightning_fury": {
+      "classId": "amazon",
+      "sourceName": "Lightning Fury",
+      "displayName": "Lightning Fury",
+      "slug": "lightning_fury",
+      "asset": "/app/assets/skill-icons/amazon/lightning_fury.webp",
+      "sourceUrl": "https://d2db.net/images/skills/lightning_fury.webp"
+    },
+    "sorceress.fire_bolt": {
+      "classId": "sorceress",
+      "sourceName": "Fire Bolt",
+      "displayName": "Fire Bolt",
+      "slug": "fire_bolt",
+      "asset": "/app/assets/skill-icons/sorceress/fire_bolt.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fire_bolt.webp"
+    },
+    "sorceress.warmth": {
+      "classId": "sorceress",
+      "sourceName": "Warmth",
+      "displayName": "Warmth",
+      "slug": "warmth",
+      "asset": "/app/assets/skill-icons/sorceress/warmth.webp",
+      "sourceUrl": "https://d2db.net/images/skills/warmth.webp"
+    },
+    "sorceress.inferno": {
+      "classId": "sorceress",
+      "sourceName": "Inferno",
+      "displayName": "Inferno",
+      "slug": "inferno",
+      "asset": "/app/assets/skill-icons/sorceress/inferno.webp",
+      "sourceUrl": "https://d2db.net/images/skills/inferno.webp"
+    },
+    "sorceress.blaze": {
+      "classId": "sorceress",
+      "sourceName": "Blaze",
+      "displayName": "Blaze",
+      "slug": "blaze",
+      "asset": "/app/assets/skill-icons/sorceress/blaze.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blaze.webp"
+    },
+    "sorceress.fire_ball": {
+      "classId": "sorceress",
+      "sourceName": "Fire Ball",
+      "displayName": "Fire Ball",
+      "slug": "fire_ball",
+      "asset": "/app/assets/skill-icons/sorceress/fire_ball.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fire_ball.webp"
+    },
+    "sorceress.fire_wall": {
+      "classId": "sorceress",
+      "sourceName": "Fire Wall",
+      "displayName": "Fire Wall",
+      "slug": "fire_wall",
+      "asset": "/app/assets/skill-icons/sorceress/fire_wall.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fire_wall.webp"
+    },
+    "sorceress.enchant": {
+      "classId": "sorceress",
+      "sourceName": "Enchant",
+      "displayName": "Enchant",
+      "slug": "enchant",
+      "asset": "/app/assets/skill-icons/sorceress/enchant.webp",
+      "sourceUrl": "https://d2db.net/images/skills/enchant.webp"
+    },
+    "sorceress.meteor": {
+      "classId": "sorceress",
+      "sourceName": "Meteor",
+      "displayName": "Meteor",
+      "slug": "meteor",
+      "asset": "/app/assets/skill-icons/sorceress/meteor.webp",
+      "sourceUrl": "https://d2db.net/images/skills/meteor.webp"
+    },
+    "sorceress.fire_mastery": {
+      "classId": "sorceress",
+      "sourceName": "Fire Mastery",
+      "displayName": "Fire Mastery",
+      "slug": "fire_mastery",
+      "asset": "/app/assets/skill-icons/sorceress/fire_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fire_mastery.webp"
+    },
+    "sorceress.hydra": {
+      "classId": "sorceress",
+      "sourceName": "Hydra",
+      "displayName": "Hydra",
+      "slug": "hydra",
+      "asset": "/app/assets/skill-icons/sorceress/hydra.webp",
+      "sourceUrl": "https://d2db.net/images/skills/hydra.webp"
+    },
+    "sorceress.charged_bolt": {
+      "classId": "sorceress",
+      "sourceName": "Charged Bolt",
+      "displayName": "Charged Bolt",
+      "slug": "charged_bolt",
+      "asset": "/app/assets/skill-icons/sorceress/charged_bolt.webp",
+      "sourceUrl": "https://d2db.net/images/skills/charged_bolt.webp"
+    },
+    "sorceress.static_field": {
+      "classId": "sorceress",
+      "sourceName": "Static Field",
+      "displayName": "Static Field",
+      "slug": "static_field",
+      "asset": "/app/assets/skill-icons/sorceress/static_field.webp",
+      "sourceUrl": "https://d2db.net/images/skills/static_field.webp"
+    },
+    "sorceress.telekinesis": {
+      "classId": "sorceress",
+      "sourceName": "Telekinesis",
+      "displayName": "Telekinesis",
+      "slug": "telekinesis",
+      "asset": "/app/assets/skill-icons/sorceress/telekinesis.webp",
+      "sourceUrl": "https://d2db.net/images/skills/telekinesis.webp"
+    },
+    "sorceress.nova": {
+      "classId": "sorceress",
+      "sourceName": "Nova",
+      "displayName": "Nova",
+      "slug": "nova",
+      "asset": "/app/assets/skill-icons/sorceress/nova.webp",
+      "sourceUrl": "https://d2db.net/images/skills/nova.webp"
+    },
+    "sorceress.lightning": {
+      "classId": "sorceress",
+      "sourceName": "Lightning",
+      "displayName": "Lightning",
+      "slug": "lightning",
+      "asset": "/app/assets/skill-icons/sorceress/lightning.webp",
+      "sourceUrl": "https://d2db.net/images/skills/lightning.webp"
+    },
+    "sorceress.chain_lightning": {
+      "classId": "sorceress",
+      "sourceName": "Chain Lightning",
+      "displayName": "Chain Lightning",
+      "slug": "chain_lightning",
+      "asset": "/app/assets/skill-icons/sorceress/chain_lightning.webp",
+      "sourceUrl": "https://d2db.net/images/skills/chain_lightning.webp"
+    },
+    "sorceress.teleport": {
+      "classId": "sorceress",
+      "sourceName": "Teleport",
+      "displayName": "Teleport",
+      "slug": "teleport",
+      "asset": "/app/assets/skill-icons/sorceress/teleport.webp",
+      "sourceUrl": "https://d2db.net/images/skills/teleport.webp"
+    },
+    "sorceress.thunder_storm": {
+      "classId": "sorceress",
+      "sourceName": "Thunder Storm",
+      "displayName": "Thunder Storm",
+      "slug": "thunder_storm",
+      "asset": "/app/assets/skill-icons/sorceress/thunder_storm.webp",
+      "sourceUrl": "https://d2db.net/images/skills/thunder_storm.webp"
+    },
+    "sorceress.energy_shield": {
+      "classId": "sorceress",
+      "sourceName": "Energy Shield",
+      "displayName": "Energy Shield",
+      "slug": "energy_shield",
+      "asset": "/app/assets/skill-icons/sorceress/energy_shield.webp",
+      "sourceUrl": "https://d2db.net/images/skills/energy_shield.webp"
+    },
+    "sorceress.lightning_mastery": {
+      "classId": "sorceress",
+      "sourceName": "Lightning Mastery",
+      "displayName": "Lightning Mastery",
+      "slug": "lightning_mastery",
+      "asset": "/app/assets/skill-icons/sorceress/lightning_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/lightning_mastery.webp"
+    },
+    "sorceress.ice_bolt": {
+      "classId": "sorceress",
+      "sourceName": "Ice Bolt",
+      "displayName": "Ice Bolt",
+      "slug": "ice_bolt",
+      "asset": "/app/assets/skill-icons/sorceress/ice_bolt.webp",
+      "sourceUrl": "https://d2db.net/images/skills/ice_bolt.webp"
+    },
+    "sorceress.frozen_armor": {
+      "classId": "sorceress",
+      "sourceName": "Frozen Armor",
+      "displayName": "Frozen Armor",
+      "slug": "frozen_armor",
+      "asset": "/app/assets/skill-icons/sorceress/frozen_armor.webp",
+      "sourceUrl": "https://d2db.net/images/skills/frozen_armor.webp"
+    },
+    "sorceress.frost_nova": {
+      "classId": "sorceress",
+      "sourceName": "Frost Nova",
+      "displayName": "Frost Nova",
+      "slug": "frost_nova",
+      "asset": "/app/assets/skill-icons/sorceress/frost_nova.webp",
+      "sourceUrl": "https://d2db.net/images/skills/frost_nova.webp"
+    },
+    "sorceress.ice_blast": {
+      "classId": "sorceress",
+      "sourceName": "Ice Blast",
+      "displayName": "Ice Blast",
+      "slug": "ice_blast",
+      "asset": "/app/assets/skill-icons/sorceress/ice_blast.webp",
+      "sourceUrl": "https://d2db.net/images/skills/ice_blast.webp"
+    },
+    "sorceress.shiver_armor": {
+      "classId": "sorceress",
+      "sourceName": "Shiver Armor",
+      "displayName": "Shiver Armor",
+      "slug": "shiver_armor",
+      "asset": "/app/assets/skill-icons/sorceress/shiver_armor.webp",
+      "sourceUrl": "https://d2db.net/images/skills/shiver_armor.webp"
+    },
+    "sorceress.glacial_spike": {
+      "classId": "sorceress",
+      "sourceName": "Glacial Spike",
+      "displayName": "Glacial Spike",
+      "slug": "glacial_spike",
+      "asset": "/app/assets/skill-icons/sorceress/glacial_spike.webp",
+      "sourceUrl": "https://d2db.net/images/skills/glacial_spike.webp"
+    },
+    "sorceress.blizzard": {
+      "classId": "sorceress",
+      "sourceName": "Blizzard",
+      "displayName": "Blizzard",
+      "slug": "blizzard",
+      "asset": "/app/assets/skill-icons/sorceress/blizzard.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blizzard.webp"
+    },
+    "sorceress.chilling_armor": {
+      "classId": "sorceress",
+      "sourceName": "Chilling Armor",
+      "displayName": "Chilling Armor",
+      "slug": "chilling_armor",
+      "asset": "/app/assets/skill-icons/sorceress/chilling_armor.webp",
+      "sourceUrl": "https://d2db.net/images/skills/chilling_armor.webp"
+    },
+    "sorceress.frozen_orb": {
+      "classId": "sorceress",
+      "sourceName": "Frozen Orb",
+      "displayName": "Frozen Orb",
+      "slug": "frozen_orb",
+      "asset": "/app/assets/skill-icons/sorceress/frozen_orb.webp",
+      "sourceUrl": "https://d2db.net/images/skills/frozen_orb.webp"
+    },
+    "sorceress.cold_mastery": {
+      "classId": "sorceress",
+      "sourceName": "Cold Mastery",
+      "displayName": "Cold Mastery",
+      "slug": "cold_mastery",
+      "asset": "/app/assets/skill-icons/sorceress/cold_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/cold_mastery.webp"
+    },
+    "necromancer.amplify_damage": {
+      "classId": "necromancer",
+      "sourceName": "Amplify Damage",
+      "displayName": "Amplify Damage",
+      "slug": "amplify_damage",
+      "asset": "/app/assets/skill-icons/necromancer/amplify_damage.webp",
+      "sourceUrl": "https://d2db.net/images/skills/amplify_damage.webp"
+    },
+    "necromancer.dim_vision": {
+      "classId": "necromancer",
+      "sourceName": "Dim Vision",
+      "displayName": "Dim Vision",
+      "slug": "dim_vision",
+      "asset": "/app/assets/skill-icons/necromancer/dim_vision.webp",
+      "sourceUrl": "https://d2db.net/images/skills/dim_vision.webp"
+    },
+    "necromancer.weaken": {
+      "classId": "necromancer",
+      "sourceName": "Weaken",
+      "displayName": "Weaken",
+      "slug": "weaken",
+      "asset": "/app/assets/skill-icons/necromancer/weaken.webp",
+      "sourceUrl": "https://d2db.net/images/skills/weaken.webp"
+    },
+    "necromancer.iron_maiden": {
+      "classId": "necromancer",
+      "sourceName": "Iron Maiden",
+      "displayName": "Iron Maiden",
+      "slug": "iron_maiden",
+      "asset": "/app/assets/skill-icons/necromancer/iron_maiden.webp",
+      "sourceUrl": "https://d2db.net/images/skills/iron_maiden.webp"
+    },
+    "necromancer.terror": {
+      "classId": "necromancer",
+      "sourceName": "Terror",
+      "displayName": "Terror",
+      "slug": "terror",
+      "asset": "/app/assets/skill-icons/necromancer/terror.webp",
+      "sourceUrl": "https://d2db.net/images/skills/terror.webp"
+    },
+    "necromancer.confuse": {
+      "classId": "necromancer",
+      "sourceName": "Confuse",
+      "displayName": "Confuse",
+      "slug": "confuse",
+      "asset": "/app/assets/skill-icons/necromancer/confuse.webp",
+      "sourceUrl": "https://d2db.net/images/skills/confuse.webp"
+    },
+    "necromancer.life_tap": {
+      "classId": "necromancer",
+      "sourceName": "Life Tap",
+      "displayName": "Life Tap",
+      "slug": "life_tap",
+      "asset": "/app/assets/skill-icons/necromancer/life_tap.webp",
+      "sourceUrl": "https://d2db.net/images/skills/life_tap.webp"
+    },
+    "necromancer.attract": {
+      "classId": "necromancer",
+      "sourceName": "Attract",
+      "displayName": "Attract",
+      "slug": "attract",
+      "asset": "/app/assets/skill-icons/necromancer/attract.webp",
+      "sourceUrl": "https://d2db.net/images/skills/attract.webp"
+    },
+    "necromancer.decrepify": {
+      "classId": "necromancer",
+      "sourceName": "Decrepify",
+      "displayName": "Decrepify",
+      "slug": "decrepify",
+      "asset": "/app/assets/skill-icons/necromancer/decrepify.webp",
+      "sourceUrl": "https://d2db.net/images/skills/decrepify.webp"
+    },
+    "necromancer.lower_resist": {
+      "classId": "necromancer",
+      "sourceName": "Lower Resist",
+      "displayName": "Lower Resist",
+      "slug": "lower_resist",
+      "asset": "/app/assets/skill-icons/necromancer/lower_resist.webp",
+      "sourceUrl": "https://d2db.net/images/skills/lower_resist.webp"
+    },
+    "necromancer.teeth": {
+      "classId": "necromancer",
+      "sourceName": "Teeth",
+      "displayName": "Teeth",
+      "slug": "teeth",
+      "asset": "/app/assets/skill-icons/necromancer/teeth.webp",
+      "sourceUrl": "https://d2db.net/images/skills/teeth.webp"
+    },
+    "necromancer.bone_armor": {
+      "classId": "necromancer",
+      "sourceName": "Bone Armor",
+      "displayName": "Bone Armor",
+      "slug": "bone_armor",
+      "asset": "/app/assets/skill-icons/necromancer/bone_armor.webp",
+      "sourceUrl": "https://d2db.net/images/skills/bone_armor.webp"
+    },
+    "necromancer.poison_dagger": {
+      "classId": "necromancer",
+      "sourceName": "Poison Dagger",
+      "displayName": "Poison Dagger",
+      "slug": "poison_dagger",
+      "asset": "/app/assets/skill-icons/necromancer/poison_dagger.webp",
+      "sourceUrl": "https://d2db.net/images/skills/poison_dagger.webp"
+    },
+    "necromancer.corpse_explosion": {
+      "classId": "necromancer",
+      "sourceName": "Corpse Explosion",
+      "displayName": "Corpse Explosion",
+      "slug": "corpse_explosion",
+      "asset": "/app/assets/skill-icons/necromancer/corpse_explosion.webp",
+      "sourceUrl": "https://d2db.net/images/skills/corpse_explosion.webp"
+    },
+    "necromancer.bone_wall": {
+      "classId": "necromancer",
+      "sourceName": "Bone Wall",
+      "displayName": "Bone Wall",
+      "slug": "bone_wall",
+      "asset": "/app/assets/skill-icons/necromancer/bone_wall.webp",
+      "sourceUrl": "https://d2db.net/images/skills/bone_wall.webp"
+    },
+    "necromancer.poison_explosion": {
+      "classId": "necromancer",
+      "sourceName": "Poison Explosion",
+      "displayName": "Poison Explosion",
+      "slug": "poison_explosion",
+      "asset": "/app/assets/skill-icons/necromancer/poison_explosion.webp",
+      "sourceUrl": "https://d2db.net/images/skills/poison_explosion.webp"
+    },
+    "necromancer.bone_spear": {
+      "classId": "necromancer",
+      "sourceName": "Bone Spear",
+      "displayName": "Bone Spear",
+      "slug": "bone_spear",
+      "asset": "/app/assets/skill-icons/necromancer/bone_spear.webp",
+      "sourceUrl": "https://d2db.net/images/skills/bone_spear.webp"
+    },
+    "necromancer.bone_prison": {
+      "classId": "necromancer",
+      "sourceName": "Bone Prison",
+      "displayName": "Bone Prison",
+      "slug": "bone_prison",
+      "asset": "/app/assets/skill-icons/necromancer/bone_prison.webp",
+      "sourceUrl": "https://d2db.net/images/skills/bone_prison.webp"
+    },
+    "necromancer.poison_nova": {
+      "classId": "necromancer",
+      "sourceName": "Poison Nova",
+      "displayName": "Poison Nova",
+      "slug": "poison_nova",
+      "asset": "/app/assets/skill-icons/necromancer/poison_nova.webp",
+      "sourceUrl": "https://d2db.net/images/skills/poison_nova.webp"
+    },
+    "necromancer.bone_spirit": {
+      "classId": "necromancer",
+      "sourceName": "Bone Spirit",
+      "displayName": "Bone Spirit",
+      "slug": "bone_spirit",
+      "asset": "/app/assets/skill-icons/necromancer/bone_spirit.webp",
+      "sourceUrl": "https://d2db.net/images/skills/bone_spirit.webp"
+    },
+    "necromancer.skeleton_mastery": {
+      "classId": "necromancer",
+      "sourceName": "Skeleton Mastery",
+      "displayName": "Skeleton Mastery",
+      "slug": "skeleton_mastery",
+      "asset": "/app/assets/skill-icons/necromancer/skeleton_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/skeleton_mastery.webp"
+    },
+    "necromancer.raise_skeleton": {
+      "classId": "necromancer",
+      "sourceName": "Raise Skeleton",
+      "displayName": "Raise Skeleton",
+      "slug": "raise_skeleton",
+      "asset": "/app/assets/skill-icons/necromancer/raise_skeleton.webp",
+      "sourceUrl": "https://d2db.net/images/skills/raise_skeleton.webp"
+    },
+    "necromancer.clay_golem": {
+      "classId": "necromancer",
+      "sourceName": "Clay Golem",
+      "displayName": "Clay Golem",
+      "slug": "clay_golem",
+      "asset": "/app/assets/skill-icons/necromancer/clay_golem.webp",
+      "sourceUrl": "https://d2db.net/images/skills/clay_golem.webp"
+    },
+    "necromancer.golem_mastery": {
+      "classId": "necromancer",
+      "sourceName": "Golem Mastery",
+      "displayName": "Golem Mastery",
+      "slug": "golem_mastery",
+      "asset": "/app/assets/skill-icons/necromancer/golem_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/golem_mastery.webp"
+    },
+    "necromancer.raise_skeletal_mage": {
+      "classId": "necromancer",
+      "sourceName": "Raise Skeletal Mage",
+      "displayName": "Raise Skeletal Mage",
+      "slug": "raise_skeletal_mage",
+      "asset": "/app/assets/skill-icons/necromancer/raise_skeletal_mage.webp",
+      "sourceUrl": "https://d2db.net/images/skills/raise_skeletal_mage.webp"
+    },
+    "necromancer.bloodgolem": {
+      "classId": "necromancer",
+      "sourceName": "BloodGolem",
+      "displayName": "Blood Golem",
+      "slug": "blood_golem",
+      "asset": "/app/assets/skill-icons/necromancer/blood_golem.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blood_golem.webp"
+    },
+    "necromancer.summon_resist": {
+      "classId": "necromancer",
+      "sourceName": "Summon Resist",
+      "displayName": "Summon Resist",
+      "slug": "summon_resist",
+      "asset": "/app/assets/skill-icons/necromancer/summon_resist.webp",
+      "sourceUrl": "https://d2db.net/images/skills/summon_resist.webp"
+    },
+    "necromancer.irongolem": {
+      "classId": "necromancer",
+      "sourceName": "IronGolem",
+      "displayName": "Iron Golem",
+      "slug": "iron_golem",
+      "asset": "/app/assets/skill-icons/necromancer/iron_golem.webp",
+      "sourceUrl": "https://d2db.net/images/skills/iron_golem.webp"
+    },
+    "necromancer.firegolem": {
+      "classId": "necromancer",
+      "sourceName": "FireGolem",
+      "displayName": "Fire Golem",
+      "slug": "fire_golem",
+      "asset": "/app/assets/skill-icons/necromancer/fire_golem.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fire_golem.webp"
+    },
+    "necromancer.revive": {
+      "classId": "necromancer",
+      "sourceName": "Revive",
+      "displayName": "Revive",
+      "slug": "revive",
+      "asset": "/app/assets/skill-icons/necromancer/revive.webp",
+      "sourceUrl": "https://d2db.net/images/skills/revive.webp"
+    },
+    "paladin.sacrifice": {
+      "classId": "paladin",
+      "sourceName": "Sacrifice",
+      "displayName": "Sacrifice",
+      "slug": "sacrifice",
+      "asset": "/app/assets/skill-icons/paladin/sacrifice.webp",
+      "sourceUrl": "https://d2db.net/images/skills/sacrifice.webp"
+    },
+    "paladin.smite": {
+      "classId": "paladin",
+      "sourceName": "Smite",
+      "displayName": "Smite",
+      "slug": "smite",
+      "asset": "/app/assets/skill-icons/paladin/smite.webp",
+      "sourceUrl": "https://d2db.net/images/skills/smite.webp"
+    },
+    "paladin.holy_bolt": {
+      "classId": "paladin",
+      "sourceName": "Holy Bolt",
+      "displayName": "Holy Bolt",
+      "slug": "holy_bolt",
+      "asset": "/app/assets/skill-icons/paladin/holy_bolt.webp",
+      "sourceUrl": "https://d2db.net/images/skills/holy_bolt.webp"
+    },
+    "paladin.zeal": {
+      "classId": "paladin",
+      "sourceName": "Zeal",
+      "displayName": "Zeal",
+      "slug": "zeal",
+      "asset": "/app/assets/skill-icons/paladin/zeal.webp",
+      "sourceUrl": "https://d2db.net/images/skills/zeal.webp"
+    },
+    "paladin.charge": {
+      "classId": "paladin",
+      "sourceName": "Charge",
+      "displayName": "Charge",
+      "slug": "charge",
+      "asset": "/app/assets/skill-icons/paladin/charge.webp",
+      "sourceUrl": "https://d2db.net/images/skills/charge.webp"
+    },
+    "paladin.vengeance": {
+      "classId": "paladin",
+      "sourceName": "Vengeance",
+      "displayName": "Vengeance",
+      "slug": "vengeance",
+      "asset": "/app/assets/skill-icons/paladin/vengeance.webp",
+      "sourceUrl": "https://d2db.net/images/skills/vengeance.webp"
+    },
+    "paladin.blessed_hammer": {
+      "classId": "paladin",
+      "sourceName": "Blessed Hammer",
+      "displayName": "Blessed Hammer",
+      "slug": "blessed_hammer",
+      "asset": "/app/assets/skill-icons/paladin/blessed_hammer.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blessed_hammer.webp"
+    },
+    "paladin.conversion": {
+      "classId": "paladin",
+      "sourceName": "Conversion",
+      "displayName": "Conversion",
+      "slug": "conversion",
+      "asset": "/app/assets/skill-icons/paladin/conversion.webp",
+      "sourceUrl": "https://d2db.net/images/skills/conversion.webp"
+    },
+    "paladin.holy_shield": {
+      "classId": "paladin",
+      "sourceName": "Holy Shield",
+      "displayName": "Holy Shield",
+      "slug": "holy_shield",
+      "asset": "/app/assets/skill-icons/paladin/holy_shield.webp",
+      "sourceUrl": "https://d2db.net/images/skills/holy_shield.webp"
+    },
+    "paladin.fist_of_the_heavens": {
+      "classId": "paladin",
+      "sourceName": "Fist of the Heavens",
+      "displayName": "Fist of the Heavens",
+      "slug": "fist_of_the_heavens",
+      "asset": "/app/assets/skill-icons/paladin/fist_of_the_heavens.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fist_of_the_heavens.webp"
+    },
+    "paladin.might": {
+      "classId": "paladin",
+      "sourceName": "Might",
+      "displayName": "Might",
+      "slug": "might",
+      "asset": "/app/assets/skill-icons/paladin/might.webp",
+      "sourceUrl": "https://d2db.net/images/skills/might.webp"
+    },
+    "paladin.holy_fire": {
+      "classId": "paladin",
+      "sourceName": "Holy Fire",
+      "displayName": "Holy Fire",
+      "slug": "holy_fire",
+      "asset": "/app/assets/skill-icons/paladin/holy_fire.webp",
+      "sourceUrl": "https://d2db.net/images/skills/holy_fire.webp"
+    },
+    "paladin.thorns": {
+      "classId": "paladin",
+      "sourceName": "Thorns",
+      "displayName": "Thorns",
+      "slug": "thorns",
+      "asset": "/app/assets/skill-icons/paladin/thorns.webp",
+      "sourceUrl": "https://d2db.net/images/skills/thorns.webp"
+    },
+    "paladin.blessed_aim": {
+      "classId": "paladin",
+      "sourceName": "Blessed Aim",
+      "displayName": "Blessed Aim",
+      "slug": "blessed_aim",
+      "asset": "/app/assets/skill-icons/paladin/blessed_aim.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blessed_aim.webp"
+    },
+    "paladin.concentration": {
+      "classId": "paladin",
+      "sourceName": "Concentration",
+      "displayName": "Concentration",
+      "slug": "concentration",
+      "asset": "/app/assets/skill-icons/paladin/concentration.webp",
+      "sourceUrl": "https://d2db.net/images/skills/concentration.webp"
+    },
+    "paladin.holy_freeze": {
+      "classId": "paladin",
+      "sourceName": "Holy Freeze",
+      "displayName": "Holy Freeze",
+      "slug": "holy_freeze",
+      "asset": "/app/assets/skill-icons/paladin/holy_freeze.webp",
+      "sourceUrl": "https://d2db.net/images/skills/holy_freeze.webp"
+    },
+    "paladin.holy_shock": {
+      "classId": "paladin",
+      "sourceName": "Holy Shock",
+      "displayName": "Holy Shock",
+      "slug": "holy_shock",
+      "asset": "/app/assets/skill-icons/paladin/holy_shock.webp",
+      "sourceUrl": "https://d2db.net/images/skills/holy_shock.webp"
+    },
+    "paladin.sanctuary": {
+      "classId": "paladin",
+      "sourceName": "Sanctuary",
+      "displayName": "Sanctuary",
+      "slug": "sanctuary",
+      "asset": "/app/assets/skill-icons/paladin/sanctuary.webp",
+      "sourceUrl": "https://d2db.net/images/skills/sanctuary.webp"
+    },
+    "paladin.fanaticism": {
+      "classId": "paladin",
+      "sourceName": "Fanaticism",
+      "displayName": "Fanaticism",
+      "slug": "fanaticism",
+      "asset": "/app/assets/skill-icons/paladin/fanaticism.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fanaticism.webp"
+    },
+    "paladin.conviction": {
+      "classId": "paladin",
+      "sourceName": "Conviction",
+      "displayName": "Conviction",
+      "slug": "conviction",
+      "asset": "/app/assets/skill-icons/paladin/conviction.webp",
+      "sourceUrl": "https://d2db.net/images/skills/conviction.webp"
+    },
+    "paladin.prayer": {
+      "classId": "paladin",
+      "sourceName": "Prayer",
+      "displayName": "Prayer",
+      "slug": "prayer",
+      "asset": "/app/assets/skill-icons/paladin/prayer.webp",
+      "sourceUrl": "https://d2db.net/images/skills/prayer.webp"
+    },
+    "paladin.resist_fire": {
+      "classId": "paladin",
+      "sourceName": "Resist Fire",
+      "displayName": "Resist Fire",
+      "slug": "resist_fire",
+      "asset": "/app/assets/skill-icons/paladin/resist_fire.webp",
+      "sourceUrl": "https://d2db.net/images/skills/resist_fire.webp"
+    },
+    "paladin.defiance": {
+      "classId": "paladin",
+      "sourceName": "Defiance",
+      "displayName": "Defiance",
+      "slug": "defiance",
+      "asset": "/app/assets/skill-icons/paladin/defiance.webp",
+      "sourceUrl": "https://d2db.net/images/skills/defiance.webp"
+    },
+    "paladin.resist_cold": {
+      "classId": "paladin",
+      "sourceName": "Resist Cold",
+      "displayName": "Resist Cold",
+      "slug": "resist_cold",
+      "asset": "/app/assets/skill-icons/paladin/resist_cold.webp",
+      "sourceUrl": "https://d2db.net/images/skills/resist_cold.webp"
+    },
+    "paladin.cleansing": {
+      "classId": "paladin",
+      "sourceName": "Cleansing",
+      "displayName": "Cleansing",
+      "slug": "cleansing",
+      "asset": "/app/assets/skill-icons/paladin/cleansing.webp",
+      "sourceUrl": "https://d2db.net/images/skills/cleansing.webp"
+    },
+    "paladin.resist_lightning": {
+      "classId": "paladin",
+      "sourceName": "Resist Lightning",
+      "displayName": "Resist Lightning",
+      "slug": "resist_lightning",
+      "asset": "/app/assets/skill-icons/paladin/resist_lightning.webp",
+      "sourceUrl": "https://d2db.net/images/skills/resist_lightning.webp"
+    },
+    "paladin.vigor": {
+      "classId": "paladin",
+      "sourceName": "Vigor",
+      "displayName": "Vigor",
+      "slug": "vigor",
+      "asset": "/app/assets/skill-icons/paladin/vigor.webp",
+      "sourceUrl": "https://d2db.net/images/skills/vigor.webp"
+    },
+    "paladin.meditation": {
+      "classId": "paladin",
+      "sourceName": "Meditation",
+      "displayName": "Meditation",
+      "slug": "meditation",
+      "asset": "/app/assets/skill-icons/paladin/meditation.webp",
+      "sourceUrl": "https://d2db.net/images/skills/meditation.webp"
+    },
+    "paladin.redemption": {
+      "classId": "paladin",
+      "sourceName": "Redemption",
+      "displayName": "Redemption",
+      "slug": "redemption",
+      "asset": "/app/assets/skill-icons/paladin/redemption.webp",
+      "sourceUrl": "https://d2db.net/images/skills/redemption.webp"
+    },
+    "paladin.salvation": {
+      "classId": "paladin",
+      "sourceName": "Salvation",
+      "displayName": "Salvation",
+      "slug": "salvation",
+      "asset": "/app/assets/skill-icons/paladin/salvation.webp",
+      "sourceUrl": "https://d2db.net/images/skills/salvation.webp"
+    },
+    "barbarian.bash": {
+      "classId": "barbarian",
+      "sourceName": "Bash",
+      "displayName": "Bash",
+      "slug": "bash",
+      "asset": "/app/assets/skill-icons/barbarian/bash.webp",
+      "sourceUrl": "https://d2db.net/images/skills/bash.webp"
+    },
+    "barbarian.leap": {
+      "classId": "barbarian",
+      "sourceName": "Leap",
+      "displayName": "Leap",
+      "slug": "leap",
+      "asset": "/app/assets/skill-icons/barbarian/leap.webp",
+      "sourceUrl": "https://d2db.net/images/skills/leap.webp"
+    },
+    "barbarian.double_swing": {
+      "classId": "barbarian",
+      "sourceName": "Double Swing",
+      "displayName": "Double Swing",
+      "slug": "double_swing",
+      "asset": "/app/assets/skill-icons/barbarian/double_swing.webp",
+      "sourceUrl": "https://d2db.net/images/skills/double_swing.webp"
+    },
+    "barbarian.stun": {
+      "classId": "barbarian",
+      "sourceName": "Stun",
+      "displayName": "Stun",
+      "slug": "stun",
+      "asset": "/app/assets/skill-icons/barbarian/stun.webp",
+      "sourceUrl": "https://d2db.net/images/skills/stun.webp"
+    },
+    "barbarian.double_throw": {
+      "classId": "barbarian",
+      "sourceName": "Double Throw",
+      "displayName": "Double Throw",
+      "slug": "double_throw",
+      "asset": "/app/assets/skill-icons/barbarian/double_throw.webp",
+      "sourceUrl": "https://d2db.net/images/skills/double_throw.webp"
+    },
+    "barbarian.leap_attack": {
+      "classId": "barbarian",
+      "sourceName": "Leap Attack",
+      "displayName": "Leap Attack",
+      "slug": "leap_attack",
+      "asset": "/app/assets/skill-icons/barbarian/leap_attack.webp",
+      "sourceUrl": "https://d2db.net/images/skills/leap_attack.webp"
+    },
+    "barbarian.concentrate": {
+      "classId": "barbarian",
+      "sourceName": "Concentrate",
+      "displayName": "Concentrate",
+      "slug": "concentrate",
+      "asset": "/app/assets/skill-icons/barbarian/concentrate.webp",
+      "sourceUrl": "https://d2db.net/images/skills/concentrate.webp"
+    },
+    "barbarian.frenzy": {
+      "classId": "barbarian",
+      "sourceName": "Frenzy",
+      "displayName": "Frenzy",
+      "slug": "frenzy",
+      "asset": "/app/assets/skill-icons/barbarian/frenzy.webp",
+      "sourceUrl": "https://d2db.net/images/skills/frenzy.webp"
+    },
+    "barbarian.whirlwind": {
+      "classId": "barbarian",
+      "sourceName": "Whirlwind",
+      "displayName": "Whirlwind",
+      "slug": "whirlwind",
+      "asset": "/app/assets/skill-icons/barbarian/whirlwind.webp",
+      "sourceUrl": "https://d2db.net/images/skills/whirlwind.webp"
+    },
+    "barbarian.berserk": {
+      "classId": "barbarian",
+      "sourceName": "Berserk",
+      "displayName": "Berserk",
+      "slug": "berserk",
+      "asset": "/app/assets/skill-icons/barbarian/berserk.webp",
+      "sourceUrl": "https://d2db.net/images/skills/berserk.webp"
+    },
+    "barbarian.blade_mastery": {
+      "classId": "barbarian",
+      "sourceName": "Blade Mastery",
+      "displayName": "Blade Mastery",
+      "slug": "sword_mastery",
+      "asset": "/app/assets/skill-icons/barbarian/sword_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/sword_mastery.webp"
+    },
+    "barbarian.axe_mastery": {
+      "classId": "barbarian",
+      "sourceName": "Axe Mastery",
+      "displayName": "Axe Mastery",
+      "slug": "axe_mastery",
+      "asset": "/app/assets/skill-icons/barbarian/axe_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/axe_mastery.webp"
+    },
+    "barbarian.mace_mastery": {
+      "classId": "barbarian",
+      "sourceName": "Mace Mastery",
+      "displayName": "Mace Mastery",
+      "slug": "mace_mastery",
+      "asset": "/app/assets/skill-icons/barbarian/mace_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/mace_mastery.webp"
+    },
+    "barbarian.pole_arm_mastery": {
+      "classId": "barbarian",
+      "sourceName": "Pole Arm Mastery",
+      "displayName": "Polearm Mastery",
+      "slug": "polearm_mastery",
+      "asset": "/app/assets/skill-icons/barbarian/polearm_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/polearm_mastery.webp"
+    },
+    "barbarian.throwing_mastery": {
+      "classId": "barbarian",
+      "sourceName": "Throwing Mastery",
+      "displayName": "Throwing Mastery",
+      "slug": "throwing_mastery",
+      "asset": "/app/assets/skill-icons/barbarian/throwing_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/throwing_mastery.webp"
+    },
+    "barbarian.spear_mastery": {
+      "classId": "barbarian",
+      "sourceName": "Spear Mastery",
+      "displayName": "Spear Mastery",
+      "slug": "spear_mastery",
+      "asset": "/app/assets/skill-icons/barbarian/spear_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/spear_mastery.webp"
+    },
+    "barbarian.increased_stamina": {
+      "classId": "barbarian",
+      "sourceName": "Increased Stamina",
+      "displayName": "Increased Stamina",
+      "slug": "increased_stamina",
+      "asset": "/app/assets/skill-icons/barbarian/increased_stamina.webp",
+      "sourceUrl": "https://d2db.net/images/skills/increased_stamina.webp"
+    },
+    "barbarian.iron_skin": {
+      "classId": "barbarian",
+      "sourceName": "Iron Skin",
+      "displayName": "Iron Skin",
+      "slug": "iron_skin",
+      "asset": "/app/assets/skill-icons/barbarian/iron_skin.webp",
+      "sourceUrl": "https://d2db.net/images/skills/iron_skin.webp"
+    },
+    "barbarian.increased_speed": {
+      "classId": "barbarian",
+      "sourceName": "Increased Speed",
+      "displayName": "Increased Speed",
+      "slug": "increased_speed",
+      "asset": "/app/assets/skill-icons/barbarian/increased_speed.webp",
+      "sourceUrl": "https://d2db.net/images/skills/increased_speed.webp"
+    },
+    "barbarian.natural_resistance": {
+      "classId": "barbarian",
+      "sourceName": "Natural Resistance",
+      "displayName": "Natural Resistance",
+      "slug": "natural_resistance",
+      "asset": "/app/assets/skill-icons/barbarian/natural_resistance.webp",
+      "sourceUrl": "https://d2db.net/images/skills/natural_resistance.webp"
+    },
+    "barbarian.howl": {
+      "classId": "barbarian",
+      "sourceName": "Howl",
+      "displayName": "Howl",
+      "slug": "howl",
+      "asset": "/app/assets/skill-icons/barbarian/howl.webp",
+      "sourceUrl": "https://d2db.net/images/skills/howl.webp"
+    },
+    "barbarian.find_potion": {
+      "classId": "barbarian",
+      "sourceName": "Find Potion",
+      "displayName": "Find Potion",
+      "slug": "find_potion",
+      "asset": "/app/assets/skill-icons/barbarian/find_potion.webp",
+      "sourceUrl": "https://d2db.net/images/skills/find_potion.webp"
+    },
+    "barbarian.taunt": {
+      "classId": "barbarian",
+      "sourceName": "Taunt",
+      "displayName": "Taunt",
+      "slug": "taunt",
+      "asset": "/app/assets/skill-icons/barbarian/taunt.webp",
+      "sourceUrl": "https://d2db.net/images/skills/taunt.webp"
+    },
+    "barbarian.shout": {
+      "classId": "barbarian",
+      "sourceName": "Shout",
+      "displayName": "Shout",
+      "slug": "shout",
+      "asset": "/app/assets/skill-icons/barbarian/shout.webp",
+      "sourceUrl": "https://d2db.net/images/skills/shout.webp"
+    },
+    "barbarian.find_item": {
+      "classId": "barbarian",
+      "sourceName": "Find Item",
+      "displayName": "Find Item",
+      "slug": "find_item",
+      "asset": "/app/assets/skill-icons/barbarian/find_item.webp",
+      "sourceUrl": "https://d2db.net/images/skills/find_item.webp"
+    },
+    "barbarian.battle_cry": {
+      "classId": "barbarian",
+      "sourceName": "Battle Cry",
+      "displayName": "Battle Cry",
+      "slug": "battle_cry",
+      "asset": "/app/assets/skill-icons/barbarian/battle_cry.webp",
+      "sourceUrl": "https://d2db.net/images/skills/battle_cry.webp"
+    },
+    "barbarian.battle_orders": {
+      "classId": "barbarian",
+      "sourceName": "Battle Orders",
+      "displayName": "Battle Orders",
+      "slug": "battle_orders",
+      "asset": "/app/assets/skill-icons/barbarian/battle_orders.webp",
+      "sourceUrl": "https://d2db.net/images/skills/battle_orders.webp"
+    },
+    "barbarian.grim_ward": {
+      "classId": "barbarian",
+      "sourceName": "Grim Ward",
+      "displayName": "Grim Ward",
+      "slug": "grim_ward",
+      "asset": "/app/assets/skill-icons/barbarian/grim_ward.webp",
+      "sourceUrl": "https://d2db.net/images/skills/grim_ward.webp"
+    },
+    "barbarian.war_cry": {
+      "classId": "barbarian",
+      "sourceName": "War Cry",
+      "displayName": "War Cry",
+      "slug": "war_cry",
+      "asset": "/app/assets/skill-icons/barbarian/war_cry.webp",
+      "sourceUrl": "https://d2db.net/images/skills/war_cry.webp"
+    },
+    "barbarian.battle_command": {
+      "classId": "barbarian",
+      "sourceName": "Battle Command",
+      "displayName": "Battle Command",
+      "slug": "battle_command",
+      "asset": "/app/assets/skill-icons/barbarian/battle_command.webp",
+      "sourceUrl": "https://d2db.net/images/skills/battle_command.webp"
+    },
+    "druid.raven": {
+      "classId": "druid",
+      "sourceName": "Raven",
+      "displayName": "Raven",
+      "slug": "raven",
+      "asset": "/app/assets/skill-icons/druid/raven.webp",
+      "sourceUrl": "https://d2db.net/images/skills/raven.webp"
+    },
+    "druid.plague_poppy": {
+      "classId": "druid",
+      "sourceName": "Plague Poppy",
+      "displayName": "Poison Creeper",
+      "slug": "poison_creeper",
+      "asset": "/app/assets/skill-icons/druid/poison_creeper.webp",
+      "sourceUrl": "https://d2db.net/images/skills/poison_creeper.webp"
+    },
+    "druid.oak_sage": {
+      "classId": "druid",
+      "sourceName": "Oak Sage",
+      "displayName": "Oak Sage",
+      "slug": "oak_sage",
+      "asset": "/app/assets/skill-icons/druid/oak_sage.webp",
+      "sourceUrl": "https://d2db.net/images/skills/oak_sage.webp"
+    },
+    "druid.summon_spirit_wolf": {
+      "classId": "druid",
+      "sourceName": "Summon Spirit Wolf",
+      "displayName": "Summon Spirit Wolf",
+      "slug": "summon_spirit_wolf",
+      "asset": "/app/assets/skill-icons/druid/summon_spirit_wolf.webp",
+      "sourceUrl": "https://d2db.net/images/skills/summon_spirit_wolf.webp"
+    },
+    "druid.cycle_of_life": {
+      "classId": "druid",
+      "sourceName": "Cycle of Life",
+      "displayName": "Carrion Vine",
+      "slug": "carrion_vine",
+      "asset": "/app/assets/skill-icons/druid/carrion_vine.webp",
+      "sourceUrl": "https://d2db.net/images/skills/carrion_vine.webp"
+    },
+    "druid.heart_of_wolverine": {
+      "classId": "druid",
+      "sourceName": "Heart of Wolverine",
+      "displayName": "Heart of Wolverine",
+      "slug": "heart_of_wolverine",
+      "asset": "/app/assets/skill-icons/druid/heart_of_wolverine.webp",
+      "sourceUrl": "https://d2db.net/images/skills/heart_of_wolverine.webp"
+    },
+    "druid.summon_fenris": {
+      "classId": "druid",
+      "sourceName": "Summon Fenris",
+      "displayName": "Summon Dire Wolf",
+      "slug": "summon_dire_wolf",
+      "asset": "/app/assets/skill-icons/druid/summon_dire_wolf.webp",
+      "sourceUrl": "https://d2db.net/images/skills/summon_dire_wolf.webp"
+    },
+    "druid.vines": {
+      "classId": "druid",
+      "sourceName": "Vines",
+      "displayName": "Solar Creeper",
+      "slug": "solar_creeper",
+      "asset": "/app/assets/skill-icons/druid/solar_creeper.webp",
+      "sourceUrl": "https://d2db.net/images/skills/solar_creeper.webp"
+    },
+    "druid.spirit_of_barbs": {
+      "classId": "druid",
+      "sourceName": "Spirit of Barbs",
+      "displayName": "Spirit of Barbs",
+      "slug": "spirit_of_barbs",
+      "asset": "/app/assets/skill-icons/druid/spirit_of_barbs.webp",
+      "sourceUrl": "https://d2db.net/images/skills/spirit_of_barbs.webp"
+    },
+    "druid.summon_grizzly": {
+      "classId": "druid",
+      "sourceName": "Summon Grizzly",
+      "displayName": "Summon Grizzly",
+      "slug": "summon_grizzly",
+      "asset": "/app/assets/skill-icons/druid/summon_grizzly.webp",
+      "sourceUrl": "https://d2db.net/images/skills/summon_grizzly.webp"
+    },
+    "druid.wearwolf": {
+      "classId": "druid",
+      "sourceName": "Wearwolf",
+      "displayName": "Werewolf",
+      "slug": "werewolf",
+      "asset": "/app/assets/skill-icons/druid/werewolf.webp",
+      "sourceUrl": "https://d2db.net/images/skills/werewolf.webp"
+    },
+    "druid.shape_shifting": {
+      "classId": "druid",
+      "sourceName": "Shape Shifting",
+      "displayName": "Lycanthropy",
+      "slug": "lycanthropy",
+      "asset": "/app/assets/skill-icons/druid/lycanthropy.webp",
+      "sourceUrl": "https://d2db.net/images/skills/lycanthropy.webp"
+    },
+    "druid.wearbear": {
+      "classId": "druid",
+      "sourceName": "Wearbear",
+      "displayName": "Werebear",
+      "slug": "werebear",
+      "asset": "/app/assets/skill-icons/druid/werebear.webp",
+      "sourceUrl": "https://d2db.net/images/skills/werebear.webp"
+    },
+    "druid.feral_rage": {
+      "classId": "druid",
+      "sourceName": "Feral Rage",
+      "displayName": "Feral Rage",
+      "slug": "feral_rage",
+      "asset": "/app/assets/skill-icons/druid/feral_rage.webp",
+      "sourceUrl": "https://d2db.net/images/skills/feral_rage.webp"
+    },
+    "druid.maul": {
+      "classId": "druid",
+      "sourceName": "Maul",
+      "displayName": "Maul",
+      "slug": "maul",
+      "asset": "/app/assets/skill-icons/druid/maul.webp",
+      "sourceUrl": "https://d2db.net/images/skills/maul.webp"
+    },
+    "druid.rabies": {
+      "classId": "druid",
+      "sourceName": "Rabies",
+      "displayName": "Rabies",
+      "slug": "rabies",
+      "asset": "/app/assets/skill-icons/druid/rabies.webp",
+      "sourceUrl": "https://d2db.net/images/skills/rabies.webp"
+    },
+    "druid.fire_claws": {
+      "classId": "druid",
+      "sourceName": "Fire Claws",
+      "displayName": "Fire Claws",
+      "slug": "fire_claws",
+      "asset": "/app/assets/skill-icons/druid/fire_claws.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fire_claws.webp"
+    },
+    "druid.hunger": {
+      "classId": "druid",
+      "sourceName": "Hunger",
+      "displayName": "Hunger",
+      "slug": "hunger",
+      "asset": "/app/assets/skill-icons/druid/hunger.webp",
+      "sourceUrl": "https://d2db.net/images/skills/hunger.webp"
+    },
+    "druid.shock_wave": {
+      "classId": "druid",
+      "sourceName": "Shock Wave",
+      "displayName": "Shock Wave",
+      "slug": "shock_wave",
+      "asset": "/app/assets/skill-icons/druid/shock_wave.webp",
+      "sourceUrl": "https://d2db.net/images/skills/shock_wave.webp"
+    },
+    "druid.fury": {
+      "classId": "druid",
+      "sourceName": "Fury",
+      "displayName": "Fury",
+      "slug": "fury",
+      "asset": "/app/assets/skill-icons/druid/fury.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fury.webp"
+    },
+    "druid.firestorm": {
+      "classId": "druid",
+      "sourceName": "Firestorm",
+      "displayName": "Firestorm",
+      "slug": "firestorm",
+      "asset": "/app/assets/skill-icons/druid/firestorm.webp",
+      "sourceUrl": "https://d2db.net/images/skills/firestorm.webp"
+    },
+    "druid.molten_boulder": {
+      "classId": "druid",
+      "sourceName": "Molten Boulder",
+      "displayName": "Molten Boulder",
+      "slug": "molten_boulder",
+      "asset": "/app/assets/skill-icons/druid/molten_boulder.webp",
+      "sourceUrl": "https://d2db.net/images/skills/molten_boulder.webp"
+    },
+    "druid.arctic_blast": {
+      "classId": "druid",
+      "sourceName": "Arctic Blast",
+      "displayName": "Arctic Blast",
+      "slug": "arctic_blast",
+      "asset": "/app/assets/skill-icons/druid/arctic_blast.webp",
+      "sourceUrl": "https://d2db.net/images/skills/arctic_blast.webp"
+    },
+    "druid.eruption": {
+      "classId": "druid",
+      "sourceName": "Eruption",
+      "displayName": "Fissure",
+      "slug": "fissure",
+      "asset": "/app/assets/skill-icons/druid/fissure.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fissure.webp"
+    },
+    "druid.cyclone_armor": {
+      "classId": "druid",
+      "sourceName": "Cyclone Armor",
+      "displayName": "Cyclone Armor",
+      "slug": "cyclone_armor",
+      "asset": "/app/assets/skill-icons/druid/cyclone_armor.webp",
+      "sourceUrl": "https://d2db.net/images/skills/cyclone_armor.webp"
+    },
+    "druid.twister": {
+      "classId": "druid",
+      "sourceName": "Twister",
+      "displayName": "Twister",
+      "slug": "twister",
+      "asset": "/app/assets/skill-icons/druid/twister.webp",
+      "sourceUrl": "https://d2db.net/images/skills/twister.webp"
+    },
+    "druid.volcano": {
+      "classId": "druid",
+      "sourceName": "Volcano",
+      "displayName": "Volcano",
+      "slug": "volcano",
+      "asset": "/app/assets/skill-icons/druid/volcano.webp",
+      "sourceUrl": "https://d2db.net/images/skills/volcano.webp"
+    },
+    "druid.tornado": {
+      "classId": "druid",
+      "sourceName": "Tornado",
+      "displayName": "Tornado",
+      "slug": "tornado",
+      "asset": "/app/assets/skill-icons/druid/tornado.webp",
+      "sourceUrl": "https://d2db.net/images/skills/tornado.webp"
+    },
+    "druid.armageddon": {
+      "classId": "druid",
+      "sourceName": "Armageddon",
+      "displayName": "Armageddon",
+      "slug": "armageddon",
+      "asset": "/app/assets/skill-icons/druid/armageddon.webp",
+      "sourceUrl": "https://d2db.net/images/skills/armageddon.webp"
+    },
+    "druid.hurricane": {
+      "classId": "druid",
+      "sourceName": "Hurricane",
+      "displayName": "Hurricane",
+      "slug": "hurricane",
+      "asset": "/app/assets/skill-icons/druid/hurricane.webp",
+      "sourceUrl": "https://d2db.net/images/skills/hurricane.webp"
+    },
+    "assassin.fire_trauma": {
+      "classId": "assassin",
+      "sourceName": "Fire Trauma",
+      "displayName": "Fire Blast",
+      "slug": "fire_blast",
+      "asset": "/app/assets/skill-icons/assassin/fire_blast.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fire_blast.webp"
+    },
+    "assassin.shock_field": {
+      "classId": "assassin",
+      "sourceName": "Shock Field",
+      "displayName": "Shock Web",
+      "slug": "shock_web",
+      "asset": "/app/assets/skill-icons/assassin/shock_web.webp",
+      "sourceUrl": "https://d2db.net/images/skills/shock_web.webp"
+    },
+    "assassin.blade_sentinel": {
+      "classId": "assassin",
+      "sourceName": "Blade Sentinel",
+      "displayName": "Blade Sentinel",
+      "slug": "blade_sentinel",
+      "asset": "/app/assets/skill-icons/assassin/blade_sentinel.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blade_sentinel.webp"
+    },
+    "assassin.charged_bolt_sentry": {
+      "classId": "assassin",
+      "sourceName": "Charged Bolt Sentry",
+      "displayName": "Charged Bolt Sentry",
+      "slug": "charged_bolt_sentry",
+      "asset": "/app/assets/skill-icons/assassin/charged_bolt_sentry.webp",
+      "sourceUrl": "https://d2db.net/images/skills/charged_bolt_sentry.webp"
+    },
+    "assassin.wake_of_fire_sentry": {
+      "classId": "assassin",
+      "sourceName": "Wake of Fire Sentry",
+      "displayName": "Wake of Fire",
+      "slug": "wake_of_fire",
+      "asset": "/app/assets/skill-icons/assassin/wake_of_fire.webp",
+      "sourceUrl": "https://d2db.net/images/skills/wake_of_fire.webp"
+    },
+    "assassin.blade_fury": {
+      "classId": "assassin",
+      "sourceName": "Blade Fury",
+      "displayName": "Blade Fury",
+      "slug": "blade_fury",
+      "asset": "/app/assets/skill-icons/assassin/blade_fury.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blade_fury.webp"
+    },
+    "assassin.lightning_sentry": {
+      "classId": "assassin",
+      "sourceName": "Lightning Sentry",
+      "displayName": "Lightning Sentry",
+      "slug": "lightning_sentry",
+      "asset": "/app/assets/skill-icons/assassin/lightning_sentry.webp",
+      "sourceUrl": "https://d2db.net/images/skills/lightning_sentry.webp"
+    },
+    "assassin.inferno_sentry": {
+      "classId": "assassin",
+      "sourceName": "Inferno Sentry",
+      "displayName": "Wake of Inferno",
+      "slug": "wake_of_inferno",
+      "asset": "/app/assets/skill-icons/assassin/wake_of_inferno.webp",
+      "sourceUrl": "https://d2db.net/images/skills/wake_of_inferno.webp"
+    },
+    "assassin.death_sentry": {
+      "classId": "assassin",
+      "sourceName": "Death Sentry",
+      "displayName": "Death Sentry",
+      "slug": "death_sentry",
+      "asset": "/app/assets/skill-icons/assassin/death_sentry.webp",
+      "sourceUrl": "https://d2db.net/images/skills/death_sentry.webp"
+    },
+    "assassin.blade_shield": {
+      "classId": "assassin",
+      "sourceName": "Blade Shield",
+      "displayName": "Blade Shield",
+      "slug": "blade_shield",
+      "asset": "/app/assets/skill-icons/assassin/blade_shield.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blade_shield.webp"
+    },
+    "assassin.claw_mastery": {
+      "classId": "assassin",
+      "sourceName": "Claw Mastery",
+      "displayName": "Claw Mastery",
+      "slug": "claw_mastery",
+      "asset": "/app/assets/skill-icons/assassin/claw_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/claw_mastery.webp"
+    },
+    "assassin.psychic_hammer": {
+      "classId": "assassin",
+      "sourceName": "Psychic Hammer",
+      "displayName": "Psychic Hammer",
+      "slug": "psychic_hammer",
+      "asset": "/app/assets/skill-icons/assassin/psychic_hammer.webp",
+      "sourceUrl": "https://d2db.net/images/skills/psychic_hammer.webp"
+    },
+    "assassin.quickness": {
+      "classId": "assassin",
+      "sourceName": "Quickness",
+      "displayName": "Burst of Speed",
+      "slug": "burst_of_speed",
+      "asset": "/app/assets/skill-icons/assassin/burst_of_speed.webp",
+      "sourceUrl": "https://d2db.net/images/skills/burst_of_speed.webp"
+    },
+    "assassin.weapon_block": {
+      "classId": "assassin",
+      "sourceName": "Weapon Block",
+      "displayName": "Weapon Block",
+      "slug": "weapon_block",
+      "asset": "/app/assets/skill-icons/assassin/weapon_block.webp",
+      "sourceUrl": "https://d2db.net/images/skills/weapon_block.webp"
+    },
+    "assassin.cloak_of_shadows": {
+      "classId": "assassin",
+      "sourceName": "Cloak of Shadows",
+      "displayName": "Cloak of Shadows",
+      "slug": "cloak_of_shadows",
+      "asset": "/app/assets/skill-icons/assassin/cloak_of_shadows.webp",
+      "sourceUrl": "https://d2db.net/images/skills/cloak_of_shadows.webp"
+    },
+    "assassin.fade": {
+      "classId": "assassin",
+      "sourceName": "Fade",
+      "displayName": "Fade",
+      "slug": "fade",
+      "asset": "/app/assets/skill-icons/assassin/fade.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fade.webp"
+    },
+    "assassin.shadow_warrior": {
+      "classId": "assassin",
+      "sourceName": "Shadow Warrior",
+      "displayName": "Shadow Warrior",
+      "slug": "shadow_warrior",
+      "asset": "/app/assets/skill-icons/assassin/shadow_warrior.webp",
+      "sourceUrl": "https://d2db.net/images/skills/shadow_warrior.webp"
+    },
+    "assassin.mind_blast": {
+      "classId": "assassin",
+      "sourceName": "Mind Blast",
+      "displayName": "Mind Blast",
+      "slug": "mind_blast",
+      "asset": "/app/assets/skill-icons/assassin/mind_blast.webp",
+      "sourceUrl": "https://d2db.net/images/skills/mind_blast.webp"
+    },
+    "assassin.venom": {
+      "classId": "assassin",
+      "sourceName": "Venom",
+      "displayName": "Venom",
+      "slug": "venom",
+      "asset": "/app/assets/skill-icons/assassin/venom.webp",
+      "sourceUrl": "https://d2db.net/images/skills/venom.webp"
+    },
+    "assassin.shadow_master": {
+      "classId": "assassin",
+      "sourceName": "Shadow Master",
+      "displayName": "Shadow Master",
+      "slug": "shadow_master",
+      "asset": "/app/assets/skill-icons/assassin/shadow_master.webp",
+      "sourceUrl": "https://d2db.net/images/skills/shadow_master.webp"
+    },
+    "assassin.tiger_strike": {
+      "classId": "assassin",
+      "sourceName": "Tiger Strike",
+      "displayName": "Tiger Strike",
+      "slug": "tiger_strike",
+      "asset": "/app/assets/skill-icons/assassin/tiger_strike.webp",
+      "sourceUrl": "https://d2db.net/images/skills/tiger_strike.webp"
+    },
+    "assassin.dragon_talon": {
+      "classId": "assassin",
+      "sourceName": "Dragon Talon",
+      "displayName": "Dragon Talon",
+      "slug": "dragon_talon",
+      "asset": "/app/assets/skill-icons/assassin/dragon_talon.webp",
+      "sourceUrl": "https://d2db.net/images/skills/dragon_talon.webp"
+    },
+    "assassin.fists_of_fire": {
+      "classId": "assassin",
+      "sourceName": "Fists of Fire",
+      "displayName": "Fists of Fire",
+      "slug": "fists_of_fire",
+      "asset": "/app/assets/skill-icons/assassin/fists_of_fire.webp",
+      "sourceUrl": "https://d2db.net/images/skills/fists_of_fire.webp"
+    },
+    "assassin.dragon_claw": {
+      "classId": "assassin",
+      "sourceName": "Dragon Claw",
+      "displayName": "Dragon Claw",
+      "slug": "dragon_claw",
+      "asset": "/app/assets/skill-icons/assassin/dragon_claw.webp",
+      "sourceUrl": "https://d2db.net/images/skills/dragon_claw.webp"
+    },
+    "assassin.cobra_strike": {
+      "classId": "assassin",
+      "sourceName": "Cobra Strike",
+      "displayName": "Cobra Strike",
+      "slug": "cobra_strike",
+      "asset": "/app/assets/skill-icons/assassin/cobra_strike.webp",
+      "sourceUrl": "https://d2db.net/images/skills/cobra_strike.webp"
+    },
+    "assassin.claws_of_thunder": {
+      "classId": "assassin",
+      "sourceName": "Claws of Thunder",
+      "displayName": "Claws of Thunder",
+      "slug": "claws_of_thunder",
+      "asset": "/app/assets/skill-icons/assassin/claws_of_thunder.webp",
+      "sourceUrl": "https://d2db.net/images/skills/claws_of_thunder.webp"
+    },
+    "assassin.dragon_tail": {
+      "classId": "assassin",
+      "sourceName": "Dragon Tail",
+      "displayName": "Dragon Tail",
+      "slug": "dragon_tail",
+      "asset": "/app/assets/skill-icons/assassin/dragon_tail.webp",
+      "sourceUrl": "https://d2db.net/images/skills/dragon_tail.webp"
+    },
+    "assassin.blades_of_ice": {
+      "classId": "assassin",
+      "sourceName": "Blades of Ice",
+      "displayName": "Blades of Ice",
+      "slug": "blades_of_ice",
+      "asset": "/app/assets/skill-icons/assassin/blades_of_ice.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blades_of_ice.webp"
+    },
+    "assassin.dragon_flight": {
+      "classId": "assassin",
+      "sourceName": "Dragon Flight",
+      "displayName": "Dragon Flight",
+      "slug": "dragon_flight",
+      "asset": "/app/assets/skill-icons/assassin/dragon_flight.webp",
+      "sourceUrl": "https://d2db.net/images/skills/dragon_flight.webp"
+    },
+    "assassin.royal_strike": {
+      "classId": "assassin",
+      "sourceName": "Royal Strike",
+      "displayName": "Phoenix Strike",
+      "slug": "phoenix_strike",
+      "asset": "/app/assets/skill-icons/assassin/phoenix_strike.webp",
+      "sourceUrl": "https://d2db.net/images/skills/phoenix_strike.webp"
+    },
+    "warlock.demonic_mastery": {
+      "classId": "warlock",
+      "sourceName": "Demonic Mastery",
+      "displayName": "Demonic Mastery",
+      "slug": "demonic_mastery",
+      "asset": "/app/assets/skill-icons/warlock/demonic_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/demonic_mastery.webp"
+    },
+    "warlock.summon_goatman": {
+      "classId": "warlock",
+      "sourceName": "Summon Goatman",
+      "displayName": "Summon Goatman",
+      "slug": "summon_goatman",
+      "asset": "/app/assets/skill-icons/warlock/summon_goatman.webp",
+      "sourceUrl": "https://d2db.net/images/skills/summon_goatman.webp"
+    },
+    "warlock.blood_oath": {
+      "classId": "warlock",
+      "sourceName": "Blood Oath",
+      "displayName": "Blood Oath",
+      "slug": "blood_oath",
+      "asset": "/app/assets/skill-icons/warlock/blood_oath.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blood_oath.webp"
+    },
+    "warlock.death_mark": {
+      "classId": "warlock",
+      "sourceName": "Death Mark",
+      "displayName": "Death Mark",
+      "slug": "death_mark",
+      "asset": "/app/assets/skill-icons/warlock/death_mark.webp",
+      "sourceUrl": "https://d2db.net/images/skills/death_mark.webp"
+    },
+    "warlock.summon_tainted": {
+      "classId": "warlock",
+      "sourceName": "Summon Tainted",
+      "displayName": "Summon Tainted",
+      "slug": "summon_tainted",
+      "asset": "/app/assets/skill-icons/warlock/summon_tainted.webp",
+      "sourceUrl": "https://d2db.net/images/skills/summon_tainted.webp"
+    },
+    "warlock.blood_boil": {
+      "classId": "warlock",
+      "sourceName": "Blood Boil",
+      "displayName": "Blood Boil",
+      "slug": "blood_boil",
+      "asset": "/app/assets/skill-icons/warlock/blood_boil.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blood_boil.webp"
+    },
+    "warlock.summon_defiler": {
+      "classId": "warlock",
+      "sourceName": "Summon Defiler",
+      "displayName": "Summon Defiler",
+      "slug": "summon_defiler",
+      "asset": "/app/assets/skill-icons/warlock/summon_defiler.webp",
+      "sourceUrl": "https://d2db.net/images/skills/summon_defiler.webp"
+    },
+    "warlock.engorge": {
+      "classId": "warlock",
+      "sourceName": "Engorge",
+      "displayName": "Engorge",
+      "slug": "engorge",
+      "asset": "/app/assets/skill-icons/warlock/engorge.webp",
+      "sourceUrl": "https://d2db.net/images/skills/engorge.webp"
+    },
+    "warlock.consume": {
+      "classId": "warlock",
+      "sourceName": "Consume",
+      "displayName": "Consume",
+      "slug": "consume",
+      "asset": "/app/assets/skill-icons/warlock/consume.webp",
+      "sourceUrl": "https://d2db.net/images/skills/consume.webp"
+    },
+    "warlock.bind_demon": {
+      "classId": "warlock",
+      "sourceName": "Bind Demon",
+      "displayName": "Bind Demon",
+      "slug": "bind_demon",
+      "asset": "/app/assets/skill-icons/warlock/bind_demon.webp",
+      "sourceUrl": "https://d2db.net/images/skills/bind_demon.webp"
+    },
+    "warlock.levitate": {
+      "classId": "warlock",
+      "sourceName": "Levitate",
+      "displayName": "Levitation Mastery",
+      "slug": "levitation_mastery",
+      "asset": "/app/assets/skill-icons/warlock/levitation_mastery.webp",
+      "sourceUrl": "https://d2db.net/images/skills/levitation_mastery.webp"
+    },
+    "warlock.hex_bane": {
+      "classId": "warlock",
+      "sourceName": "Hex Bane",
+      "displayName": "Hex: Bane",
+      "slug": "hex_bane",
+      "asset": "/app/assets/skill-icons/warlock/hex_bane.webp",
+      "sourceUrl": "https://d2db.net/images/skills/hex_bane.webp"
+    },
+    "warlock.cleave": {
+      "classId": "warlock",
+      "sourceName": "Cleave",
+      "displayName": "Cleave",
+      "slug": "cleave",
+      "asset": "/app/assets/skill-icons/warlock/cleave.webp",
+      "sourceUrl": "https://d2db.net/images/skills/cleave.webp"
+    },
+    "warlock.echoing_strike": {
+      "classId": "warlock",
+      "sourceName": "Echoing Strike",
+      "displayName": "Echoing Strike",
+      "slug": "echoing_strike",
+      "asset": "/app/assets/skill-icons/warlock/echoing_strike.webp",
+      "sourceUrl": "https://d2db.net/images/skills/echoing_strike.webp"
+    },
+    "warlock.hex_purge": {
+      "classId": "warlock",
+      "sourceName": "Hex Purge",
+      "displayName": "Hex: Purge",
+      "slug": "hex_purge",
+      "asset": "/app/assets/skill-icons/warlock/hex_purge.webp",
+      "sourceUrl": "https://d2db.net/images/skills/hex_purge.webp"
+    },
+    "warlock.blade_warp": {
+      "classId": "warlock",
+      "sourceName": "Blade Warp",
+      "displayName": "Blade Warp",
+      "slug": "blade_warp",
+      "asset": "/app/assets/skill-icons/warlock/blade_warp.webp",
+      "sourceUrl": "https://d2db.net/images/skills/blade_warp.webp"
+    },
+    "warlock.psychic_ward": {
+      "classId": "warlock",
+      "sourceName": "Psychic Ward",
+      "displayName": "Psychic Ward",
+      "slug": "psychic_ward",
+      "asset": "/app/assets/skill-icons/warlock/psychic_ward.webp",
+      "sourceUrl": "https://d2db.net/images/skills/psychic_ward.webp"
+    },
+    "warlock.eldritch_blast": {
+      "classId": "warlock",
+      "sourceName": "Eldritch Blast",
+      "displayName": "Eldritch Blast",
+      "slug": "eldritch_blast",
+      "asset": "/app/assets/skill-icons/warlock/eldritch_blast.webp",
+      "sourceUrl": "https://d2db.net/images/skills/eldritch_blast.webp"
+    },
+    "warlock.hex_siphon": {
+      "classId": "warlock",
+      "sourceName": "Hex Siphon",
+      "displayName": "Hex: Siphon",
+      "slug": "hex_siphon",
+      "asset": "/app/assets/skill-icons/warlock/hex_siphon.webp",
+      "sourceUrl": "https://d2db.net/images/skills/hex_siphon.webp"
+    },
+    "warlock.mirrored_blades": {
+      "classId": "warlock",
+      "sourceName": "Mirrored Blades",
+      "displayName": "Mirrored Blades",
+      "slug": "mirrored_blades",
+      "asset": "/app/assets/skill-icons/warlock/mirrored_blades.webp",
+      "sourceUrl": "https://d2db.net/images/skills/mirrored_blades.webp"
+    },
+    "warlock.miasma_bolt": {
+      "classId": "warlock",
+      "sourceName": "Miasma Bolt",
+      "displayName": "Miasma Bolt",
+      "slug": "miasma_bolt",
+      "asset": "/app/assets/skill-icons/warlock/miasma_bolt.webp",
+      "sourceUrl": "https://d2db.net/images/skills/miasma_bolt.webp"
+    },
+    "warlock.ring_of_fire": {
+      "classId": "warlock",
+      "sourceName": "Ring of Fire",
+      "displayName": "Ring of Fire",
+      "slug": "ring_of_fire",
+      "asset": "/app/assets/skill-icons/warlock/ring_of_fire.webp",
+      "sourceUrl": "https://d2db.net/images/skills/ring_of_fire.webp"
+    },
+    "warlock.sigil_lethargy": {
+      "classId": "warlock",
+      "sourceName": "Sigil Lethargy",
+      "displayName": "Sigil: Lethargy",
+      "slug": "sigil_lethargy",
+      "asset": "/app/assets/skill-icons/warlock/sigil_lethargy.webp",
+      "sourceUrl": "https://d2db.net/images/skills/sigil_lethargy.webp"
+    },
+    "warlock.sigil_rancor": {
+      "classId": "warlock",
+      "sourceName": "Sigil Rancor",
+      "displayName": "Sigil: Rancor",
+      "slug": "sigil_rancor",
+      "asset": "/app/assets/skill-icons/warlock/sigil_rancor.webp",
+      "sourceUrl": "https://d2db.net/images/skills/sigil_rancor.webp"
+    },
+    "warlock.miasma_chains": {
+      "classId": "warlock",
+      "sourceName": "Miasma Chains",
+      "displayName": "Miasma Chain",
+      "slug": "miasma_chain",
+      "asset": "/app/assets/skill-icons/warlock/miasma_chain.webp",
+      "sourceUrl": "https://d2db.net/images/skills/miasma_chain.webp"
+    },
+    "warlock.flame_wave": {
+      "classId": "warlock",
+      "sourceName": "Flame Wave",
+      "displayName": "Flame Wave",
+      "slug": "flame_wave",
+      "asset": "/app/assets/skill-icons/warlock/flame_wave.webp",
+      "sourceUrl": "https://d2db.net/images/skills/flame_wave.webp"
+    },
+    "warlock.sigil_death": {
+      "classId": "warlock",
+      "sourceName": "Sigil Death",
+      "displayName": "Sigil: Death",
+      "slug": "sigil_death",
+      "asset": "/app/assets/skill-icons/warlock/sigil_death.webp",
+      "sourceUrl": "https://d2db.net/images/skills/sigil_death.webp"
+    },
+    "warlock.enhanced_entropy": {
+      "classId": "warlock",
+      "sourceName": "Enhanced Entropy",
+      "displayName": "Enhanced Entropy",
+      "slug": "enhanced_entropy",
+      "asset": "/app/assets/skill-icons/warlock/enhanced_entropy.webp",
+      "sourceUrl": "https://d2db.net/images/skills/enhanced_entropy.webp"
+    },
+    "warlock.apocalypse": {
+      "classId": "warlock",
+      "sourceName": "Apocalypse",
+      "displayName": "Apocalypse",
+      "slug": "apocalypse",
+      "asset": "/app/assets/skill-icons/warlock/apocalypse.webp",
+      "sourceUrl": "https://d2db.net/images/skills/apocalypse.webp"
+    },
+    "warlock.abyss": {
+      "classId": "warlock",
+      "sourceName": "Abyss",
+      "displayName": "Abyss",
+      "slug": "abyss",
+      "asset": "/app/assets/skill-icons/warlock/abyss.webp",
+      "sourceUrl": "https://d2db.net/images/skills/abyss.webp"
+    }
+  }
+}

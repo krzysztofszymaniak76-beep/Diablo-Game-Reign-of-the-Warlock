@@ -4,7 +4,7 @@ import { mkdir, open, rename, rm, stat } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
 
-export const RELEASE_VERSION = '0.1';
+export const RELEASE_VERSION = '0.2';
 export const RELEASE_REPOSITORY = 'krzysztofszymaniak76-beep/Diablo-Game-Reign-of-the-Warlock';
 export const RELEASE_API = `https://api.github.com/repos/${RELEASE_REPOSITORY}/releases/latest`;
 const INSTALLER_PREFIX = 'Diablo-Game-Reign-of-the-Warlock-Setup-';

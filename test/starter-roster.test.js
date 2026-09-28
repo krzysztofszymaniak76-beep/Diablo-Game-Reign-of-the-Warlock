@@ -2,7 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 
-import { EquipmentCatalog, validateEquipmentItem } from "../src/core/equipment.js";
+import { EquipmentCatalog, validateEquipmentItem, validateEquipmentWorld } from "../src/core/equipment.js";
+import { Roster } from "../src/core/characters.js";
 import { InventoryGrid } from "../src/core/inventory-grid.js";
 import {
   STARTER_ROSTER_DEFINITIONS,
@@ -10,6 +11,7 @@ import {
   defaultActiveIds,
   createStarterRosterCharacters,
   createStarterInventoryItems,
+  equipFreshStarterGear,
   migrateMissingStarterRoster,
 } from "../src/core/starter-roster.js";
 
@@ -47,6 +49,24 @@ test("starter definitions contain exactly one immutable entry for every class", 
     assert.equal(starterRosterDefinitionById[definition.id], definition);
     assert.match(definition.role, /\S/);
   }
+});
+
+test('fresh heroes wear their usable starter weapon and armor without losing spare gear', () => {
+  const roster = new Roster(createStarterRosterCharacters());
+  const inventories = new Map([...createStarterInventoryItems(catalog)]
+    .map(([id, items]) => [id, new InventoryGrid({ width: 10, height: 4, items })]));
+  equipFreshStarterGear(roster, inventories, catalog);
+  assert.doesNotThrow(() => validateEquipmentWorld(roster, inventories, catalog));
+  for (const definition of STARTER_ROSTER_DEFINITIONS) {
+    const hero = roster.get(definition.id);
+    assert.ok(hero.equipment.weapon, definition.id);
+    if (definition.starterItems.some(({ canonicalId }) => canonicalId === 'quilted_armor')) {
+      assert.equal(hero.equipment.chest?.canonicalId, 'quilted_armor');
+    }
+  }
+  assert.equal(roster.get('hadriel').equipment.offhand?.canonicalId, 'buckler');
+  assert.ok(inventories.get('hadriel').items.has('hadriel.targe'));
+  assert.ok(inventories.get('korgan').items.has('korgan.starter.short_sword'));
 });
 
 test("the established three heroes remain the exact default active party", () => {

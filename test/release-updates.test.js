@@ -22,7 +22,7 @@ function release(version, bytes = Buffer.from('private local installer test')) {
 }
 
 test('public version sequence passes 0.9 to 1.0 and rejects 0.10', () => {
-  assert.equal(RELEASE_VERSION, '0.1');
+  assert.equal(RELEASE_VERSION, '0.2');
   assert.equal(compareReleaseVersions('1.0', '0.9'), 1);
   assert.equal(compareReleaseVersions('2.0', '1.9'), 1);
   assert.equal(compareReleaseVersions('0.2', '0.9'), -1);
@@ -32,18 +32,18 @@ test('public version sequence passes 0.9 to 1.0 and rejects 0.10', () => {
 });
 
 test('new release is offered only with exact installer, size and digest', () => {
-  const good = readLatestRelease(release('0.2'));
+  const good = readLatestRelease(release('0.3'));
   assert.equal(good.updateAvailable, true);
   assert.deepEqual(good.release.changes, ['Nowa mapa', 'Naprawiono zapisy']);
   assert.equal(good.release.date, '2026-09-25');
   assert.equal(readLatestRelease(release('0.1')).updateAvailable, false);
-  const noDigest = release('0.2');
+  const noDigest = release('0.3');
   delete noDigest.assets[0].digest;
   assert.equal(readLatestRelease(noDigest).updateAvailable, false);
-  const wrongHost = release('0.2');
+  const wrongHost = release('0.3');
   wrongHost.assets[0].browser_download_url = 'https://attacker.example/setup.exe';
   assert.equal(readLatestRelease(wrongHost).updateAvailable, false);
-  const noInstaller = release('0.2');
+  const noInstaller = release('0.3');
   noInstaller.assets = [];
   assert.equal(readLatestRelease(noInstaller).updateAvailable, false);
 });
@@ -57,14 +57,14 @@ test('GitHub 404 is a visible no-release state, not a phantom update', async () 
 test('download verifies exact bytes and SHA-256 before installer can launch', async t => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'rotw-update-test-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
-  const bytes = Buffer.from('EXE test bytes 0.2');
-  const latest = readLatestRelease(release('0.2', bytes));
+  const bytes = Buffer.from('EXE test bytes 0.3');
+  const latest = readLatestRelease(release('0.3', bytes));
   const fetchImpl = async url => {
     assert.equal(url, latest.installer.url);
     return new Response(bytes, { status: 200 });
   };
   const file = await downloadVerifiedInstaller(latest, { directory, fetchImpl });
-  assert.equal(path.basename(file), expectedInstallerName('0.2'));
+  assert.equal(path.basename(file), expectedInstallerName('0.3'));
   assert.deepEqual(await readFile(file), bytes);
   let downloadedAgain = false;
   assert.equal(await downloadVerifiedInstaller(latest, { directory, fetchImpl: async () => {
@@ -77,7 +77,7 @@ test('download verifies exact bytes and SHA-256 before installer can launch', as
 test('damaged download is rejected and incomplete file is removed', async t => {
   const directory = await mkdtemp(path.join(os.tmpdir(), 'rotw-update-damage-test-'));
   t.after(() => rm(directory, { recursive: true, force: true }));
-  const latest = readLatestRelease(release('0.2', Buffer.from('correct')));
+  const latest = readLatestRelease(release('0.3', Buffer.from('correct')));
   await assert.rejects(downloadVerifiedInstaller(latest, {
     directory, fetchImpl: async () => new Response(Buffer.from('damaged'), { status: 200 }),
   }), /SHA-256/);

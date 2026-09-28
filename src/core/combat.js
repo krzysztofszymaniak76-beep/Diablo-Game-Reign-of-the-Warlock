@@ -418,6 +418,37 @@ export class CombatState {
     return Boolean(unit && unit.readyAt <= this.scheduler.time);
   }
 
+  /** Transfer the current player decision to one chosen living field hero.
+   * This spends no action, does not advance the clock and does not resolve AI.
+   * The chosen hero's recovery is waived for this player decision only. */
+  chooseHeroForPlayerTurn(heroId, legalIds = this.units.keys()) {
+    this.#assertTimelineMode(TIMELINE_MODE.RECOVERY);
+    const current = this.units.get(this.currentActorId);
+    const chosen = this.units.get(heroId);
+    if (this.readinessPhase !== READINESS_PHASE.AWAITING_ACTION || current?.kind !== 'hero') {
+      throw new Error('Nie trwa tura drużyny');
+    }
+    if (chosen?.kind !== 'hero' || !new Set(legalIds).has(heroId)) {
+      throw new Error('Ta postać nie może teraz walczyć');
+    }
+    if (heroId === current.id) return this.readinessQueue(legalIds)[0];
+    if ([...this.activeCommands.values()].some((command) => command.actorId === heroId)) {
+      throw new Error('Postać kończy poprzednią akcję');
+    }
+    if (chosen.readinessEventId) {
+      this.scheduler.cancelWhere((event) => event.id === chosen.readinessEventId);
+      chosen.readinessEventId = null;
+    }
+    chosen.readyAt = Math.min(chosen.readyAt, this.scheduler.time);
+    // The relinquishing hero re-enters the queue just after this decision.
+    // A same-tick ready event here would violate the save/load boundary and
+    // could steal the chosen hero's command before it is submitted.
+    current.readyAt = Math.max(current.readyAt, this.scheduler.time + 1);
+    this.currentActorId = heroId;
+    this.#syncRecoveryReadiness([...new Set(legalIds)]);
+    return this.readinessQueue(legalIds)[0];
+  }
+
   readinessQueue(legalIds = this.units.keys()) {
     if (!legalIds || typeof legalIds[Symbol.iterator] !== "function") throw new TypeError("legalIds must be iterable");
     const seen = new Set();
@@ -459,6 +490,13 @@ export class CombatState {
       if (boundary.type === "ready") return boundary.entry;
     }
     throw new Error("Timeline exceeded its deterministic safety limit");
+  }
+
+  // Presentation can inspect the exact next boundary without popping it or
+  // resolving damage. Readiness synchronization is identical to advanceTimeline.
+  previewNextTimelineEvent(legalIds = this.units.keys()) {
+    this.#syncRecoveryReadiness([...new Set(legalIds)]);
+    return this.currentActorId ? null : structuredClone(this.scheduler.queue[0] ?? null);
   }
 
   advanceTimeline(legalIds = this.units.keys(), { resolve, onInterrupt } = {}) {

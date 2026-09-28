@@ -1,5 +1,5 @@
 param(
-  [string]$Version = '0.1',
+  [string]$Version = '0.2',
   [string]$OutputDirectory = (Join-Path (Split-Path -Parent $PSScriptRoot) 'outputs\installer'),
   [switch]$LocalTest,
   [string]$NodeExecutable = '',
@@ -75,11 +75,11 @@ $sourcePackage = Get-Content -LiteralPath (Join-Path $root 'package.json') -Raw 
   nodeVersion = $nodeVersion.ToString()
   nodeSha256 = $nodeHash
 } | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $stage 'installed-build.json') -Encoding UTF8
-@'
+$instruction = @'
 REIGN OF THE WARLOCK - INSTALATOR WINDOWS
 
 Wydawca: Kris Labs PL
-Wersja produktu: 0.1
+Wersja produktu: __PRODUCT_VERSION__
 
 Instalator pozwala wybrać folder gry i utworzyć skrót na pulpicie.
 Na stronie „Przeniesienie zapisu” można wskazać wcześniejszy folder gry.
@@ -95,7 +95,8 @@ podpisany cyfrowo certyfikatem.
 
 Instalator zawiera materiały z bieżącej kopii projektu. Przed publicznym
 udostępnieniem sprawdź prawa do wszystkich grafik i pozostałych zasobów.
-'@ | Set-Content -LiteralPath (Join-Path $stage 'INSTRUKCJA_INSTALACJI.txt') -Encoding UTF8
+'@
+$instruction.Replace('__PRODUCT_VERSION__', $Version) | Set-Content -LiteralPath (Join-Path $stage 'INSTRUKCJA_INSTALACJI.txt') -Encoding UTF8
 
 # Draw an original D2 monogram. It does not reuse the official game logo.
 Add-Type -AssemblyName System.Drawing
