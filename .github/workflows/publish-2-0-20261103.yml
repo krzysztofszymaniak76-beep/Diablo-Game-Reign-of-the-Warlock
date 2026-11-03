@@ -1,0 +1,34 @@
+name: Verify exact 2.0 publication transport
+
+on:
+  push:
+    branches: [codex/release-2-0-publication-20261103]
+    paths: [.github/workflows/publish-2-0-20261103.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify original installer bytes without changing any release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: python
+        run: |
+          import os, json, hashlib, base64, urllib.request
+          repo = 'krzysztofszymaniak76-beep/Diablo-Game-Reign-of-the-Warlock'
+          expected = '6b9f4fbfdeb222e5fdd61fa9e9aff5298eb108f02829d5da59c919f3ce8f63ce'
+          sha = 'e227875007e1691521dda3a5e418e0c2eba6d745'
+          req = urllib.request.Request('https://api.github.com/repos/'+repo+'/git/blobs/'+sha,
+            headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],
+              'Accept':'application/vnd.github+json','User-Agent':'Diablo2-authorized-publication20'})
+          with urllib.request.urlopen(req,timeout=60) as response:
+            blob = json.load(response)
+          data = base64.b64decode(blob['content'])
+          assert len(data) == 65536 and hashlib.sha256(data).hexdigest() == expected
+          print(json.dumps({'status':'EXACT_ORIGINAL_INSTALLER_TRANSPORT_VERIFIED',
+            'bytes':len(data),'sha256':expected,'releaseChanged':False,'installerExecuted':False}))
+
