@@ -1,0 +1,37 @@
+name: Verify approved Diablo 2 publication 2.1
+
+on:
+  push:
+    branches: [codex/release-2-1-publication-20261105-2135]
+    paths: [.github/workflows/verify-2-1-20261105.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify approved description and release heads
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import os,json,base64,hashlib,urllib.request
+          repo='krzysztofszymaniak76-beep/Diablo-Game-Reign-of-the-Warlock'
+          assert os.environ['GITHUB_REPOSITORY']==repo
+          assert os.environ['GITHUB_REF_NAME']=='codex/release-2-1-publication-20261105-2135'
+          headers={'Authorization':'Bearer '+os.environ['GH_TOKEN'],'Accept':'application/vnd.github+json','User-Agent':'Diablo2-approved-publication21-preflight'}
+          def get(path):
+              req=urllib.request.Request('https://api.github.com/repos/'+repo+'/'+path,headers=headers)
+              with urllib.request.urlopen(req,timeout=30)as response:return json.load(response)
+          blob=get('git/blobs/07a953826476f0ae39b581c2d18962acbf4c1899')
+          raw=base64.b64decode(blob['content'])
+          assert hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()=='07a953826476f0ae39b581c2d18962acbf4c1899'
+          latest=get('releases/latest'); target=get('releases/tags/v2.1')
+          assert latest['tag_name']=='v2.0' and latest['id']==426190766
+          assert target['id']==426233808 and target['tag_name']=='v2.1'
+          assert len(raw)>1000 and raw.decode('utf-8').startswith('Diablo 2 — aktualizacja 2.1:')
+          print(json.dumps({'status':'PASS_APPROVED_2_1_DESCRIPTION_BLOB_AND_PUBLIC_HEADS','releaseChanged':False,'descriptionBytes':len(raw)}))
+          PY
